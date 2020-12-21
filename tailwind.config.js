@@ -5,6 +5,9 @@ module.exports = {
     content: ['./src/client/**/*.jsx'],
   },
   theme: {
+    fontFamily: {
+      sans: ['Lato', 'Roboto', 'Arial', 'sans-serif'],
+    },
     extend: {},
   },
   variants: {
