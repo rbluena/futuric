@@ -22,7 +22,7 @@ const Link = ({ children, size, href, className, active, ...props }) => {
   return (
     <LinkWrapper prefetch={false} href={href} {...props}>
       <a
-        className={`text-pink-600 hover:text-pink-800 transition duration-150 ease-in-out ${className}`}
+        className={`text-pink-700 hover:text-pink-900 transition duration-150 ease-in-out ${className}`}
         href={href}
       >
         {children}
