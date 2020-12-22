@@ -20,5 +20,24 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'import', 'prettier'],
-  rules: {},
+  rules: {
+    'react/jsx-props-no-spreading': 'off',
+    'no-underscore-dangle': 'off',
+    'no-param-reassign': 'off',
+  },
+  settings: {
+    'import/resolver': {
+      alias: [
+        ['@app', './src/client'],
+        ['@app/screens', './src/client/screens'],
+        ['@app/containers', './src/client/containers'],
+        ['@app/actions', './src/client/actions'],
+        ['@app/slices', './src/client/slices'],
+        ['@app/hooks', './src/client/hooks'],
+        ['@app/utils', './src/client/utils'],
+        ['@app/services', './src/client/services'],
+        ['@app/components', './src/client/components'],
+      ],
+    },
+  },
 };
