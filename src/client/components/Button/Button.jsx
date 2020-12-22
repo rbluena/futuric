@@ -3,27 +3,27 @@ import PropTypes from 'prop-types';
 
 const Button = ({ children, outline, className, size, variant }) => {
   if (variant === 'primary' && !outline) {
-    className += ' text-white bg-indigo-500 rounded-sm';
+    className += ' text-neutral-50 bg-primary-700 rounded-sm';
   }
 
   if (variant === 'primary' && outline) {
-    className += ' border border-indigo-500 text-indigo-500 rounded-sm';
+    className += ' border border-primary-700 text-primary-500 rounded-sm';
   }
 
   if (variant === 'secondary' && !outline) {
-    className += ' bg-white text-indigo-500 rounded-sm';
+    className += ' bg-white text-primary-700 rounded-sm';
   }
 
   if (variant === 'secondary' && outline) {
-    className += ' border border-white text-white rounded-sm';
+    className += ' border border-neutral-50 text-neutral-50 rounded-sm';
   }
 
   if (size === 'lg') {
-    className += ' w-full py-3 px-6 text-lg';
+    className += ' w-full py-3 px-6 text-lg font-bold';
   }
 
   if (size === 'md') {
-    className += ' py-2 px-4 text-sm';
+    className += ' py-2 px-4 text-sm font-bold';
   }
 
   return (
@@ -34,8 +34,8 @@ const Button = ({ children, outline, className, size, variant }) => {
 };
 
 Button.defaultProps = {
-  variant: 'secondary',
-  size: 'lg',
+  variant: 'primary',
+  size: 'md',
   outline: false,
   className: '',
 };
