@@ -1,3 +1,5 @@
+const { gray, fuchsia } = require('tailwindcss/colors');
+
 module.exports = {
   darkMode: false, // or 'media' or 'class'
   purge: {
@@ -7,6 +9,10 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Lato', 'Roboto', 'Arial', 'sans-serif'],
+    },
+    colors: {
+      primary: fuchsia,
+      neutral: gray,
     },
     extend: {},
   },
