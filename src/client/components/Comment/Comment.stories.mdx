@@ -1,0 +1,21 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import Comment from './Comment';
+
+<Meta title="Design System/Comment" component={Comment} />
+
+# Comment
+
+<Canvas>
+  <Story name="Comment">
+    <Comment
+      data={{
+        author: 'Rabii Luena',
+        createdAt: '2 weeks ago',
+        description:
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Distinctio atque illo enim cumque ullam iste facilis maiores sequi delectus adipisci, nostrum molestiae dicta saepe necessitatibus! Mollitia aspernatur minus beatae quasi?',
+        profile:
+          'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      }}
+    />
+  </Story>
+</Canvas>
