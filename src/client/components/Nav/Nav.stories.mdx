@@ -1,0 +1,16 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import Nav from './Nav';
+
+<Meta title="Design System/Nav" component={Nav} />
+
+# Nav
+
+export const Template = (args) => <Nav {...args} />;
+
+<ArgsTable of={Nav} />
+
+<Canvas>
+  <Story name="Nav">
+    <Nav />
+  </Story>
+</Canvas>
