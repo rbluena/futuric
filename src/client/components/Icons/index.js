@@ -14,6 +14,8 @@ import BadgeIcon from './BadgeIcon';
 import BadgeOutlineIcon from './BadgeOutlineIcon';
 import BellIcon from './BellIcon';
 import BellOutlineIcon from './BellOutlineIcon';
+import HeartIcon from './HeartIcon';
+import HeartOutlineIcon from './HeartOutlineIcon';
 
 export {
   ClipboardListIcon,
@@ -31,5 +33,7 @@ export {
   BadgeOutlineIcon,
   BellIcon,
   BellOutlineIcon,
+  HeartIcon,
+  HeartOutlineIcon,
   CloseIcon,
 };
