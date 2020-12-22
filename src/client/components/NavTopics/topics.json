@@ -1,0 +1,14 @@
+[
+  { "title": "Literature", "path": "/posts/literature" },
+  { "title": "Politics", "path": "/posts/politics" },
+  { "title": "Business", "path": "/posts/business" },
+  { "title": "Startup", "path": "/posts/startup" },
+  { "title": "Comedy", "path": "/posts/comedy" },
+  { "title": "Science and Technology", "path": "/posts/sci-tech" },
+  { "title": "Health", "path": "/posts/health" },
+  { "title": "Language", "path": "/posts/Livestreams" },
+  { "title": "Sports", "path": "/posts/sports" },
+  { "title": "Personal Development", "path": "/posts/personal" },
+  { "title": "Programming", "path": "/posts/programming" },
+  { "title": "Relationship", "path": "/posts/relationship" }
+]

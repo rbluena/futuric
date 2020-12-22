@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LinkWrapper from 'next/link';
 
-const Link = ({ children, size, href, className, active, ...props }) => {
+const Link = ({
+  children,
+  variant,
+  size,
+  href,
+  className,
+  active,
+  ...props
+}) => {
   if (size === 'xs') {
     className += ' text-xs';
   }
@@ -22,7 +30,11 @@ const Link = ({ children, size, href, className, active, ...props }) => {
   return (
     <LinkWrapper prefetch={false} href={href} {...props}>
       <a
-        className={`text-pink-700 hover:text-pink-900 transition duration-150 ease-in-out ${className}`}
+        className={`transition duration-150 ease-in-out ${className} ${
+          variant === 'secondary'
+            ? 'text-gray-500 hover:text-gray-900'
+            : 'text-pink-700 hover:text-pink-900'
+        }`}
         href={href}
       >
         {children}
@@ -35,6 +47,7 @@ Link.defaultProps = {
   active: false,
   className: '',
   size: 'md',
+  variant: '',
 };
 
 Link.propTypes = {
@@ -49,7 +62,12 @@ Link.propTypes = {
 
   /**  */
   active: PropTypes.bool,
+
+  /**  */
   size: PropTypes.string,
+
+  /** Link can of variant primary or secondary. */
+  variant: PropTypes.string,
 };
 
 export default Link;
