@@ -1,0 +1,18 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import Link from './Link';
+
+<Meta title="Design System/Link" component={Link} />
+
+# Link
+
+export const Template = (args) => <Link {...args} />;
+
+<ArgsTable of={Link} />
+
+<Canvas>
+  <Story name="Link">
+    <Link size="xs" href="/">
+      Link
+    </Link>
+  </Story>
+</Canvas>
