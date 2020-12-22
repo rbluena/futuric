@@ -4,7 +4,7 @@ import { Avatar, Link } from '@app/components';
 
 const Comment = ({ data }) => (
   <div className="flex max-w-sm p-2">
-    <Avatar src={data.profile} alt={data.author} />
+    <Avatar src={data.profile} alt={data.author} size="lg" />
     <section className="pl-3">
       <header>
         <p className="text-sm font-semibold text-neutral-700">{data.author}</p>

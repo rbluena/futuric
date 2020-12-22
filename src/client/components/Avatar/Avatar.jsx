@@ -14,7 +14,17 @@ const Avatar = ({ size, className, src, alt }) => {
     className += ' h-10 w-10';
   }
 
-  return <img className={`rounded-full ${className}`} src={src} alt={alt} />;
+  if (size === 'xl') {
+    className += ' h-14 w-14';
+  }
+
+  return (
+    <img
+      className={`rounded-full border-2 border-primary-700 ${className}`}
+      src={src}
+      alt={alt}
+    />
+  );
 };
 
 Avatar.defaultProps = {

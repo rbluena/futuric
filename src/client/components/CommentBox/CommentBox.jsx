@@ -12,12 +12,7 @@ const CommentBox = ({ author }) => {
 
   return (
     <div className="flex max-w-sm bg-neutral-100 rounded-md shadow-lg p-2 relative">
-      <Avatar
-        src={author.profile}
-        alt={author.name}
-        size="lg"
-        className="border-2 border-primary-700"
-      />
+      <Avatar src={author.profile} alt={author.name} size="xl" />
       <section className="px-2 w-full relative">
         <header>
           <p className="font-semibold text-neutral-700">{author.name}</p>
