@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Avatar, Link } from '@app/components';
 
 const Comment = ({ data }) => (
-  <div className="flex max-w-sm">
+  <div className="flex max-w-sm p-2">
     <Avatar src={data.profile} alt={data.author} />
     <section className="pl-3">
       <header>
