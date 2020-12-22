@@ -26,7 +26,9 @@ PostCard.Avatar.propTypes = {
 
 PostCard.Content = ({ title, children }) => (
   <div className="w-full pl-2">
-    <p className="font-semibold text-lg">{title}</p>
+    <h2 className="font-semibold text-lg leading-6 text-neutral-700">
+      {title}
+    </h2>
     {children}
   </div>
 );
@@ -41,16 +43,16 @@ PostCard.Content.propTypes = {
 
 PostCard.Footer = ({ publisher }) => (
   <div className="flex items-center justify-items-start w-full mt-3">
-    <span className="text-sm text-neutral-500">From</span>
+    <span className="text-sm text-neutral-500">From:</span>
     &nbsp;
     <Link href={publisher.url} className="font-bold text-sm">
       {publisher.name}
     </Link>
-    &nbsp; &nbsp;
-    <span className="rounded-full inline-block h-1 w-1 bg-neutral-300" />
-    &nbsp; &nbsp;
+    &nbsp;&nbsp;&nbsp;
+    <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
+    &nbsp;&nbsp;&nbsp;
     <span className="text-sm text-neutral-500">Available:</span>
-    &nbsp; &nbsp;
+    &nbsp;
     <Link
       href={`/available/${publisher.activeDate}`}
       className="text-sm font-bold"
