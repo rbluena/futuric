@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Link } from '@app/components';
-import { HeartIcon, HeartOutlineIcon } from '@app/components/Icons';
+import { HeartIcon } from '@app/components/Icons';
 
 const Comment = ({ data }) => (
-  <div className="flex max-w-sm p-2">
+  <div className="flex max-w-sm p-2 py-4">
     <Avatar src={data.profile} alt={data.author} size="lg" />
     <section className="pl-3">
       <header>
