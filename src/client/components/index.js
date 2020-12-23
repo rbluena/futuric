@@ -6,6 +6,7 @@ import Avatar from './Avatar';
 import PostCard from './PostCard';
 import Comment from './Comment';
 import CommentBox from './CommentBox';
+import Sidebar from './Sidebar';
 
 export {
   LayoutManager,
@@ -16,4 +17,5 @@ export {
   PostCard,
   Comment,
   CommentBox,
+  Sidebar,
 };
