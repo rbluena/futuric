@@ -1,7 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import FeaturedContainer from '@app/containers/FeaturedContainer';
 
-const LandingPage = (props) => <div>Landing page</div>;
+const LandingPage = () => (
+  <div>
+    <FeaturedContainer />
+  </div>
+);
 
 LandingPage.propTypes = {};
 
