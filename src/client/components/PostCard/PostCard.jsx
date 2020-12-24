@@ -86,7 +86,10 @@ PostCard.Footer = ({ publisher, small }) => (
       {publisher.activeDate}
     </Link>
     <button type="button" className="ml-auto" title="Get notified">
-      <BellOutlineIcon size="sm" className="text-neutral-500" />
+      <BellOutlineIcon
+        size={small ? 'xs' : 'sm'}
+        className="text-primary-700"
+      />
     </button>
   </div>
 );

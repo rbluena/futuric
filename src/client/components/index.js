@@ -13,6 +13,7 @@ import NavCategories from './NavCategories';
 import Hero from './Hero';
 import WidePosts from './WidePosts';
 import Aside from './Aside';
+import Footer from './Footer';
 
 export {
   LayoutManager,
@@ -30,4 +31,5 @@ export {
   Hero,
   WidePosts,
   Aside,
+  Footer,
 };
