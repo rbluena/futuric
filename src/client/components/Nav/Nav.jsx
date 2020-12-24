@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from '@app/components';
 
 const Nav = () => (
-  <nav className="relative pt-6 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+  <nav className="relative py-6 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
     <div className="relative flex items-center">
       {/* <Image
         className="h-8 w-auto sm:h-10"

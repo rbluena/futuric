@@ -11,6 +11,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'prettier',
+    'prettier/react',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -24,6 +25,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
+    'import/no-cycle': 'off',
   },
   settings: {
     'import/resolver': {

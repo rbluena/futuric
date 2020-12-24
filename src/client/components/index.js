@@ -7,6 +7,10 @@ import PostCard from './PostCard';
 import Comment from './Comment';
 import CommentBox from './CommentBox';
 import Sidebar from './Sidebar';
+import Nav from './Nav';
+import NavTopics from './NavTopics';
+import NavCategories from './NavCategories';
+import Hero from './Hero';
 
 export {
   LayoutManager,
@@ -18,4 +22,8 @@ export {
   Comment,
   CommentBox,
   Sidebar,
+  Nav,
+  NavTopics,
+  NavCategories,
+  Hero,
 };
