@@ -6,7 +6,7 @@ import { BellOutlineIcon } from '@app/components/Icons';
 const PostCard = ({ children, small }) => (
   <div
     className={` transform transition-all flex items-start bg-neutral-50 hover:scale-105 hover:bg-neutral-100 p-4 ${
-      small ? 'max-w-md' : ' max-w-xl'
+      small ? 'max-w-sm' : ' max-w-xl'
     }`}
   >
     {children}
