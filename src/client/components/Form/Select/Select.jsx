@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Select = ({ size, id, name, options, label, error, ...rest }) => (
+const Select = ({ name, options, label, error, ...rest }) => (
   <div className="max-w-sm">
     {label && label.length && (
-      <label htmlFor={id} className="text-sm text-primary-700">
+      <label htmlFor={name} className="text-sm text-primary-700">
         {label}
       </label>
     )}
     <select
-      id={id}
+      id={name}
       name={name}
-      className={` bg-neutral-50 border-b-2  outline-none border-primary-300 focus:border-primary-600 focus:outline-none rounded w-full text-sm leading-tight p-2 ${
-        size === 'sm' ? 'py-1' : ''
-      }`}
+      className={` bg-neutral-50 border-b-2  outline-none border-primary-300 focus:border-primary-600 focus:outline-none rounded w-full text-sm leading-tight p-2`}
       {...rest}
     >
       {options.map((item) => (
@@ -35,9 +33,6 @@ Select.defaultProps = {
 };
 
 Select.propTypes = {
-  /** ID of an input. */
-  id: PropTypes.string.isRequired,
-
   /** Name of a select control. */
   name: PropTypes.string.isRequired,
 
