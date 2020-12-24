@@ -1,10 +1,11 @@
 import React from 'react';
-import FeaturedContainer from '@app/containers/FeaturedContainer';
+import PostsContainer from '@app/containers/PostsContainer';
 import RecentlyPublishedContainer from '@app/containers/RecentlyPublishedContainer';
+import { NavCategories } from '@app/components';
 
 const LandingPage = () => (
   <div>
-    <FeaturedContainer />
+    <PostsContainer sidebar={<NavCategories categories={[]} />} />
     <RecentlyPublishedContainer />
   </div>
 );
