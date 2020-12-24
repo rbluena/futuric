@@ -29,7 +29,7 @@ const Dropdown = ({
 
   return (
     <ul
-      className={`origin-top-right mt-2 w-56 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${
+      className={`origin-top-right absolute mt-2 w-56 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${
         isOpen ? '' : 'hidden'
       }`}
       role="menu"

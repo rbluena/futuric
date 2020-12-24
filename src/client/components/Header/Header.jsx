@@ -12,6 +12,12 @@ const Header = ({ showHero }) => (
   </div>
 );
 
-Header.propTypes = {};
+Header.defaultProps = {
+  showHero: false,
+};
+
+Header.propTypes = {
+  showHero: PropTypes.bool,
+};
 
 export default Header;
