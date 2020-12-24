@@ -1,4 +1,4 @@
-const { gray, fuchsia, red, blue } = require('tailwindcss/colors');
+const { gray, fuchsia, red, blue, white } = require('tailwindcss/colors');
 
 module.exports = {
   darkMode: false, // or 'media' or 'class'
@@ -15,6 +15,7 @@ module.exports = {
       neutral: gray,
       danger: red,
       success: blue,
+      white,
     },
     extend: {},
   },

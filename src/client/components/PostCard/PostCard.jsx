@@ -3,12 +3,23 @@ import PropTypes from 'prop-types';
 import { Avatar, Link } from '@app/components';
 import { BellOutlineIcon } from '@app/components/Icons';
 
-const PostCard = ({ children }) => (
-  <div className="flex items-start max-w-xl bg-neutral-50 p-4">{children}</div>
+const PostCard = ({ children, small }) => (
+  <div
+    className={` transform transition-all flex items-start bg-neutral-50 hover:scale-105 hover:bg-neutral-100 p-4 ${
+      small ? 'max-w-md' : ' max-w-xl'
+    }`}
+  >
+    {children}
+  </div>
 );
+
+PostCard.defaultProps = {
+  small: false,
+};
 
 PostCard.propTypes = {
   children: PropTypes.node.isRequired,
+  small: PropTypes.bool,
 };
 
 PostCard.Avatar = ({ src, small }) => (
@@ -24,9 +35,15 @@ PostCard.Avatar.propTypes = {
   small: PropTypes.bool,
 };
 
-PostCard.Content = ({ title, children }) => (
+PostCard.Content = ({ title, children, small }) => (
   <div className="w-full pl-2">
-    <h2 className="font-semibold text-lg leading-6 text-neutral-700">
+    <h2
+      className={`text-neutral-600 ${
+        small
+          ? 'text-sm leading-5 font-semibold'
+          : 'text-lg font-semibold leading-6'
+      }`}
+    >
       {title}
     </h2>
     {children}
@@ -35,27 +52,36 @@ PostCard.Content = ({ title, children }) => (
 
 PostCard.Content.defaultProps = {
   children: null,
+  small: false,
 };
 PostCard.Content.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string.isRequired,
+  small: PropTypes.bool,
 };
 
-PostCard.Footer = ({ publisher }) => (
-  <div className="flex items-center justify-items-start w-full mt-3">
-    <span className="text-sm text-neutral-500">From:</span>
+PostCard.Footer = ({ publisher, small }) => (
+  <div className="flex items-center justify-items-start w-full mt-3 bg-neutral-100">
+    <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
+      From:
+    </span>
     &nbsp;
-    <Link href={publisher.url} className="font-bold text-sm">
+    <Link
+      href={publisher.url}
+      className={`font-bold ${small ? 'text-xs' : 'text-sm'}`}
+    >
       {publisher.name}
     </Link>
     &nbsp;&nbsp;&nbsp;
     <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
     &nbsp;&nbsp;&nbsp;
-    <span className="text-sm text-neutral-500">Available:</span>
+    <span className={` ${small ? 'text-xs' : 'text-sm'} text-neutral-500}`}>
+      Available:
+    </span>
     &nbsp;
     <Link
       href={`/available/${publisher.activeDate}`}
-      className="text-sm font-bold"
+      className={`${small ? 'text-xs' : 'text-sm'} font-bold`}
     >
       {publisher.activeDate}
     </Link>
@@ -65,8 +91,13 @@ PostCard.Footer = ({ publisher }) => (
   </div>
 );
 
+PostCard.Footer.defaultProps = {
+  small: false,
+};
+
 PostCard.Footer.propTypes = {
   publisher: PropTypes.objectOf(PropTypes.shape).isRequired,
+  small: PropTypes.bool,
 };
 
 export default PostCard;

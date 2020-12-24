@@ -11,6 +11,7 @@ import Nav from './Nav';
 import NavTopics from './NavTopics';
 import NavCategories from './NavCategories';
 import Hero from './Hero';
+import WidePosts from './WidePosts';
 
 export {
   LayoutManager,
@@ -26,4 +27,5 @@ export {
   NavTopics,
   NavCategories,
   Hero,
+  WidePosts,
 };
