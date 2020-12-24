@@ -3,7 +3,7 @@ import { Link } from '@app/components';
 import categories from './categories.json';
 
 const NavCategories = () => (
-  <ul>
+  <ul className="p-2">
     {categories.map((item) => (
       <li key={item.path} className="my-3">
         <Link className="font-light text-xl" href={item.path}>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from '@app/components';
 
 const WidePosts = ({ heading, children, viewLink }) => (
-  <section className="px-12">
+  <section className="p-2">
     <header className="flex items-end border-b-2 border-neutral-200">
       <h2 className="text-lg">{heading}</h2>
       {viewLink && viewLink.length > 0 && (

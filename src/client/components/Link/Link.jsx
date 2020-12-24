@@ -30,7 +30,7 @@ const Link = ({
   return (
     <LinkWrapper prefetch={false} href={href} {...props}>
       <a
-        className={`transition duration-150 ease-in-out ${className} ${
+        className={`transition duration-150 ease-in-out text-center ${className} ${
           variant === 'secondary'
             ? 'text-neutral-500 hover:text-neutral-900'
             : 'text-primary-700 hover:text-primary-900'

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@app/components';
 
 const Hero = () => (
-  <div className="text-center py-12 bg-primary-800 text-neutral-50 ">
+  <div className="text-center px-2 py-12 bg-primary-800 text-neutral-50 ">
     <h1 className="text-3xl my-8">Share your upcoming online content.</h1>
     <h4 className="text-lg py-">
       Create and share a link for content you about to publish online in the
@@ -18,7 +18,5 @@ const Hero = () => (
     </div>
   </div>
 );
-
-Hero.propTypes = {};
 
 export default Hero;
