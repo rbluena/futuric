@@ -6,6 +6,8 @@ import { Dropdown } from '@app/components/Form';
 const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
+  function onChangeDropdownHandler() {}
+
   return (
     <nav className="relative py-6 max-w-6xl mx-auto">
       <div className="relative flex items-center">
@@ -30,7 +32,10 @@ const Nav = () => {
           <Link className="px-2 font-bold" href="/link/create">
             Create Link
           </Link>
-          <Link className="px-2 font-bold" href="/auth/signin">
+          <Link className="px-2 font-bold" href="/learn">
+            Learn
+          </Link>
+          <Link className="px-2 font-bold" href="/signin">
             Sign In
           </Link>
         </div>
@@ -42,11 +47,11 @@ const Nav = () => {
           <Dropdown
             options={[
               { label: 'Notifications', value: 'notifications' },
-              { label: 'My Posts', value: 'myposts' },
+              { label: 'My Links', value: 'mylinks' },
               { label: 'Waiting List', value: 'waiting_list' },
               { label: 'Sign Out', value: 'signout' },
             ]}
-            onValueChanged={(value) => console.log(value)}
+            onValueChanged={onChangeDropdownHandler}
             changeDropdownVisibility={(value) => setToggleDropdown(value)}
             isOpen={toggleDropdown}
           />
