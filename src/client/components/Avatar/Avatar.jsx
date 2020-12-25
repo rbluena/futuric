@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Avatar = ({ size, className, src, alt }) => {
+const Avatar = ({ size, className, src, alt, initials }) => {
   if (size === 'sm') {
     className += ' h-6 w-6';
   }
@@ -18,6 +18,16 @@ const Avatar = ({ size, className, src, alt }) => {
     className += ' h-14 w-14';
   }
 
+  if (!src || src.length === 0) {
+    return (
+      <div
+        className={`rounded-full border-2 border-primary-700 bg-primary-500 text-white flex justify-center items-center font-semibold ${className}`}
+      >
+        {initials}
+      </div>
+    );
+  }
+
   return (
     <img
       className={`rounded-full border-2 border-primary-700 ${className}`}
@@ -30,6 +40,8 @@ const Avatar = ({ size, className, src, alt }) => {
 Avatar.defaultProps = {
   size: 'md',
   className: '',
+  initials: '',
+  src: '',
 };
 
 Avatar.propTypes = {
@@ -43,7 +55,10 @@ Avatar.propTypes = {
   alt: PropTypes.string.isRequired,
 
   /** Source of the image */
-  src: PropTypes.string.isRequired,
+  src: PropTypes.string,
+
+  /** Initials that can be used if no avatar created. */
+  initials: PropTypes.string,
 };
 
 export default Avatar;

@@ -42,7 +42,7 @@ const Nav = () => {
 
         <div className="relative">
           <button type="button" onClick={() => setToggleDropdown(true)}>
-            <Avatar size="lg" src="" alt="profile" />
+            <Avatar size="lg" src="" alt="profile" initials="RL" />
           </button>
           <Dropdown
             options={[
