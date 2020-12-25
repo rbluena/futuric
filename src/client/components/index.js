@@ -7,6 +7,7 @@ import PostCard from './PostCard';
 import Comment from './Comment';
 import CommentBox from './CommentBox';
 import Sidebar from './Sidebar';
+import Header from './Header';
 import Nav from './Nav';
 import NavTopics from './NavTopics';
 import NavCategories from './NavCategories';
@@ -25,6 +26,7 @@ export {
   Comment,
   CommentBox,
   Sidebar,
+  Header,
   Nav,
   NavTopics,
   NavCategories,

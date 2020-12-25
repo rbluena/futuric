@@ -29,7 +29,7 @@ const Nav = () => {
           <Link className="px-2 font-bold" href="/">
             Home
           </Link>
-          <Link className="px-2 font-bold" href="/link/create">
+          <Link className="px-2 font-bold" href="/links/create">
             Create Link
           </Link>
           <Link className="px-2 font-bold" href="/learn">

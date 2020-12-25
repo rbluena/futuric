@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Nav, NavTopics, Hero } from '@app/components';
 
-const Header = ({ showHero }) => (
+const Header = ({ showHero, showTopics }) => (
   <div>
     <div className="container mx-auto">
       <Nav />
-      <NavTopics />
+      {showTopics && <NavTopics />}
     </div>
     {showHero && <Hero />}
   </div>
@@ -14,10 +14,12 @@ const Header = ({ showHero }) => (
 
 Header.defaultProps = {
   showHero: false,
+  showTopics: false,
 };
 
 Header.propTypes = {
   showHero: PropTypes.bool,
+  showTopics: PropTypes.bool,
 };
 
 export default Header;

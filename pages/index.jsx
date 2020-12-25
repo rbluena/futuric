@@ -1,15 +1,12 @@
 import React from 'react';
-import LayoutManager from '@app/components/LayoutManager';
-import Head from '@app/components/Head';
-import { Footer } from '@app/components';
-import Header from '@app/components/Header';
+import { LayoutManager, Head, Footer, Header } from '@app/components';
 import LandingPage from '@app/screens/LandingPage';
 
 export default function Home() {
   return (
     <LayoutManager>
       <Head />
-      <Header showHero />
+      <Header showHero showTopics />
       <LandingPage />
       <Footer />
     </LayoutManager>
