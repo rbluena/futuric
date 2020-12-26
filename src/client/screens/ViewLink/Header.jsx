@@ -6,6 +6,7 @@ import {
   LinkedinIcon,
   TwitterIcon,
   FacebookIcon,
+  BadgeIcon,
 } from '@app/components/Icons';
 
 const Header = ({ active }) => (
@@ -15,7 +16,10 @@ const Header = ({ active }) => (
         https://bit.ly/3eJm90H
       </Link>
       <br />
-      <span className="text-neutral-600 text-xs">Mar 25 - 9:30 AM</span>
+      <div className="text-neutral-600 text-xs">
+        <span className="font-bold text-neutral-800">Active:</span> Mar 25 -
+        9:30 AM
+      </div>
 
       <div className="border-neutral-200 pt-2 flex items-center">
         <Button
@@ -46,9 +50,11 @@ const Header = ({ active }) => (
             href="/@netflix"
             variant="secondary"
             size="lg"
-            className="font-bold"
+            className="font-bold flex items-center"
           >
-            Netflix
+            <span>Netflix</span>
+            &nbsp;
+            <BadgeIcon size="xs" className="text-success-700" />
           </Link>
           <Link href="/@" size="xs">
             Follow
