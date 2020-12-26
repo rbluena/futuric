@@ -1,13 +1,13 @@
 import React from 'react';
 import { LayoutManager, Head, Header } from '@app/components';
-import CreatePage from '@app/screens/CreatePage';
+import CreateScreen from '@app/screens/CreateLink';
 
-const create = () => (
+const Create = () => (
   <LayoutManager>
     <Head title="Create Link" description="" />
     <Header />
-    <CreatePage />
+    <CreateScreen />
   </LayoutManager>
 );
 
-export default create;
+export default Create;

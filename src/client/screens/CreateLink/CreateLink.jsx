@@ -5,7 +5,7 @@ import { Button } from '@app/components';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-const CreatePage = () => {
+const CreateLink = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState(new Date());
@@ -22,7 +22,7 @@ const CreatePage = () => {
         <ContentEditable
           content={description}
           onChange={(evt, value) => setDescription(value)}
-          className=" bg-neutral-100 focus:outline-none text-lg font-serif py-1 mt-8"
+          className="bg-neutral-100 focus:outline-none text-lg font-serif py-1 mt-8"
           placeholder="Title"
           style={{ minHeight: '200px' }}
         />
@@ -62,4 +62,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default CreateLink;
