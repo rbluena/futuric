@@ -21,7 +21,7 @@ const Avatar = ({ size, className, src, alt, initials }) => {
   if (!src || src.length === 0) {
     return (
       <div
-        className={`rounded-full border-2 border-primary-700 bg-primary-500 text-white flex justify-center items-center font-semibold ${className}`}
+        className={`rounded-full border-2 border-primary-700 bg-primary-200 text-neutral-800 flex justify-center items-center font-semibold ${className} `}
       >
         {initials}
       </div>

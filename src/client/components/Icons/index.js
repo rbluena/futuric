@@ -16,6 +16,9 @@ import BellIcon from './BellIcon';
 import BellOutlineIcon from './BellOutlineIcon';
 import HeartIcon from './HeartIcon';
 import HeartOutlineIcon from './HeartOutlineIcon';
+import LinkedinIcon from './LinkedinIcon';
+import TwitterIcon from './TwitterIcon';
+import FacebookIcon from './FacebookIcon';
 
 export {
   ClipboardListIcon,
@@ -36,4 +39,7 @@ export {
   HeartIcon,
   HeartOutlineIcon,
   CloseIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  FacebookIcon,
 };

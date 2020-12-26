@@ -2,20 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Button = ({ children, outline, className, size, variant }) => {
+  if (variant === 'text-button') {
+    className += ' p-0 m-0';
+  } else {
+    className += ' rounded-sm';
+  }
+
   if (variant === 'primary' && !outline) {
-    className += ' text-neutral-50 bg-primary-700 rounded-sm';
+    className += ' text-neutral-50 bg-primary-700';
   }
 
   if (variant === 'primary' && outline) {
-    className += ' border border-primary-700 text-primary-500 rounded-sm';
+    className += ' border border-primary-700 text-primary-500';
   }
 
   if (variant === 'secondary' && !outline) {
-    className += ' bg-white text-primary-700 rounded-sm';
+    className += ' bg-white text-primary-700';
   }
 
   if (variant === 'secondary' && outline) {
-    className += ' border border-neutral-50 text-neutral-50 rounded-sm';
+    className += ' border border-neutral-50 text-neutral-50';
   }
 
   if (size === 'lg') {
