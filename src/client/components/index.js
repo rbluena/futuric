@@ -16,6 +16,8 @@ import WidePosts from './WidePosts';
 import Aside from './Aside';
 import Footer from './Footer';
 import ContentWrapper from './Content';
+import Section from './Section';
+import ProfileHeader from './ProfileHeader';
 
 export {
   LayoutManager,
@@ -35,5 +37,7 @@ export {
   WidePosts,
   Aside,
   Footer,
+  Section,
   ContentWrapper,
+  ProfileHeader,
 };
