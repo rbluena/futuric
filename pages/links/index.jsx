@@ -1,12 +1,12 @@
 import React from 'react';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
-import ViewLinkScreen from '@app/screens/ViewLink';
+import LinksPage from '@app/screens/AllLinks';
 
 const ViewLink = () => (
   <LayoutManager>
     <Head title="View Link" />
     <Header />
-    <ViewLinkScreen />
+    <LinksPage />
     <Footer />
   </LayoutManager>
 );

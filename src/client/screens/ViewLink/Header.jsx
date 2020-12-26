@@ -6,7 +6,7 @@ import {
   LinkedinIcon,
   TwitterIcon,
   FacebookIcon,
-  BadgeIcon,
+  BadgeShieldIcon,
 } from '@app/components/Icons';
 
 const Header = ({ active }) => (
@@ -17,8 +17,8 @@ const Header = ({ active }) => (
       </Link>
       <br />
       <div className="text-neutral-600 text-xs">
-        <span className="font-bold text-neutral-800">Active:</span> Mar 25 -
-        9:30 AM
+        <span className="font-bold text-neutral-800">Available:</span> Mar 25th
+        - 9:30 AM
       </div>
 
       <div className="border-neutral-200 pt-2 flex items-center">
@@ -54,13 +54,14 @@ const Header = ({ active }) => (
           >
             <span>Netflix</span>
             &nbsp;
-            <BadgeIcon size="xs" className="text-success-700" />
+            <BadgeShieldIcon size="xs" className="text-primary-700" />
           </Link>
           <Link href="/@" size="xs">
-            Follow
+            {/* Follow */}
+            Unfollow
           </Link>
         </div>
-        <Avatar initials="NL" size="xl" className="text-2xl" />
+        {/* <Avatar initials="NL" size="xl" className="text-2xl" /> */}
       </div>
     </div>
   </div>

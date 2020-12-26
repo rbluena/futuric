@@ -9,6 +9,7 @@ import ChevronDownIcon from './ChevronDownIcon';
 import ChevronLeftIcon from './ChevronLeftIcon';
 import ChevronRightIcon from './ChevronRightIcon';
 import CloseIcon from './CloseIcon';
+import BadgeShieldIcon from './BadgeShieldIcon';
 import SpinIcon from './SpinIcon';
 import BadgeIcon from './BadgeIcon';
 import BadgeOutlineIcon from './BadgeOutlineIcon';
@@ -19,6 +20,7 @@ import HeartOutlineIcon from './HeartOutlineIcon';
 import LinkedinIcon from './LinkedinIcon';
 import TwitterIcon from './TwitterIcon';
 import FacebookIcon from './FacebookIcon';
+import CheckUserIcon from './CheckUserIcon';
 
 export {
   ClipboardListIcon,
@@ -39,7 +41,9 @@ export {
   HeartIcon,
   HeartOutlineIcon,
   CloseIcon,
+  BadgeShieldIcon,
   LinkedinIcon,
   TwitterIcon,
   FacebookIcon,
+  CheckUserIcon,
 };

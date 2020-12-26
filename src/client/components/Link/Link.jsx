@@ -32,7 +32,7 @@ const Link = ({
       <a
         className={`transition duration-150 ease-in-out text-center  ${className} ${
           variant === 'secondary'
-            ? 'text-neutral-700 hover:text-neutral-900 '
+            ? 'text-neutral-700 hover:text-neutral-900 hover:underline '
             : 'text-primary-700 hover:text-primary-900 hover:underline'
         }`}
         href={href}
