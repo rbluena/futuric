@@ -1,13 +1,17 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import ContentEditable from 'react-sane-contenteditable';
 import DatePicker from 'react-datepicker';
 import { Button } from '@app/components';
+import { Select } from '@app/components/Form';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const Editor = () => {
   const [title, setTitle] = useState('Some text for the title.');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState(new Date());
+  const [category, setCategory] = useState('');
+  const [topics, setTopics] = useState('');
 
   return (
     <div className="mx-auto pt-10">
@@ -32,8 +36,11 @@ const Editor = () => {
             </label>
           </div> */}
         <div className="py-3">
-          <label htmlFor="date-picker" className="text-neutral-600 mb-1 block">
-            When do you expect the content to be available? (Option):
+          <label
+            htmlFor="date-picker"
+            className="text-neutral-600 mb-1 block text-sm"
+          >
+            When do you expect your content to be available? (Optional):
           </label>
           <DatePicker
             id="date-picker"
@@ -48,7 +55,58 @@ const Editor = () => {
         </div>
       </div>
 
-      <footer className="py-2">
+      {/* start: selecting options */}
+      <div>
+        <span className="text-neutral-600 mb-1 block text-sm">
+          Select category and topic for your content.
+        </span>
+        <div className="flex flex-wrap">
+          <Select
+            options={[
+              { label: 'Select Category', value: '' },
+              { label: 'Article', value: 'actions' },
+              { label: 'App Or Website', value: 'movies' },
+              { label: 'Art', value: 'pranks' },
+              { label: 'Book', value: 'pranks' },
+              { label: 'Documentary', value: 'documentaries' },
+              { label: 'Film', value: 'pranks' },
+              { label: 'Livestream', value: 'pranks' },
+              { label: 'Podcast', value: 'pranks' },
+              { label: 'Video', value: 'pranks' },
+            ]}
+            onChange={(evt) => setCategory(evt.target.value)}
+            value={category}
+            required
+          />
+          &nbsp; &nbsp;
+          <Select
+            options={[
+              { label: 'Select topic', value: '' },
+              { label: 'Movies', value: 'movies' },
+              { label: 'Pranks', value: 'pranks' },
+              { label: 'Business', value: 'pranks' },
+              { label: 'Politics', value: 'pranks' },
+              { label: 'Literature', value: 'pranks' },
+              { label: 'Startup', value: 'pranks' },
+              { label: 'Comedy', value: 'pranks' },
+              { label: 'Science & Tech', value: 'pranks' },
+              { label: 'Health', value: 'pranks' },
+              { label: 'Language', value: 'pranks' },
+              { label: 'Sports', value: 'pranks' },
+              { label: 'Personal Development', value: 'pranks' },
+              { label: 'Programming', value: 'pranks' },
+              { label: 'Relationships', value: 'pranks' },
+              { label: 'Pranks', value: 'pranks' },
+            ]}
+            onChange={(evt) => setTopics(evt.target.value)}
+            value={topics}
+            required
+          />
+        </div>
+      </div>
+      {/* end: selecting options */}
+
+      <footer className="py-4">
         <Button>Create Link</Button>
       </footer>
     </div>
