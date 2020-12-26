@@ -30,7 +30,7 @@ const ProfileHeader = ({ profile, isMyProfile }) => (
           )}
         </div>
 
-        {!isMyProfile && (
+        {!isMyProfile ? (
           <div className="ml-auto">
             {profile.following ? (
               <Button variant="primary" className="flex items-center">
@@ -42,6 +42,12 @@ const ProfileHeader = ({ profile, isMyProfile }) => (
                 Follow
               </Button>
             )}
+          </div>
+        ) : (
+          <div className="ml-auto">
+            <Button variant="primary" outline className="flex items-center">
+              Edit Profile
+            </Button>
           </div>
         )}
       </div>
