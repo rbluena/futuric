@@ -41,10 +41,12 @@ PostCard.Content = ({ title, children, small }) => (
       className={`text-neutral-600 ${
         small
           ? 'text-sm leading-5 font-semibold'
-          : 'text-lg font-semibold leading-6'
+          : 'text-sm font-bold text-neutral-800 leading-6'
       }`}
     >
-      {title}
+      <Link href="/" variant="secondary">
+        {title}
+      </Link>
     </h2>
     {children}
   </div>
