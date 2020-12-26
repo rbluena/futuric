@@ -62,7 +62,7 @@ PostCard.Content.propTypes = {
   small: PropTypes.bool,
 };
 
-PostCard.Footer = ({ publisher, small }) => (
+PostCard.Footer = ({ publisher, published, small }) => (
   <div className="flex items-center justify-items-start w-full mt-3 bg-neutral-100">
     <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
       From:
@@ -81,12 +81,21 @@ PostCard.Footer = ({ publisher, small }) => (
       Available:
     </span>
     &nbsp;
-    <Link
-      href={`/available/${publisher.activeDate}`}
-      className={`${small ? 'text-xs' : 'text-sm'} font-bold`}
-    >
-      {publisher.activeDate}
-    </Link>
+    {!published ? (
+      <Link
+        href={`/available/${publisher.activeDate}`}
+        className={`${small ? 'text-xs' : 'text-sm'} font-bold`}
+      >
+        {publisher.activeDate}
+      </Link>
+    ) : (
+      <Link
+        href="https://bit.ly/3eJm90H"
+        className={`${small ? 'text-xs' : 'text-sm'} font-bold`}
+      >
+        https://bit.ly/3eJm90H
+      </Link>
+    )}
     <button type="button" className="ml-auto" title="Get notified">
       <BellOutlineIcon
         size={small ? 'xs' : 'sm'}
@@ -98,11 +107,13 @@ PostCard.Footer = ({ publisher, small }) => (
 
 PostCard.Footer.defaultProps = {
   small: false,
+  published: false,
 };
 
 PostCard.Footer.propTypes = {
   publisher: PropTypes.objectOf(PropTypes.shape).isRequired,
   small: PropTypes.bool,
+  published: PropTypes.bool,
 };
 
 export default PostCard;

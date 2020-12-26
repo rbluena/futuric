@@ -15,6 +15,7 @@ import Hero from './Hero';
 import WidePosts from './WidePosts';
 import Aside from './Aside';
 import Footer from './Footer';
+import ContentWrapper from './Content';
 
 export {
   LayoutManager,
@@ -34,4 +35,5 @@ export {
   WidePosts,
   Aside,
   Footer,
+  ContentWrapper,
 };

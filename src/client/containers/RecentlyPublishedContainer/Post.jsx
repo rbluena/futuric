@@ -6,7 +6,7 @@ const Post = ({ post, publisher }) => (
   <PostCard small>
     <PostCard.Avatar src={publisher.image} small />
     <PostCard.Content title={post.title} small>
-      <PostCard.Footer publisher={publisher} small />
+      <PostCard.Footer publisher={publisher} published small />
     </PostCard.Content>
   </PostCard>
 );
