@@ -7,6 +7,7 @@ const ProfileHeaderContainer = () => (
       name: 'Netflix',
       website: 'https://netflix.com',
       description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
+      prominent: true,
     }}
     isMyProfile
   />
