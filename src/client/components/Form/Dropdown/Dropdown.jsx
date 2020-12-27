@@ -29,7 +29,7 @@ const Dropdown = ({
 
   return (
     <ul
-      className={`origin-top-right absolute mt-2 w-56 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${
+      className={`origin-top-right absolute mt-2 w-48 rounded-sm shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-neutral-100 ${
         isOpen ? '' : 'hidden'
       }`}
       role="menu"
@@ -38,8 +38,29 @@ const Dropdown = ({
       style={{ zIndex: 10000 }}
       {...props}
     >
-      <div className="py-1">
-        {options.map((item) => (
+      {options.map((item) => {
+        if (Array.isArray(item)) {
+          return (
+            <div className="py-1">
+              {item.map((list) => (
+                <button
+                  key={list.value}
+                  type="button"
+                  className=" w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  role="menuitem"
+                  onClick={() => {
+                    onValueChanged(list.value);
+                    changeDropdownVisibility(false);
+                  }}
+                >
+                  {list.label}
+                </button>
+              ))}
+            </div>
+          );
+        }
+
+        return (
           <button
             key={item.value}
             type="button"
@@ -52,8 +73,8 @@ const Dropdown = ({
           >
             {item.label}
           </button>
-        ))}
-      </div>
+        );
+      })}
     </ul>
   );
 };

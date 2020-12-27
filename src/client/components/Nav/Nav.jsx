@@ -52,11 +52,13 @@ const Nav = () => {
           </button>
           <Dropdown
             options={[
-              { label: 'Notifications', value: 'me/notifications' },
-              { label: 'My Links', value: '/me/links' },
-              { label: 'Waiting List', value: '/me/waiting' },
-              { label: 'Me', value: '/me' },
-              { label: 'Sign Out', value: 'signout' },
+              [{ label: 'Profile', value: '/me' }],
+              [
+                { label: 'My Links', value: 'me/links' },
+                { label: 'Waiting List', value: 'me/waiting' },
+                { label: 'Notifications', value: '/me/notifications' },
+              ],
+              [{ label: 'Sign Out', value: '/signout' }],
             ]}
             onValueChanged={onChangeDropdownHandler}
             changeDropdownVisibility={(value) => setToggleDropdown(value)}
