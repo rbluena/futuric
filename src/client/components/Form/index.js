@@ -5,6 +5,7 @@ import PasswordInput from './PasswordInput';
 import Select from './Select';
 import Submit from './Submit';
 import ControlWrapper from './ControlWrapper';
+import Textarea from './Textarea';
 
 export {
   TextInput,
@@ -14,4 +15,5 @@ export {
   Select,
   ControlWrapper,
   Submit,
+  Textarea,
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,7 @@ import {
   EmailInput,
   PasswordInput,
   Select,
+  Textarea,
   Submit,
 } from '@app/components/Form';
 import { Section } from '@app/components';
@@ -17,15 +18,18 @@ import { Section } from '@app/components';
 import countries from './countries.json';
 
 const UserForm = ({ user }) => {
+  const [characters, setCharacters] = useState('');
   const dispatch = useDispatch();
   const { handleSubmit, register, errors: inputErrors } = useForm({
     mode: 'onBlur',
     defaultValues: user,
   });
 
-  function onSubmit(userData) {
-    dispatch();
+  function onDescriptionChange(value) {
+    setCharacters(value);
   }
+
+  function onSubmit(userData) {}
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="pb-4">
@@ -78,6 +82,24 @@ const UserForm = ({ user }) => {
             })}
             error={get(inputErrors, 'email.message')}
           />
+        </ControlWrapper>
+        <ControlWrapper>
+          <Textarea
+            name="description"
+            label="Description"
+            placeholder="Use few words to describe yourself."
+            register={register({
+              maxLength: {
+                value: 100,
+                message: 'Characters exceeds max number.',
+              },
+            })}
+            error={get(inputErrors, 'description.message')}
+            onChange={(evt) => onDescriptionChange(evt.target.value)}
+          />
+          <span className="text-xs">
+            {100 - characters.length} characters left.
+          </span>
         </ControlWrapper>
       </Section>
 

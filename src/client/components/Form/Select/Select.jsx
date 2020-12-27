@@ -11,7 +11,7 @@ const Select = ({ name, options, label, error, ...rest }) => (
     <select
       id={name}
       name={name}
-      className={` bg-neutral-50 border-b-2  outline-none border-primary-300 focus:border-primary-600 focus:outline-none rounded w-full text-sm leading-tight p-2`}
+      className={` bg-neutral-50 border-b-2 pl-0  outline-none border-primary-300 focus:border-primary-600 focus:outline-none rounded w-full text-sm leading-tight p-2`}
       {...rest}
     >
       {options.map((item) => (
