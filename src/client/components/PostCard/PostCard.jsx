@@ -35,7 +35,7 @@ PostCard.Avatar.propTypes = {
   small: PropTypes.bool,
 };
 
-PostCard.Content = ({ title, children, small }) => (
+PostCard.Content = ({ title, postUrl, children, small }) => (
   <div className="w-full pl-2">
     <h2
       className={`text-neutral-600 ${
@@ -44,7 +44,7 @@ PostCard.Content = ({ title, children, small }) => (
           : 'text-sm font-bold text-neutral-800 leading-6'
       }`}
     >
-      <Link href="/" variant="secondary">
+      <Link href={postUrl} variant="secondary">
         {title}
       </Link>
     </h2>
@@ -55,11 +55,13 @@ PostCard.Content = ({ title, children, small }) => (
 PostCard.Content.defaultProps = {
   children: null,
   small: false,
+  postUrl: '/',
 };
 PostCard.Content.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string.isRequired,
   small: PropTypes.bool,
+  postUrl: PropTypes.string,
 };
 
 PostCard.Footer = ({ publisher, published, small }) => (
