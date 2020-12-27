@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 // import Image from 'next/image';
 import { Link, Avatar } from '@app/components';
 import { Dropdown } from '@app/components/Form';
 
 const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const router = useRouter();
 
-  function onChangeDropdownHandler() {}
+  function onChangeDropdownHandler(value) {
+    if (value !== 'signout') {
+      router.push(value);
+    }
+  }
 
   return (
     <nav className="relative py-6 max-w-6xl mx-auto">
@@ -46,9 +52,10 @@ const Nav = () => {
           </button>
           <Dropdown
             options={[
-              { label: 'Notifications', value: 'notifications' },
-              { label: 'My Links', value: 'mylinks' },
-              { label: 'Waiting List', value: 'waiting_list' },
+              { label: 'Notifications', value: 'me/notifications' },
+              { label: 'My Links', value: '/me/links' },
+              { label: 'Waiting List', value: '/me/waiting' },
+              { label: 'Me', value: '/me' },
               { label: 'Sign Out', value: 'signout' },
             ]}
             onValueChanged={onChangeDropdownHandler}

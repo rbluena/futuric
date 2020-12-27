@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ children, outline, className, size, variant }) => {
+const Button = ({ children, outline, className, size, variant, ...rest }) => {
   if (variant === 'text-button') {
     className += ' p-0 m-0';
   } else {
@@ -33,7 +33,7 @@ const Button = ({ children, outline, className, size, variant }) => {
   }
 
   return (
-    <button type="button" className={className}>
+    <button type="button" className={className} {...rest}>
       {children}
     </button>
   );
