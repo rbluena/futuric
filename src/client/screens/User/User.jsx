@@ -7,7 +7,7 @@ const User = () => (
   <div>
     <ContentWrapper>
       <ProfileHeaderContainer />
-      <Section heading="Your recent publish" />
+      <Section heading="Recently activated" />
       <PostsContainer />
 
       <div className="max-w-xs mx-auto">

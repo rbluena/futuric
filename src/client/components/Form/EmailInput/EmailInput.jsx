@@ -12,7 +12,7 @@ const EmailInput = ({ name, register, label, error, ...rest }) => (
       id={name}
       name={name}
       type="email"
-      className="bg-neutral-50 border-b-2 focus:outline-none focus:border-primary-600  border-primary-300 rounded w-full py-2 pl-2 text-neutral-700 text-sm leading-tight"
+      className="bg-neutral-50 border-b-2 focus:outline-none focus:border-primary-600  border-primary-300 rounded w-full py-2 text-neutral-700 text-sm leading-tight"
       ref={register}
       {...rest}
     />
