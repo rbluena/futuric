@@ -7,8 +7,9 @@ const User = () => (
   <div>
     <ContentWrapper>
       <ProfileHeaderContainer />
-      <Section heading="Recently activated" />
-      <PostsContainer />
+      <Section heading="Created links">
+        <PostsContainer />
+      </Section>
 
       <div className="max-w-xs mx-auto">
         <Button variant="primary" outline size="lg">
@@ -18,8 +19,9 @@ const User = () => (
     </ContentWrapper>
 
     <ContentWrapper>
-      <Section heading="Your waiting list" />
-      <PostsContainer />
+      <Section heading="Waiting list">
+        <PostsContainer />
+      </Section>
 
       <div className="max-w-xs mx-auto">
         <Button variant="primary" outline size="lg">
