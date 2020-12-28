@@ -8,7 +8,7 @@ function CloseIcon({ size, className }) {
   if (size === 'md') className += ' w-8 h-8';
   if (size === 'lg') className += ' w-12 h-12';
 
-  return <HiX className={`${className} text-gray-600`} />;
+  return <HiX className={`${className}`} />;
 }
 
 CloseIcon.defaultProps = {
