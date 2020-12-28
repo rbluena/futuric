@@ -1,5 +1,7 @@
 module.exports = {
   env: {
     SERVER_API: process.env.SERVER_API,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   },
 };
