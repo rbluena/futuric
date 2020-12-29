@@ -225,6 +225,21 @@ exports.loginHandler = async (req, res, next) => {
 };
 
 /**
+ *  Verifying user jwt token.
+ *  If it passes validation middleware, that is valid token
+ */
+exports.verifyUserToken = async (req, res, next) => {
+  try {
+    return res.status(200).json({
+      status: 200,
+      success: true,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+/**
  * Logging user out
  */
 exports.logoutHandler = async (req, res, next) => {
