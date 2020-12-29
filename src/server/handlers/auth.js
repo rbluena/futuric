@@ -1,4 +1,4 @@
-const validator = require('validator.js');
+const validator = require('validator');
 const {
   generateAccessToken,
   comparePassword,
@@ -106,9 +106,7 @@ exports.userVerificationHandler = async (req, res, next) => {
       user.verified = true;
       user.verificationToken = '';
 
-      const saved = await user.save();
-
-      console.log(saved);
+      await user.save();
 
       return res.status(200).json({
         status: 200,
@@ -131,8 +129,6 @@ exports.userVerificationHandler = async (req, res, next) => {
 
 /**
  * Send an email with verification token
- *
- * TODO: SEND THE TOKEN VIA EMAIL
  */
 exports.newVerificationCode = async (req, res, next) => {
   try {
@@ -147,14 +143,14 @@ exports.newVerificationCode = async (req, res, next) => {
       });
     }
 
-    const user = await User.findOne({ email });
+    const user = await findUserByEmail(email);
 
     if (!user) {
       res.status(422).json({
         status: 422,
         success: false,
         message: 'Bad Request',
-        errors: { details: 'You have entered wrong password.' },
+        errors: { details: 'You have entered wrong email address.' },
       });
     }
 
@@ -162,10 +158,13 @@ exports.newVerificationCode = async (req, res, next) => {
     user.verificationToken = verificationToken;
     await user.save();
 
+    // TODO: SEND EMAIL WITH VERIFICATION TOKEN
+
     return res.status(200).json({
       status: 200,
       success: true,
       message: 'success',
+      data: {},
     });
   } catch (error) {
     return next(error);

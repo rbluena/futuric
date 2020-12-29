@@ -10,7 +10,8 @@ describe('testing authentication', () => {
     password: 'password',
     type: 'local',
   };
-  // const verificationToken = null;
+
+  const verificationToken = null;
   let jwt = null;
 
   it('should register user with local data', () => {
@@ -26,7 +27,7 @@ describe('testing authentication', () => {
     });
   });
 
-  // it('should verify user with verfication token', () => {
+  // it('should verify user with verification token', () => {
   //   cy.request({
   //     method: 'GET',
   //     url: '/auth/verify',
@@ -40,6 +41,19 @@ describe('testing authentication', () => {
   //     expect(body).to.have.property('data');
   //   });
   // });
+
+  it('should create new verification code', () => {
+    cy.request({
+      method: 'POST',
+      url: '/auth/verify/new',
+      body: { email: user.email },
+    }).then((response) => {
+      const { status, body } = response;
+
+      expect(status).to.equal(200);
+      expect(body).to.have.property('data');
+    });
+  });
 
   it('should log user in with local data.', () => {
     cy.request({
@@ -60,7 +74,7 @@ describe('testing authentication', () => {
     const decoded = decode(jwt);
 
     const userData = {
-      email: faker.internet.userName,
+      email: faker.internet.email(),
       oldPassword: user.password,
       newPassword: 'newpassword',
     };
