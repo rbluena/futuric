@@ -5,6 +5,7 @@ describe('testing links', () => {
 
   let authToken = null;
   let user = null;
+  let linkId = null;
 
   before(() => {
     cy.apiSignin('rbluena@gmail.com', 'password').then((token) => {
@@ -12,7 +13,7 @@ describe('testing links', () => {
     });
   });
 
-  it.only('should create a link', () => {
+  it('should create a link', () => {
     const date = new Date('2021-01-02');
     user = decode(authToken);
 
@@ -34,23 +35,22 @@ describe('testing links', () => {
     }).then((response) => {
       const { status, body } = response;
 
-      console.log(body);
-
       expect(status).to.equal(201);
       expect(body).to.have.property('data');
+
+      linkId = body.data._id;
     });
   });
 
-  it('should update a todo', () => {
+  it('should update a link', () => {
     const data = {
-      text: 'Update todo text',
-      description: 'Updated description',
-      previous: null,
+      title: 'This is changed title',
+      description: 'This is changing description.',
     };
 
     cy.request({
       method: 'PUT',
-      url: `/todos/${todoId}`,
+      url: `/links/${linkId}`,
       body: data,
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -63,17 +63,10 @@ describe('testing links', () => {
     });
   });
 
-  it.skip('should change todo position while dragging and droping', () => {
-    const data = {
-      oldPosition: '',
-      newPosition: '',
-      children: [],
-    };
-
+  it('should retrieve a link.', () => {
     cy.request({
-      method: 'PUT',
-      url: `/todos/${todoId}/position`,
-      body: data,
+      method: 'get',
+      url: `/links/${linkId}`,
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -85,52 +78,30 @@ describe('testing links', () => {
     });
   });
 
-  it('should delete a todo', () => {
+  it("should retrieve all user's links", () => {
+    cy.request({
+      method: 'GET',
+      url: '/links',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+      qs: {
+        owner: user._id,
+      },
+    }).then((response) => {
+      const { status, body } = response;
+
+      expect(status).to.equal(200);
+      expect(body).to.have.property('data');
+    });
+  });
+
+  it('should delete a link', () => {
     cy.request({
       method: 'DELETE',
-      url: `/todos/${todoId}/${calendarId}`,
+      url: `/links/${linkId}`,
       headers: {
         Authorization: `Bearer ${authToken}`,
-      },
-    }).then((response) => {
-      const { status, body } = response;
-
-      expect(status).to.equal(200);
-      expect(body).to.have.property('data');
-    });
-  });
-
-  it.skip('should retrieve all todos', () => {
-    cy.request({
-      method: 'get',
-      url: `/todos`,
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-      qs: {
-        workspaceId,
-      },
-    }).then((response) => {
-      const { status, body } = response;
-
-      expect(status).to.equal(201);
-      expect(body).to.have.property('data');
-    });
-  });
-
-  it('should retrieve all todo for a calendar', () => {
-    cy.request({
-      method: 'get',
-      url: `/todos/calendar`,
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-      qs: {
-        workspace: workspaceId,
-        calendarUnique,
-        renderType: 'daily', // daily, monthly, quartely
-        from: new Date('2020-12-01').toISOString(),
-        to: new Date('2020-02-30').toISOString(),
       },
     }).then((response) => {
       const { status, body } = response;

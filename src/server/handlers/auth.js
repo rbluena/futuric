@@ -179,9 +179,8 @@ exports.loginHandler = async (req, res, next) => {
     const { type, email, password } = req.body;
 
     const userData = await findUserByEmail(email);
-    const user = userData.toObject();
 
-    if (!user) {
+    if (!userData) {
       return res.status(400).json({
         status: 400,
         success: false,
@@ -195,7 +194,7 @@ exports.loginHandler = async (req, res, next) => {
     // Using username/email and password to login
     if (type === 'local') {
       // Checking if password is correct password.
-      if (!comparePassword(password, user.password)) {
+      if (!comparePassword(password, userData.password)) {
         return res.status(400).json({
           status: 400,
           success: false,
@@ -204,6 +203,8 @@ exports.loginHandler = async (req, res, next) => {
         });
       }
     }
+
+    const user = userData.toObject();
 
     delete user.password;
     delete user.loginStrategy;

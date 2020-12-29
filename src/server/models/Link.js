@@ -6,9 +6,10 @@ const linkSchema = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String },
-    shortenUrl: { type: String, required: true },
-    activationUrl: { type: String },
-    activeDate: { type: Date },
+    shortenUrl: { type: String }, // Shortened url to be shared to the public
+    longUrl: { type: String }, // Longest link to be shared
+    availableAt: { type: Date }, // The day the link is active for redirect.
+    isActive: { type: Boolean, default: false }, //
     location: { type: String },
     isPrivate: { type: Boolean, default: false },
     owner: { type: Schema.Types.ObjectId, ref: 'User' },

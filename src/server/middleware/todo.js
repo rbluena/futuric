@@ -2,41 +2,29 @@
  * Validating data comming from the client
  *
  */
-exports.validateTodoData = (req, res, next) => {
+exports.validateLinkData = (req, res, next) => {
   try {
-    const { workspace, date } = req.body;
+    const { title, owner } = req.body;
 
-    // if (!text || text.length === 0) {
-    //   return res.status(400).json({
-    //     status: 400,
-    //     message: 'error',
-    //     errors: [
-    //       {
-    //         details: 'Text for the todo is required.',
-    //       },
-    //     ],
-    //   });
-    // }
-
-    if (!workspace || workspace.length === 0) {
+    if (!title || title.length === 0) {
       return res.status(400).json({
         status: 400,
         message: 'error',
         errors: [
           {
-            details: 'Missing reference to the workspace.',
+            details: 'Title of the link is missing. Title should provided.',
           },
         ],
       });
     }
 
-    if (!date) {
+    if (!owner || owner.length === 0) {
       return res.status(400).json({
         status: 400,
         message: 'error',
         errors: [
           {
-            details: 'Date of the todo should be provided.',
+            details: 'User id should be provided.',
           },
         ],
       });

@@ -1,4 +1,3 @@
-const { Schema, Mongoose } = require('mongoose');
 const User = require('../models/User');
 
 /**

@@ -1,10 +1,8 @@
 const router = require('express').Router();
 const authRoutes = require('./auth');
-// const workspaceRoutes = require('./workspace');
-// const todoRoutes = require('./todo');
+const linksRoutes = require('./links');
 
 router.use('/auth', authRoutes);
-// router.use('/workspaces', workspaceRoutes);
-// router.use('/todos', todoRoutes);
+router.use('/links', linksRoutes);
 
 module.exports = router;
