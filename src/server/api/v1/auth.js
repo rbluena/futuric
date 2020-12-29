@@ -24,7 +24,7 @@ router.post('/register', registerInputValidation, registerHandler);
  * Updating user information
  */
 // router.put('/update', isAuthenticated, updateUserHandler);
-router.put('/update', isAuthenticated, updateUserHandler);
+router.put('/update/:id', isAuthenticated, updateUserHandler);
 
 /** Getting user information */
 // router.get('/me', isAuthenticated, getUserHandler);

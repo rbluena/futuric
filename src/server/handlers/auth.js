@@ -6,12 +6,12 @@ const {
 } = require('../utils/auth');
 
 const {
-  updateUser,
   createUser,
   findUserByUsername,
   findUserByVerificationToken,
   deleteUserByEmail,
   findUserByEmail,
+  findUserById,
 } = require('../services/user');
 
 /**
@@ -242,53 +242,68 @@ exports.logoutHandler = async (req, res, next) => {
   }
 };
 
+/**
+ * Updating user based ont the ID
+ */
 exports.updateUserHandler = async (req, res, next) => {
   try {
-    const { oldPassword, newPassword, email } = req.body;
-    const userExists = await User.findOne({ email });
-    delete req.body.oldPassword;
-    delete req.body.newPassword;
+    const { oldPassword, newPassword } = req.body;
 
-    let updatedUser;
+    const user = await findUserById(req.params.id);
 
-    if (userExists) {
-      // Is user changing password?
-      if (oldPassword.length > 4 && newPassword.length > 4) {
-        if (!comparePassword(oldPassword, userExists.password)) {
-          return res.status(400).json({
-            status: 400,
-            success: false,
-            message: 'Bad Request',
-            errors: {
-              password:
-                'You are changing password, and you have entered incorrect password!',
-            },
-          });
-        }
-
-        updatedUser = await updateUser({
-          ...req.body,
-          password: newPassword,
-        });
-      } else {
-        updatedUser = await updateUser(req.body);
-      }
-    }
-
-    if (updatedUser) {
-      const jwt = await generateAccessToken(updatedUser);
-
-      req.app.jwt = jwt;
-
-      return res.status(200).json({
-        status: 200,
-        success: true,
-        message: 'User updated successfully',
-        data: jwt,
+    if (!user) {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        message: 'Bad Request',
+        errors: {
+          details: 'Failed to update user.',
+        },
       });
     }
 
-    throw new Error('Failed to update you data. Please try again later.');
+    Object.keys(req.body).forEach((key) => {
+      user[key] = req.body[key];
+    });
+
+    // Updating password
+    if (newPassword && newPassword.length > 4) {
+      delete user.newPassword;
+      delete user.oldPassword;
+
+      // User should confirm password before updating
+      if (!comparePassword(oldPassword, user.password)) {
+        return res.status(400).json({
+          status: 400,
+          success: false,
+          message: 'Bad Request',
+          errors: {
+            password:
+              'You are changing password, and you have entered incorrect password!',
+          },
+        });
+      }
+
+      user.password = newPassword;
+    }
+
+    const updatedUser = await user.save();
+
+    /** Any further issues preventing to update user */
+    if (!updatedUser) {
+      throw new Error('Failed to update you data. Please try again later.');
+    }
+
+    const jwt = await generateAccessToken(updatedUser.toObject());
+
+    req.app.jwt = jwt;
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: 'User updated successfully',
+      data: jwt,
+    });
   } catch (error) {
     return next(error);
   }

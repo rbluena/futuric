@@ -1,3 +1,4 @@
+const { Schema, Mongoose } = require('mongoose');
 const User = require('../models/User');
 
 /**
@@ -27,6 +28,15 @@ const findUserByUsername = async (username) => {
 const findUserByEmail = async (email) => {
   const user = await User.findOne({ email });
 
+  return user;
+};
+
+/**
+ * Find user by id
+ * @param {String} id
+ */
+const findUserById = async (id) => {
+  const user = await User.findById(id);
   return user;
 };
 
@@ -94,6 +104,7 @@ module.exports = {
   findUserByEmail,
   findUserByUsername,
   findUserByVerificationToken,
+  findUserById,
   createUser,
   updateUser,
   deleteUserByEmail,
