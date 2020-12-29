@@ -1,39 +1,48 @@
+const faker = require('faker');
+
 describe('testing authentication', () => {
   Cypress.config('baseUrl', Cypress.env('API'));
-  let registeredEmail = null;
+  const user = {
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: 'password',
+    type: 'local',
+  };
+  const verificationToken = null;
 
   it('should register user with local data', () => {
-    const data = {
-      username: 'rbluena',
-      email: 'rbluena@gmail.com',
-      password: 'password',
-      type: 'local',
-    };
-
     cy.request({
       method: 'POST',
       url: '/auth/register',
-      body: data,
+      body: user,
     }).then((response) => {
       const { status, body } = response;
-
-      registeredEmail = data.email;
 
       expect(status).to.equal(201);
       expect(body).to.have.property('data');
     });
   });
 
-  it('should verify user with verfication token', () => {
-    const token =
-      '8dbd7f92127294fab54e8e5502f6cce59335a8850cc2f6b570c7112b7826a33a';
+  // it('should verify user with verfication token', () => {
+  //   cy.request({
+  //     method: 'GET',
+  //     url: '/auth/verify',
+  //     qs: {
+  //       token: verificationToken,
+  //     },
+  //   }).then((response) => {
+  //     const { status, body } = response;
 
+  //     expect(status).to.equal(200);
+  //     expect(body).to.have.property('data');
+  //   });
+  // });
+
+  it('should log user in with local data', () => {
     cy.request({
-      method: 'GET',
-      url: '/auth/verify',
-      qs: {
-        token,
-      },
+      method: 'POST',
+      url: '/auth/login',
+      body: user,
     }).then((response) => {
       const { status, body } = response;
 
@@ -47,7 +56,7 @@ describe('testing authentication', () => {
       method: 'DELETE',
       url: '/auth/delete-test',
       qs: {
-        email: registeredEmail,
+        email: user.email,
       },
     }).then((response) => {
       const { status } = response;

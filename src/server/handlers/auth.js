@@ -11,6 +11,7 @@ const {
   findUserByUsername,
   findUserByVerificationToken,
   deleteUserByEmail,
+  findUserByEmail,
 } = require('../services/user');
 
 /**
@@ -171,36 +172,31 @@ exports.newVerificationCode = async (req, res, next) => {
   }
 };
 
+/**
+ * Logging user in with email address or google oauth
+ */
 exports.loginHandler = async (req, res, next) => {
   try {
-    let jwt;
-    // If user signed in with google aouth
-    if (req.user) {
-      const { user } = req;
-      jwt = generateAccessToken({
-        id: user.id,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-        verified: user.verified,
-        photo: user.photo,
+    const { type, email, password } = req.body;
+
+    const userData = await findUserByEmail(email);
+    const user = userData.toObject();
+
+    if (!user) {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        message: 'Bad Request',
+        errors: {
+          email: 'The email address does not exist. You should sign up first.',
+        },
       });
-    } else {
-      const { email, password } = req.body;
-      const userExists = await User.findOne({ email });
+    }
 
-      // Is user existing
-      if (!userExists) {
-        return res.status(400).json({
-          status: 400,
-          success: false,
-          message: 'Bad Request',
-          errors: { email: 'Email you entered does not exists!' },
-        });
-      }
-
-      // Is it a correct password
-      if (!comparePassword(password, userExists.password)) {
+    // Using username/email and password to login
+    if (type === 'local') {
+      // Checking if password is correct password.
+      if (!comparePassword(password, user.password)) {
         return res.status(400).json({
           status: 400,
           success: false,
@@ -208,20 +204,14 @@ exports.loginHandler = async (req, res, next) => {
           errors: { password: 'You have entered incorrect password!' },
         });
       }
-      const user = {
-        id: userExists.id,
-        firstname: userExists.firstname,
-        lastname: userExists.lastname,
-        email: userExists.email,
-        verified: userExists.verified,
-        address: userExists.address,
-        subscription: userExists.subscription,
-        photo: userExists.photo,
-      };
-
-      jwt = await generateAccessToken(user);
     }
 
+    delete user.password;
+    delete user.loginStrategy;
+    delete user.verificationToken;
+    delete user.links;
+
+    const jwt = await generateAccessToken(user);
     req.app.jwt = jwt;
 
     return res.status(200).json({
@@ -251,22 +241,6 @@ exports.logoutHandler = async (req, res, next) => {
     return next(error);
   }
 };
-
-// exports.googleOAuthHandler = async (req, res, next) => {
-//   try {
-//     const jwt = generateAccessToken(req.user);
-
-//     return res.status(200).json({
-//       status: 200,
-//       success: true,
-//       data: {
-//         jwt,
-//       },
-//     });
-//   } catch (error) {
-//     return next(error);
-//   }
-// };
 
 exports.updateUserHandler = async (req, res, next) => {
   try {
