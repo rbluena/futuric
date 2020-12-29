@@ -5,8 +5,9 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
+    firstname: { type: String },
+    lastname: { type: String },
+    username: { type: String, min: 4 },
     email: {
       type: String,
       required: true,
@@ -15,7 +16,7 @@ const userSchema = new Schema(
       unique: true,
       min: 3,
     },
-    photo: {
+    image: {
       thumbnail: {
         type: String,
       },
@@ -25,12 +26,18 @@ const userSchema = new Schema(
     },
     password: { type: String, min: 5 },
     token: { type: String },
-    loginStrategy: { type: String, enum: ['local', 'google'], required: true },
+    loginStrategy: {
+      type: String,
+      enum: ['local', 'google-oauth'],
+      required: true,
+    },
     varified: { type: Boolean, default: false },
+    prominent: { type: Boolean, default: false },
     verificationToken: String,
     role: { type: Schema.Types.ObjectId, ref: 'Role' },
     address: {
       address: String,
+      state: String,
       city: String,
       country: String,
     },
@@ -42,7 +49,7 @@ const userSchema = new Schema(
         default: 'FREE',
       },
     },
-    workspaces: [{ type: Schema.Types.ObjectId, ref: 'Workspace' }],
+    links: [{ type: Schema.Types.ObjectId, ref: 'Links' }],
   },
   { timestamps: true }
 );

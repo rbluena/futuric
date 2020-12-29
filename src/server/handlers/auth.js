@@ -5,8 +5,11 @@ const {
   generateVerificationCode,
 } = require('../utils/auth');
 
-const { updateUserService } = require('../services/user');
-const User = require('../models/User');
+const {
+  updateUser,
+  createUser,
+  findUserByUsername,
+} = require('../services/user');
 
 /**
  * Handling user's registration request.
@@ -15,38 +18,70 @@ const User = require('../models/User');
  */
 exports.registerHandler = async (req, res, next) => {
   try {
-    const { firstname, lastname, email, password, type } = req.body;
+    const { type, email } = req.body;
 
-    const jwt = generateAccessToken({
+    let userData;
+
+    // Signing up using email and password
+    if (type === 'local') {
+      const { username, password } = req.body;
+
+      const usernameFound = await findUserByUsername(username);
+
+      if (usernameFound) {
+        return res.status(400).json({
+          status: 400,
+          success: false,
+          message: 'Failed to register.',
+          errors: {
+            username: 'This username is not available.',
+          },
+        });
+      }
+
+      const verificationToken = generateVerificationCode();
+
+      userData = {
+        email,
+        username,
+        password,
+        loginStrategy: type,
+        verificationToken,
+      };
+
+      await createUser(userData);
+
+      const responseBody = {
+        status: 201,
+        success: true,
+        data: {},
+        message:
+          'Thank you for registering with us. Check your email for verification.',
+      };
+
+      return res.status(201).json(responseBody);
+    }
+    // signinup with google-oauth
+    const { firstname, lastname } = req.body;
+
+    userData = {
       firstname,
       lastname,
       email,
-      verified: false,
-    });
-
-    const verificationToken = generateVerificationCode();
-
-    const user = new User({
-      firstname,
-      lastname,
-      email,
-      password,
-      verificationToken,
       loginStrategy: type,
-      loggedIn: true,
-    });
+      verified: true,
+    };
 
-    await user.save();
+    const user = await createUser(userData);
+    const jwt = generateAccessToken(user);
 
-    /** Log user in */
+    req.app.jwt = jwt;
+
     const responseBody = {
       status: 201,
       success: true,
-      message:
-        'Thank you for registering with us. Check your email for verification.',
-      data: {
-        jwt,
-      },
+      data: { token: jwt },
+      message: 'Thank you for registering with us.',
     };
 
     return res.status(201).json(responseBody);
@@ -56,7 +91,7 @@ exports.registerHandler = async (req, res, next) => {
 };
 
 /**
- * Handling user verification using link provided from email.
+ * Handling user verification using link provided to user's email.
  *
  * */
 exports.userVerificationHandler = async (req, res, next) => {
@@ -213,21 +248,21 @@ exports.logoutHandler = async (req, res, next) => {
   }
 };
 
-exports.googleOAuthHandler = async (req, res, next) => {
-  try {
-    const jwt = generateAccessToken(req.user);
+// exports.googleOAuthHandler = async (req, res, next) => {
+//   try {
+//     const jwt = generateAccessToken(req.user);
 
-    return res.status(200).json({
-      status: 200,
-      success: true,
-      data: {
-        jwt,
-      },
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
+//     return res.status(200).json({
+//       status: 200,
+//       success: true,
+//       data: {
+//         jwt,
+//       },
+//     });
+//   } catch (error) {
+//     return next(error);
+//   }
+// };
 
 exports.updateUserHandler = async (req, res, next) => {
   try {
@@ -253,12 +288,12 @@ exports.updateUserHandler = async (req, res, next) => {
           });
         }
 
-        updatedUser = await updateUserService({
+        updatedUser = await updateUser({
           ...req.body,
           password: newPassword,
         });
       } else {
-        updatedUser = await updateUserService(req.body);
+        updatedUser = await updateUser(req.body);
       }
     }
 

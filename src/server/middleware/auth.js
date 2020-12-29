@@ -1,55 +1,6 @@
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const { OAuth2Strategy } = require('passport-google-oauth');
-// const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const { registerValidation } = require('../utils/validation');
-const User = require('../models/User');
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.use(
-  'google',
-  new OAuth2Strategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_OAUTH_CALLBACK,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        const existingUser = await User.findOne({ email: profile.email });
-
-        if (existingUser) {
-          done(null, existingUser);
-        }
-
-        const newUser = new User({
-          firstname: profile.name.givenName,
-          lastname: profile.name.familyName,
-          email: profile.emails[0].value,
-          photo: {
-            medium: profile.image.url,
-          },
-          token: accessToken,
-          verified: false,
-          loginStrategy: 'google',
-        });
-
-        await newUser.save();
-
-        done(null, newUser);
-      } catch (error) {
-        done(error, null);
-      }
-    }
-  )
-);
+const { findUserByEmail } = require('../services/user');
 
 /**
  * Checking if user is authenticated for a route.
@@ -73,14 +24,13 @@ exports.isAuthenticated = async (req, res, next) => {
 
         return next();
       });
-    } else {
-      return res.status(403).json({
-        status: 403,
-        success: false,
-        message: 'error',
-        errors: [{ description: 'You are not logged in, please login!' }],
-      });
     }
+    return res.status(403).json({
+      status: 403,
+      success: false,
+      message: 'error',
+      errors: [{ description: 'You are not logged in, please login!' }],
+    });
   } catch (error) {
     return next(error);
   }
@@ -99,14 +49,16 @@ exports.registerInputValidation = async (req, res, next) => {
     const validatedInfo = await registerValidation(req.body);
     const { email } = validatedInfo;
 
-    const emailExist = await User.findOne({ email });
+    const foundUser = await findUserByEmail(email);
 
-    if (emailExist) {
+    if (foundUser) {
       return res.status(400).json({
         status: 400,
         success: false,
-        message: 'Bad Request',
-        errors: { email: 'Email is already exists.' },
+        message: 'Failed to register.',
+        errors: {
+          email: 'This email address is not available.',
+        },
       });
     }
 
@@ -129,7 +81,7 @@ exports.registerInputValidation = async (req, res, next) => {
     }
     err = { ...error };
 
-    next(err);
+    return next(err);
   }
 };
 
