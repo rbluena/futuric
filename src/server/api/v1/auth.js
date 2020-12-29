@@ -1,4 +1,3 @@
-const passport = require('passport');
 const router = require('express').Router();
 const {
   registerHandler,
@@ -45,28 +44,8 @@ router.post('/verify/new', newVerificationCode);
 router.post('/login', authenticate, loginHandler);
 
 /**
- * Logging in user using google OAuth
+ * Logging user out.
  */
-router.get(
-  '/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    session: false,
-  }),
-  loginHandler
-);
-
-router.get('/google/error', (req, res) => res.send('Unknown Error'));
-
-router.get(
-  '/google/callback',
-  passport.authenticate('google', {
-    session: false,
-    failureRedirect: '/google/error',
-  }),
-  loginHandler
-);
-
 router.get('/logout', logoutHandler);
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const express = require('express');
-const passport = require('passport');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -36,9 +35,6 @@ module.exports = function initializedApp(router) {
       origin: isProduction ? false : '*',
     })
   );
-
-  app.use(passport.initialize());
-  app.use(passport.session());
 
   app.use(express.static(path.join(__dirname, '../../public/')));
 
