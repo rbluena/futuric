@@ -27,6 +27,7 @@ Cypress.Commands.add('apiSignin', (email, password) =>
     .request('POST', `${Cypress.env('API')}/auth/login`, {
       email,
       password,
+      type: 'local',
     })
     .then((response) => response.body.data.jwt)
 );

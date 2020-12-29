@@ -1,38 +1,32 @@
-describe('testing todos', () => {
+const { decode } = require('jsonwebtoken');
+
+describe('testing links', () => {
   Cypress.config('baseUrl', Cypress.env('API'));
 
   let authToken = null;
-  const workspaceId = '5fcf67d4c034d1ebf15e59d0';
-  let calendarUnique = null;
-  let calendarId = null;
-  let todoId = null;
+  let user = null;
 
   before(() => {
-    cy.apiSignin('luenarabii@gmail.com', 'password').then((token) => {
+    cy.apiSignin('rbluena@gmail.com', 'password').then((token) => {
       authToken = token;
     });
   });
 
-  it('should create a todo', () => {
-    const date = new Date('2020-12-13');
-    const timestamp = new Date(
-      `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`
-    ).getTime();
+  it.only('should create a link', () => {
+    const date = new Date('2021-01-02');
+    user = decode(authToken);
 
     const data = {
-      text: 'Writting my first todo item here',
-      date: timestamp,
+      title: 'This is my first title for my next publishing content.',
       description:
         'Description will be used in the future, for the mean time let focus on somethng else.',
-      workspace: workspaceId,
-      isChild: false,
-      previous: todoId,
-      next: null,
+      date,
+      owner: user._id,
     };
 
     cy.request({
       method: 'POST',
-      url: '/todos/create',
+      url: '/links/create',
       body: data,
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -40,12 +34,10 @@ describe('testing todos', () => {
     }).then((response) => {
       const { status, body } = response;
 
+      console.log(body);
+
       expect(status).to.equal(201);
       expect(body).to.have.property('data');
-
-      todoId = body.data._id;
-      calendarUnique = body.data.calendar.unique;
-      calendarId = body.data.calendar._id;
     });
   });
 

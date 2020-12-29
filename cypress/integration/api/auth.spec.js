@@ -11,7 +11,7 @@ describe('testing authentication', () => {
     type: 'local',
   };
 
-  const verificationToken = null;
+  // const verificationToken = null;
   let jwt = null;
 
   it('should register user with local data', () => {
