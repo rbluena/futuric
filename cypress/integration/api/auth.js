@@ -1,10 +1,9 @@
 describe('testing authentication', () => {
   Cypress.config('baseUrl', Cypress.env('API'));
 
-  it('should sign user up', () => {
+  it('should register user with local data', () => {
     const data = {
-      firstname: 'John',
-      lastname: 'Doe',
+      username: 'jdoe',
       email: 'john_doe@gmail.com',
       password: 'password',
       type: 'local',

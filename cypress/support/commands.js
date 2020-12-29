@@ -1,25 +1,32 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('signup', () => {
+  cy.visit(`/auth/register`);
+  cy.get('input[name="firstname"]').type('John');
+  cy.get('input[name="lastname"]').type('Doe');
+  cy.get('input[name="email"]').type('john_doe@gmail.com');
+  cy.get('input[name="password"]').type('password');
+  cy.get('button[type="submit"]').should('be.visible').click();
+});
+
+Cypress.Commands.add('signin', (email, password) => {
+  cy.visit(`/auth/login`);
+  cy.get('input[name="email"]').type(email);
+  cy.get('input[name="password"]').type(password);
+  cy.get('button[type="submit"]').should('be.visible').click();
+});
+
+Cypress.Commands.add('signout', () => {
+  cy.visit('/');
+  cy.get('button[type="button"]')
+    .contains('Logout')
+    .should('be.visible')
+    .click();
+});
+
+Cypress.Commands.add('apiSignin', (email, password) =>
+  cy
+    .request('POST', `${Cypress.env('API')}/auth/login`, {
+      email,
+      password,
+    })
+    .then((response) => response.body.data.jwt)
+);
