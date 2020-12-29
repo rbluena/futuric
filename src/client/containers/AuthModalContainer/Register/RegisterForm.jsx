@@ -23,6 +23,10 @@ const RegisterForm = () => {
           placeholder="Username"
           register={register({
             required: 'This field is required.',
+            minLength: {
+              value: 4,
+              message: 'Email should not be less than 4 characters.',
+            },
           })}
           error={get(inputErrors, 'username.message')}
         />

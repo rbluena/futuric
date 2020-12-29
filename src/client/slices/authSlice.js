@@ -4,10 +4,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   fetching: false,
   token: null,
+  type: null, // 'google-oauth' or 'local'
   error: null,
 };
 
-// SLICE
 const authSlice = createSlice({
   name: 'auth',
   initialState,
