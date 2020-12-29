@@ -31,7 +31,7 @@ const userSchema = new Schema(
       enum: ['local', 'google-oauth'],
       required: true,
     },
-    varified: { type: Boolean, default: false },
+    verified: { type: Boolean, default: false },
     prominent: { type: Boolean, default: false },
     verificationToken: String,
     role: { type: Schema.Types.ObjectId, ref: 'Role' },

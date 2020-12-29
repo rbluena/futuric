@@ -6,6 +6,7 @@ const {
   loginHandler,
   logoutHandler,
   updateUserHandler,
+  deleteTestingUserHandler,
   // getUserHandler,
 } = require('../../handlers/auth');
 const {
@@ -31,7 +32,7 @@ router.put('/update', isAuthenticated, updateUserHandler);
 /**
  * Verifying user with token sent via email
  */
-router.get('/verify/:token', userVerificationHandler);
+router.get('/verify', userVerificationHandler);
 
 /**
  * Request new verification code
@@ -47,5 +48,10 @@ router.post('/login', authenticate, loginHandler);
  * Logging user out.
  */
 router.get('/logout', logoutHandler);
+
+/**
+ * Deleting user
+ */
+router.delete('/delete-test', deleteTestingUserHandler);
 
 module.exports = router;

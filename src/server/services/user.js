@@ -1,8 +1,17 @@
-const { update } = require('../models/User');
 const User = require('../models/User');
 
 /**
- * Find user by username
+ * Getting user by verification token.
+ * @param {String} verificationToken
+ */
+const findUserByVerificationToken = async (verificationToken) => {
+  const user = await User.findOne({ verificationToken });
+
+  return user;
+};
+
+/**
+ * Find user by username.
  * @param {String} username
  */
 const findUserByUsername = async (username) => {
@@ -12,7 +21,7 @@ const findUserByUsername = async (username) => {
 };
 
 /**
- * Find user by email address
+ * Find user by email address.
  * @param {string} email
  */
 const findUserByEmail = async (email) => {
@@ -22,7 +31,7 @@ const findUserByEmail = async (email) => {
 };
 
 /**
- * Saving user to the database
+ * Saving user to the database.
  * @param {Object} userData
  */
 const createUser = async (userData) => {
@@ -38,7 +47,7 @@ const createUser = async (userData) => {
 };
 
 /**
- * Updating user details
+ * Updating user details.
  * @param {Object} userData User information
  */
 const updateUser = async (userData) => {
@@ -66,15 +75,26 @@ const updateUser = async (userData) => {
     address: updated.address,
     verified: updated.verified,
     subscription: updated.subscription,
-    photo: update.photo,
+    photo: updated.photo,
   };
 
   return updatedUser;
 };
 
+/**
+ * Deleting user by email address.
+ * @param {String} email
+ */
+const deleteUserByEmail = async (email) => {
+  const deleted = await User.deleteOne({ email });
+  return deleted;
+};
+
 module.exports = {
   findUserByEmail,
   findUserByUsername,
+  findUserByVerificationToken,
   createUser,
   updateUser,
+  deleteUserByEmail,
 };

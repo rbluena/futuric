@@ -9,6 +9,8 @@ const {
   updateUser,
   createUser,
   findUserByUsername,
+  findUserByVerificationToken,
+  deleteUserByEmail,
 } = require('../services/user');
 
 /**
@@ -96,17 +98,20 @@ exports.registerHandler = async (req, res, next) => {
  * */
 exports.userVerificationHandler = async (req, res, next) => {
   try {
-    const verificationToken = req.params.token;
-    const user = User.findOne({ verificationToken });
+    const verificationToken = req.query.token;
+    const user = await findUserByVerificationToken(verificationToken);
 
     if (user && !user.verified) {
-      await user.updateOne(
-        { verificationToken },
-        { verificationToken: '', verified: true }
-      );
+      user.verified = true;
+      user.verificationToken = '';
+
+      const saved = await user.save();
+
+      console.log(saved);
 
       return res.status(200).json({
         status: 200,
+        data: { verified: true },
         message: 'success',
       });
     }
@@ -115,8 +120,7 @@ exports.userVerificationHandler = async (req, res, next) => {
       status: 400,
       message: 'error',
       errors: {
-        details:
-          'Verification is failed, please request new verification code.',
+        details: 'Verification is failed, please send new verification token.',
       },
     });
   } catch (error) {
@@ -313,5 +317,20 @@ exports.updateUserHandler = async (req, res, next) => {
     throw new Error('Failed to update you data. Please try again later.');
   } catch (error) {
     return next(error);
+  }
+};
+
+/**
+ * Using this to delete user when writing tests
+ */
+exports.deleteTestingUserHandler = async (req, res, next) => {
+  try {
+    if (process.env.NODE_ENV === 'development') {
+      const { email } = req.query;
+      await deleteUserByEmail(email);
+      res.status(200).json({});
+    }
+  } catch (error) {
+    next(error);
   }
 };
