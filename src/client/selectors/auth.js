@@ -20,8 +20,27 @@ const selectUser = (state) => {
     return user;
   }
 
-  return {};
+  return null;
+};
+
+const selectAuth = (state) => {
+  const { token } = state.auth;
+  let isAuthenticated = false;
+  let user = null;
+  let redirectUserToSettings = false;
+
+  if (token && token.length) {
+    isAuthenticated = true;
+    user = selectSelf(state);
+    if (user && !user.username) {
+      redirectUserToSettings = true;
+    }
+  }
+
+  return { isAuthenticated, user, redirectUserToSettings };
 };
 
 // eslint-disable-next-line import/prefer-default-export
 export const getUserSelector = createSelector(selectSelf, selectUser);
+
+export const getAuthSelector = createSelector(selectSelf, selectAuth);

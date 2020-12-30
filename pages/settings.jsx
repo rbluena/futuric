@@ -4,7 +4,7 @@ import UserEditScreen from '@app/screens/UserEdit';
 
 const Edit = () => (
   <LayoutManager>
-    <Head title="My Links" />
+    <Head title="Edit" />
     <Header />
     <UserEditScreen />
     <Footer />
