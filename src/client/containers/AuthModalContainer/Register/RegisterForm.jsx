@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { get, isObject } from 'lodash';
 import { registerUserAction } from '@app/actions';
@@ -11,10 +12,9 @@ import {
   Submit,
 } from '@app/components/Form';
 
-const RegisterForm = () => {
+const RegisterForm = ({ setApiError }) => {
   const { register, errors: inputErrors, handleSubmit } = useForm({});
   const dispatch = useDispatch();
-  const [apiError, setApiError] = useState(null);
 
   async function onSubmit(userData) {
     try {
@@ -35,9 +35,6 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {apiError && (
-        <p className="text-sm text-center text-danger-500 mt-4">{apiError}</p>
-      )}
       <ControlWrapper>
         <TextInput
           name="username"
@@ -90,6 +87,10 @@ const RegisterForm = () => {
       </ControlWrapper>
     </form>
   );
+};
+
+RegisterForm.propTypes = {
+  setApiError: PropTypes.func.isRequired,
 };
 
 export default RegisterForm;

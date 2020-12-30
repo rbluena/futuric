@@ -23,9 +23,22 @@ exports.registerHandler = async (req, res, next) => {
   try {
     const { type, email } = req.body;
 
+    const userFound = await findUserByEmail(email);
+
+    if (userFound) {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        message: 'Bad Request',
+        errors: {
+          email: 'User with email address is existing.',
+        },
+      });
+    }
+
     let userData;
 
-    // Signing up using email and password
+    // SIGINING UP WITH EMAIL AND PASSWORD
     if (type === 'local') {
       const { username, password } = req.body;
 
@@ -64,8 +77,9 @@ exports.registerHandler = async (req, res, next) => {
 
       return res.status(201).json(responseBody);
     }
-    // signinup with google-oauth
-    const { firstname, lastname } = req.body;
+
+    // SIGNING UP WITH GOOGLE OAUTH
+    const { firstname, lastname, image } = req.body;
 
     userData = {
       firstname,
@@ -74,6 +88,10 @@ exports.registerHandler = async (req, res, next) => {
       loginStrategy: type,
       verified: true,
     };
+
+    if (image && image.length) {
+      userData = { ...userData, 'image.thumbnail': image };
+    }
 
     const user = await createUser(userData);
     const jwt = generateAccessToken(user);

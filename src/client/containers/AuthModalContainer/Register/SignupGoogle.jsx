@@ -1,22 +1,47 @@
-import { get } from 'lodash';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { get, isObject } from 'lodash';
 import GoogleLogin from 'react-google-login';
 import { signupUserWithGoogleAction } from '@app/actions';
 
 const { GOOGLE_CLIENT_ID } = process.env;
 
-const SignupUser = () => {
+const SignupGoogle = ({ setApiError }) => {
   const dispatch = useDispatch();
-  function responseGoogle(response) {
+
+  /** Submiting user from google. */
+  async function responseGoogle(response) {
+    setApiError(null);
+
     const user = get(response, 'profileObj');
     const accessToken = get(response, 'accessToken');
 
-    if (user && accessToken) {
-      dispatch(signupUserWithGoogleAction(user, accessToken));
-    } else {
-      // const { error } = response;
-      // const { details } = response;
+    try {
+      if (user && accessToken) {
+        await dispatch(
+          signupUserWithGoogleAction(
+            {
+              firstname: user.givenName,
+              lastname: user.familyName,
+              email: user.email,
+              image: user.imageUrl,
+            },
+            accessToken
+          )
+        );
+      }
+    } catch (error) {
+      // Handling errors from API.
+      const { message } = error;
+
+      if (isObject(message)) {
+        const keys = Object.keys(message);
+        const err = message[keys[0]];
+        setApiError(err);
+      } else {
+        setApiError(message);
+      }
     }
   }
 
@@ -33,4 +58,8 @@ const SignupUser = () => {
   );
 };
 
-export default SignupUser;
+SignupGoogle.propTypes = {
+  setApiError: PropTypes.func.isRequired,
+};
+
+export default SignupGoogle;

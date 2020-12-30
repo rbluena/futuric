@@ -55,7 +55,7 @@ export function logUserInAction(userData) {
  * @param {Object} user
  * @param {Object} accessToken
  */
-export function logUserInWithGoogleAction(userData) {
+export function signinUserWithGoogleAction(userData) {
   return async (dispatch) => {
     try {
       dispatch(loginUser());
@@ -67,14 +67,15 @@ export function logUserInWithGoogleAction(userData) {
 
       dispatch(loginUserSuccess(data));
       // dispatch(setNotification({ type: 'success', message }));
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       const error = {
         type: 'error',
         message: err.errors,
       };
-      dispatch(setNotification(error));
+      // dispatch(setNotification(error));
       dispatch(loginUserFailure());
+      throw error;
     }
   };
 }
@@ -128,13 +129,15 @@ export function signupUserWithGoogleAction(user, accessToken) {
       const { data, message } = await registerUserService(userData);
       dispatch(registerUserSuccess(data));
       dispatch(setNotification({ type: 'success', message }));
+      dispatch(closeModal());
     } catch (err) {
       const error = {
         type: 'error',
         message: err.errors,
       };
-      dispatch(setNotification(error));
       dispatch(registerUserFailure());
+      // dispatch(setNotification(error));
+      throw error;
     }
   };
 }
