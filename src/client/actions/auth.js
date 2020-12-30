@@ -32,7 +32,7 @@ export function logUserInAction(userData) {
       dispatch(loginUser());
       const { data } = await logUserInService({
         ...userData,
-        type: 'google-oauth',
+        type: 'local',
       });
       dispatch(loginUserSuccess(data));
       // dispatch(setNotification({ type: 'success', message }));
