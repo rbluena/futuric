@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 const Logo = () => (
-  <Image src="/images/logo.png" alt="Logo" width="auto" height="45px" />
+  <Image src="/images/logo.svg" alt="Logo" width="" height="" />
 );
 
 export default Logo;
