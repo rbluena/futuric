@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-// import Image from 'next/image';
-import { Link, Avatar } from '@app/components';
+import { useDispatch } from 'react-redux';
+import { openModal } from '@app/slices/globalSlice';
+import { Link, Avatar, Button } from '@app/components';
 import { Dropdown } from '@app/components/Form';
 
 const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   function onChangeDropdownHandler(value) {
     if (value !== 'signout') {
@@ -41,9 +43,14 @@ const Nav = () => {
           <Link className="px-2 font-bold" href="/learn">
             Learn
           </Link>
-          <Link className="px-2 font-bold" href="/signin">
+          <Button
+            outline
+            size="sm"
+            className="py-2 px-4 text-xs font-bold ml-5"
+            onClick={() => dispatch(openModal('signin'))}
+          >
             Sign In
-          </Link>
+          </Button>
         </div>
 
         <div className="relative">

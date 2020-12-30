@@ -35,7 +35,7 @@ Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
 };
 
-Modal.Header = ({ heading, closeHandler }) => (
+Modal.Header = ({ heading, onClose }) => (
   <div className="p-2 flex">
     {heading.length > 0 && <h2 className=" h-2 font-semibold">{heading}</h2>}
     <Button
@@ -43,9 +43,9 @@ Modal.Header = ({ heading, closeHandler }) => (
       className="ml-auto"
       size="sm"
       outline
-      onClick={closeHandler}
+      onClick={onClose}
     >
-      <CloseIcon size="xs" />
+      <CloseIcon size="sm" />
     </Button>
   </div>
 );
@@ -56,7 +56,7 @@ Modal.Header.defaultProps = {
 
 Modal.Header.propTypes = {
   heading: PropTypes.string,
-  closeHandler: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 Modal.Content = ({ children }) => <div className="px-4">{children}</div>;
