@@ -16,7 +16,11 @@ import {
   updateUserSuccess,
   updateUserFailure,
 } from '@app/slices/authSlice';
-import { setNotification, resettingGlobalState } from '@app/slices/globalSlice';
+import {
+  setNotification,
+  resettingGlobalState,
+  closeModal,
+} from '@app/slices/globalSlice';
 
 /**
  * Logging in user using form
@@ -37,10 +41,11 @@ export function logUserInAction(userData) {
     } catch (err) {
       const error = {
         type: 'error',
-        message: err.errors,
+        message: err.errors || err.message,
       };
-      dispatch(setNotification(error));
+      // dispatch(setNotification(error));
       dispatch(loginUserFailure());
+      throw error;
     }
   };
 }
@@ -90,14 +95,16 @@ export function registerUserAction(userData) {
       dispatch(setNotification({ type: 'success', message }));
 
       // Reloading page to data from the server
-      window.location.reload();
+      // window.location.href = '/me/edit';
+      dispatch(closeModal());
     } catch (err) {
       const error = {
         type: 'error',
         message: err.errors,
       };
-      dispatch(setNotification(error));
+      // dispatch(setNotification(error));
       dispatch(registerUserFailure());
+      throw error;
     }
   };
 }

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { get } from 'lodash';
+import { get, isObject } from 'lodash';
+import { registerUserAction } from '@app/actions';
 import {
   ControlWrapper,
   TextInput,
@@ -11,11 +13,31 @@ import {
 
 const RegisterForm = () => {
   const { register, errors: inputErrors, handleSubmit } = useForm({});
+  const dispatch = useDispatch();
+  const [apiError, setApiError] = useState(null);
 
-  function onSubmit(userData) {}
+  async function onSubmit(userData) {
+    try {
+      setApiError(null);
+      await dispatch(registerUserAction(userData));
+    } catch (error) {
+      const { message } = error;
+
+      if (isObject(message)) {
+        const keys = Object.keys(message);
+        const err = message[keys[0]];
+        setApiError(err);
+      } else {
+        setApiError(message);
+      }
+    }
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="pb-4">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {apiError && (
+        <p className="text-sm text-center text-danger-500 mt-4">{apiError}</p>
+      )}
       <ControlWrapper>
         <TextInput
           name="username"
