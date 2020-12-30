@@ -5,6 +5,7 @@ import { modalStateSelector } from '@app/selectors';
 import { closeModal } from '@app/slices/globalSlice';
 import { Modal } from '@app/components';
 import Register from './Register';
+import Login from './Login';
 
 const AuthModalContainer = ({ modal }) => {
   let isOpen = null;
@@ -22,7 +23,7 @@ const AuthModalContainer = ({ modal }) => {
       <Modal.Header onClose={onCloseModal} />
       <Modal.Content>
         {modal === 'signup' && <Register />}
-        {modal === 'signin' && <Register />}
+        {modal === 'signin' && <Login />}
       </Modal.Content>
     </Modal>
   );

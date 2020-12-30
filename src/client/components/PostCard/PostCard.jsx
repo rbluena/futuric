@@ -65,39 +65,43 @@ PostCard.Content.propTypes = {
 };
 
 PostCard.Footer = ({ publisher, published, small }) => (
-  <div className="flex items-center justify-items-start w-full mt-3 bg-neutral-100">
-    <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
-      From:
-    </span>
-    &nbsp;
-    <Link
-      href={publisher.url}
-      className={`font-bold ${small ? 'text-xs' : 'text-sm'}`}
-    >
-      {publisher.name}
-    </Link>
+  <div className="flex items-center justify-items-start mt-3 bg-neutral-100">
+    <div>
+      <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
+        From:
+      </span>
+      &nbsp;
+      <Link
+        href={publisher.url}
+        className={`font-bold ${small ? 'text-xs' : 'text-sm'}`}
+      >
+        {publisher.name}
+      </Link>
+    </div>
     &nbsp;&nbsp;&nbsp;
     <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
     &nbsp;&nbsp;&nbsp;
-    <span className={` ${small ? 'text-xs' : 'text-sm'} text-neutral-500}`}>
-      Available:
-    </span>
-    &nbsp;
-    {!published ? (
-      <Link
-        href={`/available/${publisher.activeDate}`}
-        className={`${small ? 'text-xs' : 'text-sm'} font-bold`}
-      >
-        {publisher.activeDate}
-      </Link>
-    ) : (
-      <Link
-        href="https://bit.ly/3eJm90H"
-        className={`${small ? 'text-xs' : 'text-sm'} font-bold`}
-      >
-        https://bit.ly/3eJm90H
-      </Link>
-    )}
+    <div>
+      <span className={` ${small ? 'text-xs' : 'text-sm'} text-neutral-500}`}>
+        Available:
+      </span>
+      &nbsp;
+      {!published ? (
+        <Link
+          href={`/available/${publisher.activeDate}`}
+          className={`${small ? 'text-xs' : 'text-sm'} font-bold`}
+        >
+          {publisher.activeDate}
+        </Link>
+      ) : (
+        <Link
+          href="https://bit.ly/3eJm90H"
+          className={`${small ? 'text-xs' : 'text-sm'} font-bold`}
+        >
+          https://bit.ly/3eJm90H
+        </Link>
+      )}
+    </div>
     <button type="button" className="ml-auto" title="Get notified">
       <BellOutlineIcon
         size={small ? 'xs' : 'sm'}

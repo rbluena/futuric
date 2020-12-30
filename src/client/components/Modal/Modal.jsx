@@ -6,7 +6,7 @@ import { CloseIcon } from '@app/components/Icons';
 
 const Modal = ({ children, onClose, isOpen, contentLabel }) => (
   <ModalWrapper
-    className="w-full absolute z-100 flex items-center justify-center min-h-screen"
+    className="w-full absolute z-100 flex items-center justify-center min-h-screen p-2"
     isOpen={isOpen}
     onRequestClose={onClose}
     contentLabel={contentLabel}
@@ -18,7 +18,7 @@ const Modal = ({ children, onClose, isOpen, contentLabel }) => (
     data={{ background: 'black' }}
   >
     <div
-      className="inline-block align-bottom bg-white rounded-md text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+      className=" w-full md:max-w-lg inline-block align-bottom bg-white rounded-md text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
       role="dialog"
       aria-modal={isOpen}
       aria-labelledby="modal-headline"
