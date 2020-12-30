@@ -1,7 +1,9 @@
+import router from 'next/router';
 import {
   logUserInService,
   registerUserService,
   logUserOutService,
+  updateUserService,
 } from '@app/services';
 import {
   registerUser,
@@ -66,6 +68,7 @@ export function signinUserWithGoogleAction(userData) {
       });
 
       dispatch(loginUserSuccess(data));
+      dispatch(closeModal());
       // dispatch(setNotification({ type: 'success', message }));
       // window.location.reload();
     } catch (err) {
@@ -142,20 +145,42 @@ export function signupUserWithGoogleAction(user, accessToken) {
   };
 }
 
+export function updateUserAction(userData) {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(updateUser());
+      const {
+        auth: { token },
+      } = getState();
+
+      if (!userData.password || !userData.password.length) {
+        delete userData.password;
+        delete userData.oldPassword;
+      }
+
+      const { message, data } = await updateUserService(token, userData);
+
+      dispatch(updateUserSuccess(data));
+      dispatch(setNotification({ type: 'success', message }));
+    } catch (err) {
+      dispatch(logoutUserAction());
+      const error = {
+        type: 'error',
+        message: err.errors,
+      };
+      dispatch(registerUserFailure());
+      dispatch(setNotification(error));
+    }
+  };
+}
+
 /**
  * Logging user out of the application
  */
 export function logoutUserAction() {
-  return async (dispatch, getState) => {
-    try {
-      const { token } = getState().auth;
-
-      await logUserOutService(token);
-      dispatch(resettingGlobalState());
-      window.location.href = process.env.SITE;
-    } catch (err) {
-      dispatch(logoutUserSuccess());
-      window.location.href = process.env.SITE;
-    }
+  return async (dispatch) => {
+    dispatch(resettingGlobalState());
+    dispatch(logoutUserSuccess());
+    return router.push('/');
   };
 }

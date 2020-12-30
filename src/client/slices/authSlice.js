@@ -53,12 +53,27 @@ const authSlice = createSlice({
       },
     },
     registerUserSuccess: {
-      reducer: (state, { payload }) => {
+      reducer: (state) => {
         state.fetching = false;
-        state.token = payload.jwt;
       },
     },
     registerUserFailure: {
+      reducer: (state) => {
+        state.fetching = false;
+      },
+    },
+    updateUser: {
+      reducer: (state) => {
+        state.fetching = true;
+      },
+    },
+    updateUserSuccess: {
+      reducer: (state, { payload }) => {
+        state.fetching = false;
+        state.token = payload;
+      },
+    },
+    updateUserFailure: {
       reducer: (state) => {
         state.fetching = false;
       },
@@ -83,6 +98,9 @@ export const {
   registerUser,
   registerUserSuccess,
   registerUserFailure,
+  updateUser,
+  updateUserSuccess,
+  updateUserFailure,
 } = authSlice.actions;
 
 export default authSlice.reducer;

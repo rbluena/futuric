@@ -4,7 +4,7 @@ export default {
   login: `${SERVER_API}/auth/login`,
   logout: `${SERVER_API}/auth/logout`,
   createUser: `${SERVER_API}/auth/register`,
-  updateUser: `${SERVER_API}/auth/update`,
+  updateUser: (id) => `${SERVER_API}/auth/update/${id}`,
   getUser: (id) => `${SERVER_API}/user/${id}`,
   getUserWorkspaces: `${SERVER_API}/workspaces`,
   createWorkspace: `${SERVER_API}/workspaces/create`,

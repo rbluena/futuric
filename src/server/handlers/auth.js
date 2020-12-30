@@ -280,7 +280,7 @@ exports.logoutHandler = async (req, res, next) => {
  */
 exports.updateUserHandler = async (req, res, next) => {
   try {
-    const { oldPassword, newPassword } = req.body;
+    const { oldPassword, password } = req.body;
 
     const user = await findUserById(req.params.id);
 
@@ -300,8 +300,7 @@ exports.updateUserHandler = async (req, res, next) => {
     });
 
     // Updating password
-    if (newPassword && newPassword.length > 4) {
-      delete user.newPassword;
+    if (password && password.length > 4) {
       delete user.oldPassword;
 
       // User should confirm password before updating
@@ -316,8 +315,6 @@ exports.updateUserHandler = async (req, res, next) => {
           },
         });
       }
-
-      user.password = newPassword;
     }
 
     const updatedUser = await user.save();
@@ -327,7 +324,12 @@ exports.updateUserHandler = async (req, res, next) => {
       throw new Error('Failed to update you data. Please try again later.');
     }
 
-    const jwt = await generateAccessToken(updatedUser.toObject());
+    const userObject = updatedUser.toObject();
+    delete userObject.loginStrategy;
+    delete userObject.password;
+    delete userObject.verificationToken;
+
+    const jwt = await generateAccessToken(userObject);
 
     req.app.jwt = jwt;
 

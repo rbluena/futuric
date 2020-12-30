@@ -20,9 +20,7 @@ const {
  */
 router.post('/register', registerInputValidation, registerHandler);
 
-/**
- * Updating user information
- */
+/** Updating user information */
 router.put('/update/:id', isAuthenticated, updateUserHandler);
 
 /** Generating new verification token */

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { get } from 'lodash';
-import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { getUserSelector } from '@app/selectors';
+import { updateUserAction } from '@app/actions';
 
 import {
   ControlWrapper,
@@ -17,8 +18,9 @@ import { Section } from '@app/components';
 
 import countries from './countries.json';
 
-const UserForm = ({ user }) => {
+const UserForm = () => {
   const [characters, setCharacters] = useState('');
+  const user = useSelector(getUserSelector);
   const dispatch = useDispatch();
   const { handleSubmit, register, errors: inputErrors } = useForm({
     mode: 'onBlur',
@@ -29,7 +31,9 @@ const UserForm = ({ user }) => {
     setCharacters(value);
   }
 
-  function onSubmit(userData) {}
+  function onSubmit(userData) {
+    dispatch(updateUserAction({ ...userData, _id: user._id }));
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="pb-4">
@@ -37,7 +41,7 @@ const UserForm = ({ user }) => {
         <ControlWrapper>
           <TextInput
             name="firstname"
-            label="First Name"
+            label="First Name *"
             placeholder="First Name"
             register={register({
               required: 'This field is required. ',
@@ -48,7 +52,7 @@ const UserForm = ({ user }) => {
         <ControlWrapper>
           <TextInput
             name="lastname"
-            label="Last Name"
+            label="Last Name *"
             placeholder="Last Name"
             register={register({
               required: 'This field is required.',
@@ -60,7 +64,7 @@ const UserForm = ({ user }) => {
         <ControlWrapper>
           <TextInput
             name="username"
-            label="Username"
+            label="Username *"
             placeholder="Username"
             register={register({
               required: 'This field is required.',
@@ -70,9 +74,21 @@ const UserForm = ({ user }) => {
         </ControlWrapper>
 
         <ControlWrapper>
+          <TextInput
+            name="brandname"
+            label="Brand Name *"
+            placeholder="Brand Name"
+            register={register({
+              required: 'This field is required.',
+            })}
+            error={get(inputErrors, 'brandname.message')}
+          />
+        </ControlWrapper>
+
+        <ControlWrapper>
           <EmailInput
             name="email"
-            label="Email"
+            label="Email *"
             placeholder="Email"
             register={register({
               minLength: {
@@ -87,7 +103,7 @@ const UserForm = ({ user }) => {
           <Textarea
             name="description"
             label="Description"
-            placeholder="Use few words to describe yourself."
+            placeholder="Use few words to describe yourself or the brand behind profile."
             register={register({
               maxLength: {
                 value: 100,
@@ -109,9 +125,6 @@ const UserForm = ({ user }) => {
             name="address.address"
             label="Address"
             placeholder="Address"
-            register={register({
-              required: 'This field is required. ',
-            })}
             error={get(inputErrors, 'address.address.message')}
           />
         </ControlWrapper>
@@ -120,9 +133,6 @@ const UserForm = ({ user }) => {
             name="address.city"
             label="City"
             placeholder="City"
-            register={register({
-              required: 'This field is required. ',
-            })}
             error={get(inputErrors, 'address.message')}
           />
         </ControlWrapper>
@@ -161,7 +171,7 @@ const UserForm = ({ user }) => {
 
         <ControlWrapper>
           <PasswordInput
-            name="newPassword"
+            name="password"
             label="New Password"
             placeholder="New Password"
             register={register({
@@ -170,7 +180,7 @@ const UserForm = ({ user }) => {
                 message: 'Password should not be less than 5 characters.',
               },
             })}
-            error={get(inputErrors, 'newPassword.message')}
+            error={get(inputErrors, 'password.message')}
           />
         </ControlWrapper>
       </Section>
@@ -180,14 +190,6 @@ const UserForm = ({ user }) => {
       </ControlWrapper>
     </form>
   );
-};
-
-UserForm.defualtProps = {
-  user: {},
-};
-
-UserForm.propTypes = {
-  user: PropTypes.objectOf(PropTypes.shape).isRequired,
 };
 
 export default UserForm;

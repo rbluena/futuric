@@ -60,6 +60,28 @@ export const registerUserService = async (data) => {
 };
 
 /**
+ * Update user information.
+ * @param {Object} data User information
+ */
+export const updateUserService = async (token, data) => {
+  try {
+    const response = await request({
+      method: 'PUT',
+      url: path.updateUser(data._id),
+      data: JSON.stringify(data),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
  * Logging user out
  */
 export const logUserOutService = async (token) => {
