@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { isURL } from 'validator';
 import { get } from 'lodash';
 import { useForm } from 'react-hook-form';
 import { getUserSelector } from '@app/selectors';
@@ -41,7 +42,7 @@ const UserForm = () => {
         <ControlWrapper>
           <TextInput
             name="firstname"
-            label="First Name *"
+            label="First Name: *"
             placeholder="First Name"
             register={register({
               required: 'This field is required. ',
@@ -52,7 +53,7 @@ const UserForm = () => {
         <ControlWrapper>
           <TextInput
             name="lastname"
-            label="Last Name *"
+            label="Last Name: *"
             placeholder="Last Name"
             register={register({
               required: 'This field is required.',
@@ -64,7 +65,7 @@ const UserForm = () => {
         <ControlWrapper>
           <TextInput
             name="username"
-            label="Username *"
+            label="Username: *"
             placeholder="Username"
             register={register({
               required: 'This field is required.',
@@ -76,7 +77,7 @@ const UserForm = () => {
         <ControlWrapper>
           <TextInput
             name="brandname"
-            label="Brand Name *"
+            label="Brand Name: *"
             placeholder="Brand Name"
             register={register({
               required: 'This field is required.',
@@ -86,9 +87,26 @@ const UserForm = () => {
         </ControlWrapper>
 
         <ControlWrapper>
+          <TextInput
+            name="website"
+            label="Website:"
+            placeholder="Website"
+            register={register({
+              validate: (value) => {
+                if (value.length && !isURL(value))
+                  return 'This is not valid website URL.';
+
+                return true;
+              },
+            })}
+            error={get(inputErrors, 'website.message')}
+          />
+        </ControlWrapper>
+
+        <ControlWrapper>
           <EmailInput
             name="email"
-            label="Email *"
+            label="Email: *"
             placeholder="Email"
             register={register({
               minLength: {
@@ -103,7 +121,7 @@ const UserForm = () => {
         <ControlWrapper>
           <Textarea
             name="description"
-            label="Description"
+            label="Description:"
             placeholder="Use few words to describe yourself or the brand behind profile."
             register={register({
               maxLength: {
@@ -124,7 +142,7 @@ const UserForm = () => {
         <ControlWrapper>
           <TextInput
             name="address.address"
-            label="Address"
+            label="Address:"
             placeholder="Address"
             error={get(inputErrors, 'address.address.message')}
           />
@@ -132,7 +150,7 @@ const UserForm = () => {
         <ControlWrapper>
           <TextInput
             name="address.city"
-            label="City"
+            label="City:"
             placeholder="City"
             error={get(inputErrors, 'address.message')}
           />
@@ -140,7 +158,7 @@ const UserForm = () => {
 
         <ControlWrapper>
           <Select
-            label="Country"
+            label="Country:"
             name="address.country"
             options={[{ label: 'Select country', value: '' }, ...countries]}
             register={register({
@@ -158,7 +176,7 @@ const UserForm = () => {
         <ControlWrapper>
           <PasswordInput
             name="oldPassword"
-            label="Old Password"
+            label="Old Password:"
             placeholder="Old Password"
             register={register({
               minLength: {
@@ -173,7 +191,7 @@ const UserForm = () => {
         <ControlWrapper>
           <PasswordInput
             name="password"
-            label="New Password"
+            label="New Password:"
             placeholder="New Password"
             register={register({
               minLength: {
