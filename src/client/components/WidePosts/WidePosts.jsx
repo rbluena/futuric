@@ -4,7 +4,7 @@ import { Link } from '@app/components';
 
 const WidePosts = ({ heading, children, viewLink }) => (
   <section className="p-2">
-    <header className="flex border-b-2 border-neutral-200 px-10">
+    <header className="flex flex-wrap border-b-2 border-neutral-200">
       <h2 className="text-lg">{heading}</h2>
       {viewLink && viewLink.length > 0 && (
         <Link href={viewLink} size="sm" className=" ml-auto">

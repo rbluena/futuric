@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { PostCard } from '@app/components';
 
 const Post = ({ post, publisher }) => (
-  <PostCard small>
-    <PostCard.Avatar src={publisher.image} small />
-    <PostCard.Content title={post.title} small>
-      <PostCard.Footer publisher={publisher} published small />
-    </PostCard.Content>
+  <PostCard>
+    <PostCard.Header publisher={publisher} />
+    <PostCard.Content post={post} />
   </PostCard>
 );
 

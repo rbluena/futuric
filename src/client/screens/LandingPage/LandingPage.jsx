@@ -8,12 +8,7 @@ const LandingPage = () => (
   <div>
     <PostsContainer sidebar={<NavCategories categories={[]} />} />
     <RecentlyPublishedContainer />
-    {/* <div className="flex flex-wrap container">
-      <FeaturedPostsContainer />
-      <PostsContainer />
-    </div> */}
     <PostsContainer />
-    <RecentlyPublishedContainer />
     <PostsContainer />
     <PostsContainer />
     <PostsContainer />

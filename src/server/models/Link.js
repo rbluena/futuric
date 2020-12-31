@@ -7,7 +7,8 @@ const linkSchema = new Schema(
     title: { type: String, required: true },
     description: { type: String },
     shortenUrl: { type: String }, // Shortened url to be shared to the public
-    longUrl: { type: String }, // Longest link to be shared
+    longUrl: { type: String }, // Longest link to the original content
+    postUrl: { type: String },
     availableAt: { type: Date }, // The day the link is active for redirect.
     isActive: { type: Boolean, default: false }, //
     location: { type: String },
