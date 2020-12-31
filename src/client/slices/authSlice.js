@@ -39,6 +39,7 @@ const authSlice = createSlice({
       reducer: (state) => {
         state.fetching = false;
         state.token = null;
+        state.type = null;
         state.error = false;
       },
     },

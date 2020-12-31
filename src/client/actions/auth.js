@@ -1,4 +1,3 @@
-import router from 'next/router';
 import {
   logUserInService,
   registerUserService,
@@ -13,7 +12,6 @@ import {
   loginUserSuccess,
   loginUserFailure,
   logoutUserSuccess,
-  logoutUserFailure,
   updateUser,
   updateUserSuccess,
   updateUserFailure,
@@ -39,10 +37,10 @@ export function logoutUserAction() {
     try {
       await logUserOutService();
       dispatch(logoutUserSuccess());
-      return router.push('/');
+      window.location.href = '/';
     } catch (err) {
       dispatch(logoutUserSuccess());
-      return router.push('/');
+      window.location.href = '/';
     }
   };
 }
