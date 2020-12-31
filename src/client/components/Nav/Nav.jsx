@@ -16,6 +16,7 @@ const Nav = ({ user }) => {
   function onChangeDropdownHandler(value) {
     if (value !== '/signout') {
       router.push(value);
+      return;
     }
 
     dispatch(logoutUserAction());

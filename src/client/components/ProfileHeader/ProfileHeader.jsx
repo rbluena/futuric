@@ -9,7 +9,7 @@ const ProfileHeader = ({ profile, isMyProfile }) => {
 
   /** Handling all buttons in this section */
   function handleButtonClick(value) {
-    if (value === '/me/edit') {
+    if (value === '/settings') {
       router.push(value);
     }
   }
@@ -65,7 +65,7 @@ const ProfileHeader = ({ profile, isMyProfile }) => {
                 variant="primary"
                 outline
                 className="flex items-center"
-                onClick={() => handleButtonClick('/me/edit')}
+                onClick={() => handleButtonClick('/settings')}
               >
                 Edit Profile
               </Button>
