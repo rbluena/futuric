@@ -31,8 +31,9 @@ const selectAuth = (state) => {
 
   if (token && token.length) {
     isAuthenticated = true;
-    user = selectSelf(state);
-    if (user && !user.username) {
+    user = selectUser(state);
+
+    if (user && !user.brandname) {
       redirectUserToSettings = true;
     }
   }

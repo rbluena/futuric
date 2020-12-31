@@ -13,6 +13,7 @@ export default function Home() {
     if (redirectUserToSettings) {
       return router.push('/settings');
     }
+
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirectUserToSettings]);
