@@ -21,6 +21,8 @@ import LinkedinIcon from './LinkedinIcon';
 import TwitterIcon from './TwitterIcon';
 import FacebookIcon from './FacebookIcon';
 import CheckUserIcon from './CheckUserIcon';
+import InfoIcon from './InfoIcon';
+import AlertIcon from './AlertIcon';
 
 export {
   ClipboardListIcon,
@@ -46,4 +48,6 @@ export {
   TwitterIcon,
   FacebookIcon,
   CheckUserIcon,
+  InfoIcon,
+  AlertIcon,
 };

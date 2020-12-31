@@ -20,6 +20,7 @@ import ContentWrapper from './Content';
 import Section from './Section';
 import ProfileHeader from './ProfileHeader';
 import Logo from './Logo';
+import Notification from './Notification';
 
 export {
   LayoutManager,
@@ -44,4 +45,5 @@ export {
   ContentWrapper,
   ProfileHeader,
   Logo,
+  Notification,
 };
