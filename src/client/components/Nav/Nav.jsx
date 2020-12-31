@@ -33,8 +33,11 @@ const Nav = ({ user }) => {
           <Link className="px-2 font-bold" href="/">
             Home
           </Link>
+          <Link className="px-2 font-bold" href="/links">
+            Explore
+          </Link>
           <Link className="px-2 font-bold" href="/links/create">
-            Create Link
+            Create
           </Link>
           <Link className="px-2 font-bold" href="/learn">
             Learn
