@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isLoading: true,
-  notification: { type: 'error', message: 'Message to show to people.' }, // {type: 'success', message: 'String'} || { type: 'error', message: {}
+  notification: null, // {type: 'success', message: 'String'} || { type: 'error', message: {}
   modal: null,
   isSidebarOpen: true,
   toggleAuthMenu: false,
