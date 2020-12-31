@@ -25,6 +25,29 @@ import {
 } from '@app/slices/globalSlice';
 
 /**
+ * Logout
+ *
+ * Even if logout api fails, still user should be logged out
+ * on the client side.
+ *
+ * We reset the global state to clear of the data like notifications
+ * and loading state.
+ */
+export function logoutUserAction() {
+  return async (dispatch) => {
+    dispatch(resettingGlobalState());
+    try {
+      await logUserOutService();
+      dispatch(logoutUserSuccess());
+      return router.push('/');
+    } catch (err) {
+      dispatch(logoutUserSuccess());
+      return router.push('/');
+    }
+  };
+}
+
+/**
  * Logging in user using form
  * @param {Object} userData
  */
@@ -163,24 +186,12 @@ export function updateUserAction(userData) {
       dispatch(updateUserSuccess(data));
       dispatch(setNotification({ type: 'success', message }));
     } catch (err) {
-      dispatch(logoutUserAction());
       const error = {
         type: 'error',
         message: err.errors,
       };
-      dispatch(registerUserFailure());
+      dispatch(updateUserFailure());
       dispatch(setNotification(error));
     }
-  };
-}
-
-/**
- * Logging user out of the application
- */
-export function logoutUserAction() {
-  return async (dispatch) => {
-    dispatch(resettingGlobalState());
-    dispatch(logoutUserSuccess());
-    return router.push('/');
   };
 }

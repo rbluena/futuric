@@ -96,6 +96,7 @@ const UserForm = () => {
                 message: 'Email should not be less than 4 characters.',
               },
             })}
+            disabled
             error={get(inputErrors, 'email.message')}
           />
         </ControlWrapper>
