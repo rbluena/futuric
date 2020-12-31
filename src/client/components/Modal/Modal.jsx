@@ -28,11 +28,15 @@ const Modal = ({ children, onClose, isOpen, contentLabel }) => (
   </ModalWrapper>
 );
 
+Modal.defaultProps = {
+  isOpen: false,
+};
+
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
   contentLabel: PropTypes.string.isRequired,
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool,
 };
 
 Modal.Header = ({ heading, onClose }) => (

@@ -8,7 +8,7 @@ import Register from './Register';
 import Login from './Login';
 
 const AuthModalContainer = ({ modal }) => {
-  let isOpen = null;
+  let isOpen = false;
   const dispatch = useDispatch();
 
   if (modal === 'signup') isOpen = true;

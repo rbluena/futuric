@@ -38,10 +38,12 @@ const Dropdown = ({
       style={{ zIndex: 10000 }}
       {...props}
     >
-      {options.map((item) => {
+      {options.map((item, idx) => {
         if (Array.isArray(item)) {
+          const key = `item_${idx}`;
+
           return (
-            <div className="py-1">
+            <div className="py-1" key={key}>
               {item.map((list) => (
                 <button
                   key={list.value}
@@ -97,7 +99,7 @@ Dropdown.propTypes = {
   alignCenter: PropTypes.bool,
 
   /** List of options in key-value pair of label and value. */
-  options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  options: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Dropdown;

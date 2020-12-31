@@ -64,17 +64,19 @@ const CreateLink = () => {
           </span>
           <div className="flex flex-wrap">
             <Select
+              name="category"
               options={[
                 { label: 'Select Category', value: '' },
                 { label: 'Article', value: 'actions' },
                 { label: 'App Or Website', value: 'movies' },
-                { label: 'Art', value: 'pranks' },
-                { label: 'Book', value: 'pranks' },
-                { label: 'Documentary', value: 'documentaries' },
-                { label: 'Film', value: 'pranks' },
-                { label: 'Livestream', value: 'pranks' },
-                { label: 'Podcast', value: 'pranks' },
-                { label: 'Video', value: 'pranks' },
+                { label: 'Art', value: 'art' },
+                { label: 'Book', value: 'book' },
+                { label: 'Documentary', value: 'documentary' },
+                { label: 'Film', value: 'film' },
+                { label: 'Livestream', value: 'livestream' },
+                { label: 'Podcast', value: 'podcast' },
+                { label: 'Video', value: 'video' },
+                { label: 'Vlog', value: 'vlog' },
               ]}
               onChange={(evt) => setCategory(evt.target.value)}
               value={category}
@@ -82,23 +84,26 @@ const CreateLink = () => {
             />
             &nbsp; &nbsp;
             <Select
+              name="topic"
               options={[
                 { label: 'Select topic', value: '' },
                 { label: 'Movies', value: 'movies' },
                 { label: 'Pranks', value: 'pranks' },
-                { label: 'Business', value: 'pranks' },
-                { label: 'Politics', value: 'pranks' },
-                { label: 'Literature', value: 'pranks' },
-                { label: 'Startup', value: 'pranks' },
-                { label: 'Comedy', value: 'pranks' },
-                { label: 'Science & Tech', value: 'pranks' },
-                { label: 'Health', value: 'pranks' },
-                { label: 'Language', value: 'pranks' },
-                { label: 'Sports', value: 'pranks' },
-                { label: 'Personal Development', value: 'pranks' },
-                { label: 'Programming', value: 'pranks' },
-                { label: 'Relationships', value: 'pranks' },
-                { label: 'Pranks', value: 'pranks' },
+                { label: 'Business', value: 'business' },
+                { label: 'Politics', value: 'politics' },
+                { label: 'Literature', value: 'literature' },
+                { label: 'Startup', value: 'startup' },
+                { label: 'Comedy', value: 'comedy' },
+                { label: 'Science & Tech', value: 'sci-tech' },
+                { label: 'Health', value: 'health' },
+                { label: 'Language', value: 'language' },
+                { label: 'Sports', value: 'sports' },
+                {
+                  label: 'Personal Development',
+                  value: 'personal-development',
+                },
+                { label: 'Programming', value: 'programming' },
+                { label: 'Relationships', value: 'relationships' },
               ]}
               onChange={(evt) => setTopics(evt.target.value)}
               value={topics}

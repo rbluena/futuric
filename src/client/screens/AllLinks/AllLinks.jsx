@@ -14,6 +14,7 @@ const AllLinks = () => (
       <div className="mx-auto">
         <div className="border-b border-neutral-300 flex justify-around flex-wrap">
           <Select
+            name="topic"
             options={[
               { label: 'Select Topic', value: '' },
               { label: 'Comedy', value: 'comedy' },
@@ -21,6 +22,7 @@ const AllLinks = () => (
             ]}
           />
           <Select
+            name="availability"
             options={[
               { label: 'Select Availability', value: '' },
               { label: 'Today', value: 'today' },

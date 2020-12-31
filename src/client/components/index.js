@@ -16,7 +16,7 @@ import Hero from './Hero';
 import WidePosts from './WidePosts';
 import Aside from './Aside';
 import Footer from './Footer';
-import ContentWrapper from './Content';
+import ContentWrapper from './ContentWrapper';
 import Section from './Section';
 import ProfileHeader from './ProfileHeader';
 import Logo from './Logo';
