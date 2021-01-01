@@ -4,12 +4,14 @@ import { Avatar, Link } from '@app/components';
 import { BellOutlineIcon } from '@app/components/Icons';
 
 const PostCard = ({ children, small }) => (
-  <div
-    className={` transform transition-all items-start bg-neutral-50 hover:scale-105 hover:bg-neutral-100 p-4 ${
-      small ? 'max-w-sm' : ' max-w-xl'
-    }`}
-  >
-    {children}
+  <div className="relative">
+    <div
+      className={` transform transition-all mb-2 items-start bg-neutral-50 hover:scale-105 hover:bg-neutral-100 hover:absolute hover:shadow-md mx-2 p-2 ${
+        small ? 'max-w-sm' : ' max-w-xl'
+      }`}
+    >
+      {children}
+    </div>
   </div>
 );
 
