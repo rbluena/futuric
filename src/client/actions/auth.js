@@ -57,10 +57,10 @@ export function logUserInAction(userData) {
         ...userData,
         type: 'local',
       });
-      dispatch(loginUserSuccess(data));
       // dispatch(setNotification({ type: 'success', message }));
 
       window.location.reload();
+      dispatch(loginUserSuccess(data));
     } catch (err) {
       const error = {
         type: 'error',
@@ -88,10 +88,10 @@ export function signinUserWithGoogleAction(userData) {
         type: 'google-oauth',
       });
 
-      dispatch(loginUserSuccess(data));
-      dispatch(closeModal());
       // dispatch(setNotification({ type: 'success', message }));
-      // window.location.reload();
+      dispatch(loginUserSuccess(data));
+      window.location.reload();
+      dispatch(closeModal());
     } catch (err) {
       const error = {
         type: 'error',
