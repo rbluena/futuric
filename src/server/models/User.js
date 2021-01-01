@@ -36,6 +36,7 @@ const userSchema = new Schema(
     prominent: { type: Boolean, default: false },
     verificationToken: String,
     role: { type: Schema.Types.ObjectId, ref: 'Role' },
+    isSuperUser: { type: Boolean, default: false },
     address: {
       address: String,
       state: String,

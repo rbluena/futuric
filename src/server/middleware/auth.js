@@ -21,17 +21,16 @@ exports.isAuthenticated = async (req, res, next) => {
             errors: { description: 'You are not logged in, please login!' },
           });
         }
-
         return next();
       });
-    } else {
-      return res.status(403).json({
-        status: 403,
-        success: false,
-        message: 'error',
-        errors: [{ description: 'You are not logged in, please login!' }],
-      });
+      return next();
     }
+    return res.status(403).json({
+      status: 403,
+      success: false,
+      message: 'error',
+      errors: [{ description: 'You are not logged in, please login!' }],
+    });
   } catch (error) {
     return next(error);
   }
@@ -84,6 +83,13 @@ exports.registerInputValidation = async (req, res, next) => {
 
     return next(err);
   }
+};
+
+exports.isSuperUser = async (req, res) => {
+  res.status(400).json({
+    status: 400,
+    message: 'You are not authorized to perform this operation.',
+  });
 };
 
 exports.authenticate = async (req, res, next) => {
