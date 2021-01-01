@@ -14,9 +14,8 @@ const authSlice = createSlice({
 
   reducers: {
     loginUser: {
-      reducer: (state, { payload }) => {
+      reducer: (state) => {
         state.fetching = true;
-        state.token = payload;
       },
     },
     loginUserSuccess: {
