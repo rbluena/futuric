@@ -1,0 +1,14 @@
+[
+  { "name": "Literature", "code": "literature" },
+  { "name": "Politics", "code": "politics" },
+  { "name": "Business", "code": "business" },
+  { "name": "Startup", "code": "startup" },
+  { "name": "Comedy", "code": "comedy" },
+  { "name": "Science and Technology", "code": "sci-tech" },
+  { "name": "Health", "code": "health" },
+  { "name": "Language", "code": "language" },
+  { "name": "Sports", "code": "sports" },
+  { "name": "Personal Development", "code": "personal" },
+  { "name": "Programming", "code": "programming" },
+  { "name": "Relationships", "code": "relationships" }
+]

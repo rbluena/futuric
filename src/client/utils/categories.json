@@ -1,0 +1,11 @@
+[
+  { "name": "Articles", "code": "articles" },
+  { "name": "Apps & Websites", "code": "apps" },
+  { "name": "Arts", "code": "arts" },
+  { "name": "Books", "code": "books" },
+  { "name": "Documentary", "code": "documentaries" },
+  { "name": "Podcasts", "code": "podcasts" },
+  { "name": "Videos", "code": "videos" },
+  { "name": "Livestreams", "code": "livestreams" },
+  { "name": "Films", "code": "films" }
+]
