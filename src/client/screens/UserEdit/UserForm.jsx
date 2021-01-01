@@ -144,6 +144,7 @@ const UserForm = () => {
             name="address.address"
             label="Address:"
             placeholder="Address"
+            register={register}
             error={get(inputErrors, 'address.address.message')}
           />
         </ControlWrapper>
@@ -152,6 +153,7 @@ const UserForm = () => {
             name="address.city"
             label="City:"
             placeholder="City"
+            register={register}
             error={get(inputErrors, 'address.message')}
           />
         </ControlWrapper>
@@ -168,7 +170,12 @@ const UserForm = () => {
               },
             })}
             error={get(inputErrors, 'address.country.message')}
-          />
+          >
+            <option value="">Select country</option>
+            {countries.map((item) => (
+              <option value={item.value}>{item.label}</option>
+            ))}
+          </Select>
         </ControlWrapper>
       </Section>
 

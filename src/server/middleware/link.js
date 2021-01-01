@@ -24,7 +24,7 @@ exports.validateLinkData = (req, res, next) => {
         message: 'error',
         errors: [
           {
-            details: 'User id should be provided.',
+            details: 'Owner should be specified.',
           },
         ],
       });

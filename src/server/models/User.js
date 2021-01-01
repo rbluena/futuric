@@ -51,7 +51,7 @@ const userSchema = new Schema(
         default: 'FREE',
       },
     },
-    links: [{ type: Schema.Types.ObjectId, ref: 'Links' }],
+    links: [{ type: Schema.Types.ObjectId, ref: 'Link' }],
   },
   { timestamps: true }
 );

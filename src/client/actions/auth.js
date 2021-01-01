@@ -58,9 +58,8 @@ export function logUserInAction(userData) {
         type: 'local',
       });
       // dispatch(setNotification({ type: 'success', message }));
-
-      window.location.reload();
       dispatch(loginUserSuccess(data));
+      window.location.reload();
     } catch (err) {
       const error = {
         type: 'error',
@@ -90,7 +89,7 @@ export function signinUserWithGoogleAction(userData) {
 
       // dispatch(setNotification({ type: 'success', message }));
       dispatch(loginUserSuccess(data));
-      window.location.reload();
+      // window.location.reload();
       dispatch(closeModal());
     } catch (err) {
       const error = {

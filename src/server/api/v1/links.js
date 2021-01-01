@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { isAuthenticated } = require('../../middleware/auth');
-const { validateLinkData } = require('../../middleware/todo');
+const { validateLinkData } = require('../../middleware/link');
 const {
   newLinkHandler,
   updateLinkHandler,

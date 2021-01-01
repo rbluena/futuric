@@ -23,14 +23,14 @@ exports.isAuthenticated = async (req, res, next) => {
         }
         return next();
       });
-      return next();
+    } else {
+      return res.status(403).json({
+        status: 403,
+        success: false,
+        message: 'error',
+        errors: [{ description: 'You are not logged in, please login!' }],
+      });
     }
-    return res.status(403).json({
-      status: 403,
-      success: false,
-      message: 'error',
-      errors: [{ description: 'You are not logged in, please login!' }],
-    });
   } catch (error) {
     return next(error);
   }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGlobalNotification } from '@app/selectors';
-import { Notification, ContentWrapper } from '@app/components';
+import { Notification } from '@app/components';
 import { clearNotification } from '@app/slices/globalSlice';
 
 const NotificationContainer = () => {
@@ -27,7 +27,7 @@ const NotificationContainer = () => {
   }, [type, message]);
 
   return (
-    <ContentWrapper>
+    <div className="fixed w-full z-50">
       {notification && (
         <Notification
           type={notification.type}
@@ -35,7 +35,7 @@ const NotificationContainer = () => {
           closeAlert={resetNotification}
         />
       )}
-    </ContentWrapper>
+    </div>
   );
 };
 

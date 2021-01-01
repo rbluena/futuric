@@ -25,6 +25,7 @@ import {
 } from '@app/slices/linksSlice';
 
 import { setNotification } from '@app/slices/globalSlice';
+import { decode } from 'jsonwebtoken';
 
 /**
  * Retreiving a link based on link's id
@@ -54,11 +55,15 @@ export function createLinkAction(linkData) {
   return async (dispatch, getState) => {
     try {
       const { token } = getState().auth;
+      const user = decode(token);
 
-      const { message, data } = await createLinkService(token, linkData);
+      const { message, data } = await createLinkService(token, {
+        ...linkData,
+        owner: user._id,
+      });
 
       dispatch(createLink(data));
-      dispatch(createLinkSuccess());
+      dispatch(createLinkSuccess(data));
       dispatch(setNotification({ type: 'success', message }));
     } catch (err) {
       dispatch(createLinkFailure());

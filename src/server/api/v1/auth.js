@@ -11,7 +11,6 @@ const {
 } = require('../../handlers/auth');
 const {
   registerInputValidation,
-  authenticate,
   isAuthenticated,
 } = require('../../middleware/auth');
 
@@ -39,7 +38,7 @@ router.post('/verify/new', newVerificationCode);
 /**
  * Logging in user using email and password
  */
-router.post('/login', authenticate, loginHandler);
+router.post('/login', loginHandler);
 
 /**
  * Logging user out.

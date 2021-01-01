@@ -94,6 +94,11 @@ const linksSlice = createSlice({
         state.fetching = false;
       },
     },
+    removeCreatedLink: {
+      reducer: (state) => {
+        state.createdLink = null;
+      },
+    },
   },
 });
 
@@ -113,6 +118,7 @@ export const {
   deleteLink,
   deleteLinkSuccess,
   deleteLinkFailure,
+  removeCreatedLink,
 } = linksSlice.actions;
 
 export default linksSlice.reducer;

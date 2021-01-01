@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('../models/User');
 
 /**
@@ -34,10 +35,8 @@ const findUserByEmail = async (email) => {
  * Find user by id
  * @param {String} id
  */
-const findUserById = async (id) => {
-  const user = await User.findById(id);
-  return user;
-};
+const findUserById = async (id) =>
+  User.findOne({ _id: mongoose.Types.ObjectId(id) });
 
 /**
  * Saving user to the database.

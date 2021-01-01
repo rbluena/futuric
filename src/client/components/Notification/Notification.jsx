@@ -19,7 +19,7 @@ const Notification = ({ type, message, details, closeAlert }) => {
 
   return (
     <div
-      className={`transform left-1/2 -translate-x-1/2 absolute w-full z-50  border-b-2 rounded-b  shadow-md p-4 ${className}`}
+      className={`w-full z-50  border-b-2 rounded-b  shadow-md p-4 ${className}`}
       role="alert"
     >
       <div className="flex w-full">
