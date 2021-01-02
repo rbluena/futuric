@@ -2,9 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Link, Avatar, Button } from '@app/components';
-import { BadgeShieldIcon, CheckUserIcon } from '@app/components/Icons';
+import {
+  BadgeIcon,
+  BadgeShieldIcon,
+  CheckUserIcon,
+} from '@app/components/Icons';
 
-const ProfileHeader = ({ profile, isMyProfile }) => {
+const ProfileHeader = ({ profile, isCurrentUser }) => {
   const router = useRouter();
 
   /** Handling all buttons in this section */
@@ -22,26 +26,31 @@ const ProfileHeader = ({ profile, isMyProfile }) => {
 
           <div className="flex flex-col items-start pl-2">
             <Link
-              href="/@netflix"
+              href={`@${profile.username}`}
               variant="secondary"
               size="lg"
               className="font-bold flex items-center"
             >
-              <span>{profile.name}</span>
+              <span>{profile.brandname}</span>
               &nbsp;
               {profile.prominent && (
                 <BadgeShieldIcon size="sm" className="text-primary-700" />
               )}
-              {/* <BadgeIcon size="xs" className="text-success-700" /> */}
+              <BadgeIcon size="xs" className="text-success-700" />
             </Link>
             {profile.website && (
-              <Link href="/@" size="xs" variant="secondary" className="mb-2">
+              <Link
+                href={profile.website}
+                size="xs"
+                variant="secondary"
+                className="mb-2"
+              >
                 {profile.website}
               </Link>
             )}
           </div>
 
-          {!isMyProfile ? (
+          {!isCurrentUser ? (
             <div className="ml-auto">
               {profile.following ? (
                 <Button variant="primary" className="flex items-center">
@@ -55,7 +64,8 @@ const ProfileHeader = ({ profile, isMyProfile }) => {
                   className="flex items-center"
                   onClick={() => handleButtonClick('follow')}
                 >
-                  Follow
+                  Follow &nbsp;&nbsp;
+                  <CheckUserIcon size="xs" />
                 </Button>
               )}
             </div>
@@ -84,11 +94,11 @@ const ProfileHeader = ({ profile, isMyProfile }) => {
 };
 
 ProfileHeader.defaultProps = {
-  isMyProfile: false,
+  isCurrentUser: false,
 };
 
 ProfileHeader.propTypes = {
   profile: PropTypes.objectOf(PropTypes.shape).isRequired,
-  isMyProfile: PropTypes.bool,
+  isCurrentUser: PropTypes.bool,
 };
 export default ProfileHeader;

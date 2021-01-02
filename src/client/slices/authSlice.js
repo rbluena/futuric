@@ -5,6 +5,7 @@ const initialState = {
   fetching: false,
   token: null,
   type: null, // 'google-oauth' or 'local'
+  profile: null,
   error: null,
 };
 
@@ -85,6 +86,13 @@ const authSlice = createSlice({
         state.error = false;
       },
     },
+    getUserProfileSuccess: {
+      reducer: (state, { payload }) => {
+        state.fetching = false;
+        state.profile = payload;
+        state.error = false;
+      },
+    },
   },
 });
 
@@ -101,6 +109,7 @@ export const {
   updateUser,
   updateUserSuccess,
   updateUserFailure,
+  getUserProfileSuccess,
 } = authSlice.actions;
 
 export default authSlice.reducer;

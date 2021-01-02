@@ -41,7 +41,21 @@ const selectAuth = (state) => {
   return { isAuthenticated, user, redirectUserToSettings };
 };
 
+const selectProfile = (state) => {
+  const { profile } = state.auth;
+  let isCurrentUser = false;
+  const user = selectUser(state);
+
+  if (user) {
+    isCurrentUser = user._id === profile._id;
+  }
+
+  return { profile, isCurrentUser };
+};
+
 // eslint-disable-next-line import/prefer-default-export
 export const getUserSelector = createSelector(selectSelf, selectUser);
+
+export const getProfileSelector = createSelector(selectSelf, selectProfile);
 
 export const getAuthSelector = createSelector(selectSelf, selectAuth);

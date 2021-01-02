@@ -358,3 +358,38 @@ exports.deleteTestingUserHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Retrieving user based on their username
+ */
+exports.getProfileHandler = async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const user = await findUserByUsername(username);
+
+    if (!user) {
+      res.status(400).json({
+        success: false,
+        message: 'Bad Request',
+        errors: {
+          details: "User with username can't be found.",
+        },
+      });
+    }
+
+    delete user.password;
+    delete user.verificationToken;
+    delete user.token;
+    delete user.loginStrategy;
+    delete user.links;
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: 'User updated successfully',
+      data: user,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};

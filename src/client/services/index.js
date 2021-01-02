@@ -100,6 +100,19 @@ export const logUserOutService = async (token) => {
   }
 };
 
+export const getUserProfileService = async (username) => {
+  try {
+    const response = await request({
+      method: 'GET',
+      url: path.getProfile(username),
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
 /**
  * Service to create a link.
  * @param {Object} data

@@ -6,6 +6,7 @@ const {
   loginHandler,
   logoutHandler,
   updateUserHandler,
+  getProfileHandler,
   deleteTestingUserHandler,
   verifyUserToken,
 } = require('../../handlers/auth');
@@ -24,6 +25,9 @@ router.put('/update/:id', isAuthenticated, updateUserHandler);
 
 /** Generating new verification token */
 router.get('/me', isAuthenticated, verifyUserToken);
+
+/** Retrieving user's profile based on username */
+router.get('/profile/:username', getProfileHandler);
 
 /**
  * Verifying user with token sent via email
