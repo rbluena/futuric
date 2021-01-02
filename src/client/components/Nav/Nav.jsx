@@ -73,7 +73,10 @@ const Nav = ({ user }) => {
                   { label: 'Waiting List', value: '/me/waitings' },
                   { label: 'Notifications', value: '/me/notifications' },
                 ],
-                [{ label: 'Sign Out', value: '/signout' }],
+                [
+                  { label: 'Settings', value: '/settings' },
+                  { label: 'Sign Out', value: '/signout' },
+                ],
               ]}
               onValueChanged={onChangeDropdownHandler}
               changeDropdownVisibility={(value) => setToggleDropdown(value)}
