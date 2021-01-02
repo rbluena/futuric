@@ -1,24 +1,23 @@
 import React from 'react';
+import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 import { Link, Avatar } from '@app/components';
 import { BadgeIcon } from '@app/components/Icons';
 
-const Header = ({ active }) => (
+const Header = ({ active, link }) => (
   <div className="header flex border-b pb-2 border-neutral-200">
     <div className="">
-      <Link
-        href="https://bit.ly/3eJm90H"
-        variant={active ? 'primary' : 'secondary'}
-      >
-        https://bit.ly/3eJm90H
-      </Link>
+      {link.isActive ? (
+        <Link href={link.shortenUrl} variant="primary">
+          {link.shortenUrl}
+        </Link>
+      ) : (
+        <span className="text-xl text-neutral-700">{link.shortenUrl}</span>
+      )}
       <br />
-      <div className="text-neutral-600 text-xs">
-        <span className="font-bold text-neutral-800">Posted:</span> Mar 25
-      </div>
-      <div className="text-neutral-600 text-xs">
-        <span className="font-bold text-neutral-800">Active:</span> Not
-        Activeted
+      <div className="text-neutral-600 text-sm">
+        <span className="font-bold text-neutral-800">Created:</span>{' '}
+        {format(link.createdAt, 'MMM D')}
       </div>
     </div>
 
@@ -39,17 +38,18 @@ const Header = ({ active }) => (
             Follow
           </Link>
         </div>
-        <Avatar initials="NL" size="xl" className="text-2xl" />
+        {/* <Avatar initials="NL" size="xl" className="text-2xl" /> */}
       </div>
     </div>
   </div>
 );
 
 Header.defaultProps = {
-  active: true,
+  link: {},
 };
 
 Header.propTypes = {
-  active: PropTypes.bool,
+  link: PropTypes.objectOf(PropTypes.shape),
 };
+
 export default Header;

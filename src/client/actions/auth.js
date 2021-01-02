@@ -1,3 +1,4 @@
+import { setCookieToken, deleteCookieToken } from '@app/utils/session';
 import {
   logUserInService,
   registerUserService,
@@ -37,6 +38,7 @@ export function logoutUserAction() {
     try {
       await logUserOutService();
       dispatch(logoutUserSuccess());
+      await deleteCookieToken();
       window.location.href = '/';
     } catch (err) {
       dispatch(logoutUserSuccess());
@@ -59,6 +61,7 @@ export function logUserInAction(userData) {
       });
       // dispatch(setNotification({ type: 'success', message }));
       dispatch(loginUserSuccess(data));
+      await setCookieToken(data.jwt);
       window.location.reload();
     } catch (err) {
       const error = {
@@ -90,6 +93,7 @@ export function signinUserWithGoogleAction(userData) {
       // dispatch(setNotification({ type: 'success', message }));
       dispatch(loginUserSuccess(data));
       // window.location.reload();
+      await setCookieToken(data.jwt);
       dispatch(closeModal());
     } catch (err) {
       const error = {
