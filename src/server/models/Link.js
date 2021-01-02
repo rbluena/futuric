@@ -9,11 +9,13 @@ const linkSchema = new Schema(
     shortenUrl: { type: String }, // Shortened url to be shared to the public
     longUrl: { type: String }, // Longest link to the original content
     postUrl: { type: String },
-    availableAt: { type: Date }, // The day the link is active for redirect.
+    availableDate: { type: Date }, // The day the link is active for the post/content.
     isActive: { type: Boolean, default: false }, //
     location: { type: String },
     isPrivate: { type: Boolean, default: false },
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
+    topic: { type: String },
+    category: { type: String },
     archived: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
   },

@@ -76,15 +76,15 @@ export function createLinkAction(linkData) {
   };
 }
 
-export function updateLinkAction(linkData) {
+export function updateLinkAction(id, linkData) {
   return async (dispatch, getState) => {
     try {
       const { token } = getState().auth;
 
-      const { message, data } = await updateLinkService(token, linkData);
+      const { message, data } = await updateLinkService(token, id, linkData);
 
-      dispatch(updateLink(data));
-      dispatch(updateLinkSuccess());
+      dispatch(updateLink());
+      dispatch(updateLinkSuccess(data));
       dispatch(setNotification({ type: 'success', message }));
     } catch (err) {
       dispatch(updateLinkFailure());

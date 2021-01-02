@@ -23,8 +23,8 @@ const Editor = ({ link }) => {
     if (link) {
       setTitle(link.title);
       setDescription(link.description);
-      if (link.availableAt) {
-        setDate(new Date(link.availableAt));
+      if (link.availableDate) {
+        setDate(new Date(link.availableDate));
       }
       setCategory(link.category || '');
       setTopic(link.topic || '');
@@ -41,10 +41,10 @@ const Editor = ({ link }) => {
     }
 
     dispatch(
-      updateLinkAction({
+      updateLinkAction(link._id, {
         title,
         description,
-        availableDate: date,
+        availableDate: new Date(date),
         category,
         topic,
       })

@@ -12,7 +12,11 @@ const updateLinkService = async (linkId, data) => {
   const doc = await Link.findOne({ _id: linkId });
 
   Object.keys(data).forEach((key) => {
-    doc[key] = data[key];
+    if (key === 'availableDate') {
+      doc[key] = new Date(data[key]);
+    } else {
+      doc[key] = data[key];
+    }
   });
 
   const updated = await doc.save();
@@ -20,6 +24,7 @@ const updateLinkService = async (linkId, data) => {
   if (!updated) {
     throw Error('Something went wrong. Our team are fixing it');
   }
+  await updated.populate('owner');
 
   return updated._doc;
 };

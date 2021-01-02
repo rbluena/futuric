@@ -1,10 +1,10 @@
 import React from 'react';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
-import { Link, Avatar } from '@app/components';
+import { Link } from '@app/components';
 import { BadgeIcon } from '@app/components/Icons';
 
-const Header = ({ active, link }) => (
+const Header = ({ link }) => (
   <div className="header flex border-b pb-2 border-neutral-200">
     <div className="">
       {link.isActive ? (
@@ -16,9 +16,15 @@ const Header = ({ active, link }) => (
       )}
       <br />
       <div className="text-neutral-600 text-sm">
-        <span className="font-bold text-neutral-800">Created:</span>{' '}
+        <span className="font-bold text-neutral-800">Created At:</span>{' '}
         {format(link.createdAt, 'MMM D')}
       </div>
+      {link.availableDate && (
+        <div className="text-neutral-600 text-sm">
+          <span className="font-bold text-neutral-800">Available At:</span>{' '}
+          {format(link.availableDate, 'MMM D')}
+        </div>
+      )}
     </div>
 
     <div className="ml-auto">
@@ -34,9 +40,9 @@ const Header = ({ active, link }) => (
             &nbsp;
             <BadgeIcon size="xs" className="text-success-700" />
           </Link>
-          <Link href="/@" size="xs">
+          {/* <Link href="/@" size="xs">
             Follow
-          </Link>
+          </Link> */}
         </div>
         {/* <Avatar initials="NL" size="xl" className="text-2xl" /> */}
       </div>
