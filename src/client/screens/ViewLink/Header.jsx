@@ -4,9 +4,9 @@ import { format } from 'date-fns';
 import { Link, Button } from '@app/components';
 import {
   BellOutlineIcon,
-  LinkedinIcon,
-  TwitterIcon,
-  FacebookIcon,
+  // LinkedinIcon,
+  // TwitterIcon,
+  // FacebookIcon,
   BadgeIcon,
 } from '@app/components/Icons';
 
@@ -57,7 +57,7 @@ const Header = ({ link, owner, isOwner }) => (
       <div className="flex flex-wrap-reverse items-center">
         <div className="flex flex-col items-start pr-2">
           <Link
-            href={`@${owner.username}`}
+            href={`/@${owner.username}`}
             variant="secondary"
             size="lg"
             className="font-bold flex items-center"

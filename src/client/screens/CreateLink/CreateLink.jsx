@@ -113,7 +113,9 @@ const CreateLink = () => {
             >
               <option value="">Select category</option>
               {categOptions.map((item) => (
-                <option value={item.code}>{item.name}</option>
+                <option key={item.code} value={item.code}>
+                  {item.name}
+                </option>
               ))}
             </Select>
             &nbsp; &nbsp;
@@ -125,7 +127,9 @@ const CreateLink = () => {
             >
               <option value="">Select topic</option>
               {topicOptions.map((item) => (
-                <option value={item.code}>{item.name}</option>
+                <option key={item.code} value={item.code}>
+                  {item.name}
+                </option>
               ))}
             </Select>
           </div>
@@ -148,6 +152,8 @@ const CreateLink = () => {
             </label>
             <DatePicker
               id="date-picker"
+              minDate={new Date()}
+              showDisabledMonthNavigation
               selected={date}
               showTimeSelect
               onChange={(pickedDate) => {

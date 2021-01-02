@@ -94,7 +94,9 @@ const Editor = ({ link }) => {
             >
               <option value="">Select category</option>
               {categOptions.map((item) => (
-                <option value={item.code}>{item.name}</option>
+                <option key={item.code} value={item.code}>
+                  {item.name}
+                </option>
               ))}
             </Select>
             &nbsp; &nbsp;
@@ -106,36 +108,35 @@ const Editor = ({ link }) => {
             >
               <option value="">Select topic</option>
               {topicOptions.map((item) => (
-                <option value={item.code}>{item.name}</option>
+                <option key={item.code} value={item.code}>
+                  {item.name}
+                </option>
               ))}
             </Select>
           </div>
         </ControlWrapper>
 
-        <div>
-          <ControlWrapper>
-            <label
-              htmlFor="date-picker"
-              className="text-neutral-600 mb-1 block"
-            >
-              When do you expect your content to be available online?
-            </label>
-            <DatePicker
-              id="date-picker"
-              selected={date}
-              showTimeSelect
-              onChange={(pickedDate) => {
-                setDate(pickedDate);
-              }}
-              autoComplete="off"
-              dateFormat="MMM dd, yyyy - p"
-              className="outline-none py-2 px-1 focus:outline-none border-b border-primary-400 focus:border-primary-600"
-            />
-          </ControlWrapper>
-        </div>
+        <ControlWrapper>
+          <label htmlFor="date-picker" className="text-neutral-600 mb-1 block">
+            When do you expect your content to be available online?
+          </label>
+          <DatePicker
+            id="date-picker"
+            minDate={new Date()}
+            showDisabledMonthNavigation
+            selected={date}
+            showTimeSelect
+            onChange={(pickedDate) => {
+              setDate(pickedDate);
+            }}
+            autoComplete="off"
+            dateFormat="MMM dd, yyyy - p"
+            className="outline-none py-2 px-1 focus:outline-none border-b border-primary-400 focus:border-primary-600"
+          />
+        </ControlWrapper>
 
         <footer className="py-4">
-          <Submit>Create Link</Submit>
+          <Submit>Submit</Submit>
         </footer>
       </form>
     </div>

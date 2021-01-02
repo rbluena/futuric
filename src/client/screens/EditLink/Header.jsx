@@ -11,7 +11,7 @@ const Header = ({ link, owner }) => (
         href={link.longUrl || ''}
         variant={link.isActive ? 'primary' : 'secondary'}
       >
-        {link.shortenUrl}
+        {link.shortenUrl || ''}
       </Link>
       <br />
       <div className="text-neutral-600 text-sm">
@@ -33,12 +33,12 @@ const Header = ({ link, owner }) => (
       <div className="flex flex-wrap-reverse items-center">
         <div className="flex flex-col items-start pr-2">
           <Link
-            href="/@netflix"
+            href={`/@${owner.username}`}
             variant="secondary"
             size="lg"
             className="font-bold flex items-center"
           >
-            <span>Netflix</span>
+            <span>{owner.brandname}</span>
             &nbsp;
             {owner.prominent && (
               <BadgeIcon size="xs" className="text-success-500" />
