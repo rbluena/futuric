@@ -98,6 +98,21 @@ const deleteUserByEmail = async (email) => {
   return deleted;
 };
 
+/**
+ * Cheking is authenticated user is the author of the content.
+ * @param {String} userId
+ * @param {String} linkId
+ */
+const isUserOwnLinkService = async (userId, linkId) => {
+  const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+
+  if (user && user.links.includes(linkId)) {
+    return true;
+  }
+
+  return false;
+};
+
 module.exports = {
   findUserByEmail,
   findUserByUsername,
@@ -106,4 +121,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUserByEmail,
+  isUserOwnLinkService,
 };

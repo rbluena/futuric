@@ -1,3 +1,5 @@
+import { decode } from 'jsonwebtoken';
+import router from 'next/router';
 import {
   getLinkService,
   createLinkService,
@@ -25,7 +27,6 @@ import {
 } from '@app/slices/linksSlice';
 
 import { setNotification } from '@app/slices/globalSlice';
-import { decode } from 'jsonwebtoken';
 
 /**
  * Retreiving a link based on link's id
@@ -97,15 +98,23 @@ export function updateLinkAction(id, linkData) {
   };
 }
 
-export function deleteLinkAction(linkData) {
+/**
+ * Completly deleting link post from the server
+ */
+export function deleteLinkAction(id, redirect) {
   return async (dispatch, getState) => {
     try {
       const { token } = getState().auth;
 
-      const { message, data } = await deleteLinkService(token, linkData);
+      const { message } = await deleteLinkService(token, id);
 
-      dispatch(deleteLink(data));
-      dispatch(deleteLinkSuccess());
+      if (redirect) {
+        router.push('/me/links');
+        return;
+      }
+
+      dispatch(deleteLink());
+      dispatch(deleteLinkSuccess(id));
       dispatch(setNotification({ type: 'success', message }));
     } catch (err) {
       dispatch(deleteLinkFailure());

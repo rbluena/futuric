@@ -73,14 +73,13 @@ exports.updateLinkHandler = async (req, res, next) => {
 exports.deleteLinkHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { calendarId } = req.params;
 
-    const doc = await deleteLinkService(id, calendarId);
+    const doc = await deleteLinkService(id);
 
     res.status(200).json({
       status: 200,
       success: true,
-      message: 'Todo was updated successfully.',
+      message: 'Link was deleted successfully.',
       data: { ...doc },
     });
   } catch (error) {

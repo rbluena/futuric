@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { registerValidation } = require('../utils/validation');
-const { findUserByEmail } = require('../services/user');
+const { findUserByEmail, isUserOwnLinkService } = require('../services/user');
 
 /**
  * Checking if user is authenticated for a route.
@@ -39,7 +39,25 @@ exports.isAuthenticated = async (req, res, next) => {
 /**
  * Checking if user is authorized to access a route.
  */
-exports.isAuthorized = () => {};
+exports.isAuthorized = async (req, res, next) => {
+  const { id } = req.params;
+  const user = jwt.decode(req.app.jwt);
+
+  try {
+    const isOwner = await isUserOwnLinkService(user._id, id);
+
+    if (!isOwner) {
+      res.status(403).json({
+        status: 403,
+        message: 'unauthorized',
+        errors: { details: 'You are not authorized to perform this request.' },
+      });
+    }
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+};
 
 /**
  * Validating user input.
