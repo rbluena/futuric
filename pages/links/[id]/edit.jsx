@@ -9,7 +9,7 @@ import { getLinkService } from '@app/services';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
 import EditLinkScreen from '@app/screens/EditLink';
 
-const ViewLink = ({ linkData }) => {
+const EditLink = ({ linkData }) => {
   const { isAuthenticated } = useAuthentication();
   const dispatch = useDispatch();
   // Avoding to show page when redirecting
@@ -50,7 +50,7 @@ export async function getServerSideProps({ params, req }) {
       };
     }
 
-    ({ data: linkData } = await getLinkService(token, id));
+    ({ data: linkData } = await getLinkService(id));
 
     // If linkData is not found
     if (!linkData) {
@@ -58,6 +58,8 @@ export async function getServerSideProps({ params, req }) {
         notFound: true,
       };
     }
+
+    // If link is not owned by user, we should return 404
   } catch (error) {
     return {
       notFound: true,
@@ -70,12 +72,12 @@ export async function getServerSideProps({ params, req }) {
     }, // will be passed to the page component as props
   };
 }
-ViewLink.defaultProps = {
+EditLink.defaultProps = {
   linkData: {},
 };
 
-ViewLink.propTypes = {
+EditLink.propTypes = {
   linkData: PropTypes.objectOf(PropTypes.shape),
 };
 
-export default ViewLink;
+export default EditLink;

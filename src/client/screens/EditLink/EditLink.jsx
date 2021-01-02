@@ -5,12 +5,20 @@ import { getLinksStateSelector } from '@app/selectors';
 import Header from './Header';
 import Editor from './Editor';
 
-const EditLink = ({ link }) => (
-  <div className="py-10 max-w-5xl mx-auto">
-    <Header link={link || {}} />
-    <Editor link={link || {}} />
-  </div>
-);
+const EditLink = ({ link }) => {
+  let owner = {};
+
+  if (link) {
+    owner = link.owner;
+  }
+
+  return (
+    <div className="py-10 max-w-5xl mx-auto">
+      <Header link={link || {}} owner={owner} />
+      <Editor link={link || {}} />
+    </div>
+  );
+};
 
 EditLink.defaultProps = {
   link: {},

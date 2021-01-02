@@ -64,7 +64,14 @@ const deleteLinkService = async (linkId) => {
  * @param {String} linkId
  */
 const getLinkByIdService = async (linkId) => {
-  const link = await Link.findById(linkId);
+  const link = await Link.findById(linkId).populate('owner', [
+    '_id',
+    'brandname',
+    'username',
+    'prominent',
+    'firstname',
+    'lastname',
+  ]);
   return link;
 };
 

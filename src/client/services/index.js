@@ -174,14 +174,11 @@ export const deleteLinkService = async (token, id) => {
  * @param {String} token
  * @param {String} id
  */
-export const getLinkService = async (token, id) => {
+export const getLinkService = async (id) => {
   try {
     const response = await request({
       method: 'GET',
       url: path.getLink(id),
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
 
     return response.data;

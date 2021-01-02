@@ -4,25 +4,27 @@ import PropTypes from 'prop-types';
 import { Link } from '@app/components';
 import { BadgeIcon } from '@app/components/Icons';
 
-const Header = ({ link }) => (
+const Header = ({ link, owner }) => (
   <div className="header flex border-b pb-2 border-neutral-200">
     <div className="">
-      {link.isActive ? (
-        <Link href={link.shortenUrl} variant="primary">
-          {link.shortenUrl}
-        </Link>
-      ) : (
-        <span className="text-xl text-neutral-700">{link.shortenUrl}</span>
-      )}
+      <Link
+        href={link.longUrl || ''}
+        variant={link.isActive ? 'primary' : 'secondary'}
+      >
+        {link.shortenUrl}
+      </Link>
       <br />
       <div className="text-neutral-600 text-sm">
         <span className="font-bold text-neutral-800">Created At:</span>{' '}
-        {format(link.createdAt, 'MMM D')}
+        {link.createdAt && format(new Date(link.createdAt), 'MMM d')}
       </div>
       {link.availableDate && (
         <div className="text-neutral-600 text-sm">
           <span className="font-bold text-neutral-800">Available At:</span>{' '}
-          {format(link.availableDate, 'MMM D')}
+          {link.isActive
+            ? 'Published'
+            : link.availableDate &&
+              format(new Date(link.availableDate), 'MMM d')}
         </div>
       )}
     </div>
@@ -38,7 +40,9 @@ const Header = ({ link }) => (
           >
             <span>Netflix</span>
             &nbsp;
-            <BadgeIcon size="xs" className="text-success-700" />
+            {owner.prominent && (
+              <BadgeIcon size="xs" className="text-success-500" />
+            )}
           </Link>
           {/* <Link href="/@" size="xs">
             Follow
@@ -52,10 +56,12 @@ const Header = ({ link }) => (
 
 Header.defaultProps = {
   link: {},
+  owner: {},
 };
 
 Header.propTypes = {
   link: PropTypes.objectOf(PropTypes.shape),
+  owner: PropTypes.objectOf(PropTypes.shape),
 };
 
 export default Header;
