@@ -71,7 +71,9 @@ const getLinkByIdService = async (linkId) => {
     'prominent',
     'firstname',
     'lastname',
+    'followers',
   ]);
+
   return link;
 };
 

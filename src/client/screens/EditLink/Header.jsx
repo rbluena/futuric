@@ -44,9 +44,6 @@ const Header = ({ link, owner }) => (
               <BadgeIcon size="xs" className="text-success-500" />
             )}
           </Link>
-          {/* <Link href="/@" size="xs">
-            Follow
-          </Link> */}
         </div>
         {/* <Avatar initials="NL" size="xl" className="text-2xl" /> */}
       </div>

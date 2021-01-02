@@ -37,6 +37,8 @@ const userSchema = new Schema(
     verificationToken: String,
     role: { type: Schema.Types.ObjectId, ref: 'Role' },
     isSuperUser: { type: Boolean, default: false },
+    followings: { type: Array },
+    followers: { type: Array },
     address: {
       address: String,
       state: String,

@@ -52,8 +52,8 @@ export async function getServerSideProps({ params, req }) {
 
     ({ data: linkData } = await getLinkService(id));
 
-    // If linkData is not found
-    if (!linkData) {
+    // If data is not found or user is not the original author
+    if (!linkData || !linkData.isUserOwner) {
       return {
         notFound: true,
       };

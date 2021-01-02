@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@app/components';
 
-const Footer = ({ link, isOwner }) => (
+const Footer = ({ link }) => (
   <div className="flex items-center">
     <Link href="/" size="xs" className="italic">
       <span className="mr-1">35</span>Comments
     </Link>
 
-    {isOwner && (
+    {link.isUserOwner && (
       <>
         <span className="ml-2 text-neutral-300">|</span>
         <div className="flex items-center">
@@ -35,12 +35,10 @@ const Footer = ({ link, isOwner }) => (
 );
 
 Footer.defaultProps = {
-  isOwner: false,
   link: {},
 };
 
 Footer.propTypes = {
-  isOwner: PropTypes.bool,
   link: PropTypes.objectOf(PropTypes.shape),
 };
 

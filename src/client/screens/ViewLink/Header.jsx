@@ -10,7 +10,7 @@ import {
   BadgeIcon,
 } from '@app/components/Icons';
 
-const Header = ({ link, owner, isOwner }) => (
+const Header = ({ link, owner }) => (
   <div className="header flex border-b border-neutral-200">
     <div className="">
       <Link
@@ -68,12 +68,15 @@ const Header = ({ link, owner, isOwner }) => (
               <BadgeIcon size="xs" className="text-success-500" />
             )}
           </Link>
-          {!isOwner && (
-            <Link href="/@" size="xs">
-              {/* Follow */}
-              Unfollow
-            </Link>
-          )}
+          {/* {!link.isUserOwner && (
+            <Button
+              variant="text-button"
+              size="sm"
+              className="text-sm hover:underline text-primary-700"
+            >
+              {owner.isUserFollowingAuthor ? 'Unfollow' : 'Follow'}
+            </Button>
+          )} */}
         </div>
         {/* <Avatar initials="NL" size="xl" className="text-2xl" /> */}
       </div>
@@ -88,7 +91,6 @@ Header.defaultProps = {
 
 Header.propTypes = {
   link: PropTypes.objectOf(PropTypes.shape),
-  isOwner: PropTypes.bool.isRequired,
   owner: PropTypes.objectOf(PropTypes.shape),
 };
 

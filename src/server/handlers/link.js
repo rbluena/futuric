@@ -1,3 +1,4 @@
+const decode = require('jsonwebtoken');
 const request = require('axios');
 const {
   createLinkService,
@@ -93,7 +94,26 @@ exports.deleteLinkHandler = async (req, res, next) => {
 exports.getLinkHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const doc = await getLinkByIdService(id);
+    const document = await getLinkByIdService(id);
+    const doc = document.toObject();
+    doc.isUserOwner = false;
+    doc.owner.isUserFollowingAuthor = false;
+
+    if (req.app.jwt) {
+      const user = decode(req.app.jwt);
+
+      // Is the link owned by current authenticated user?
+      if (user._id === doc.owner._id) {
+        doc.isUserOwner = true;
+      }
+
+      // Is current user a follower of link's author
+      if (doc.owner.followers.includes(user._id)) {
+        doc.owner.isUserFollowingAuthor = true;
+      }
+
+      delete doc.owner.followers;
+    }
 
     res.status(200).json({
       status: 200,
