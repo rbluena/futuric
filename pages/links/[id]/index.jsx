@@ -45,7 +45,7 @@ const ViewLink = ({ linkData }) => {
 
   return (
     <LayoutManager>
-      <Head title="View Link" />
+      <Head title={linkData.title} />
       <Header />
       <LinkScreen />
       <Footer />

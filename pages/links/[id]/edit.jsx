@@ -25,7 +25,7 @@ const EditLink = ({ linkData }) => {
 
   return (
     <LayoutManager>
-      <Head title="Edit Link" />
+      <Head title={`Edit - ${linkData.title}`} />
       <Header />
       <EditLinkScreen />
       <Footer />

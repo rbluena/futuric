@@ -1,4 +1,4 @@
-const decode = require('jsonwebtoken');
+const { decode } = require('jsonwebtoken');
 const request = require('axios');
 const {
   createLinkService,
@@ -103,7 +103,7 @@ exports.getLinkHandler = async (req, res, next) => {
       const user = decode(req.app.jwt);
 
       // Is the link owned by current authenticated user?
-      if (user._id === doc.owner._id) {
+      if (String(user._id) === String(doc.owner._id)) {
         doc.isUserOwner = true;
       }
 
