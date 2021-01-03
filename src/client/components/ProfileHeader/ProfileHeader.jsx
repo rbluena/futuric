@@ -1,16 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 import { Link, Avatar, Button } from '@app/components';
 import { BadgeIcon, CheckUserIcon } from '@app/components/Icons';
+import { toggleFollowAction } from '@app/actions';
 
 const ProfileHeader = ({ profile, isCurrentUser }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   /** Handling all buttons in this section */
   function handleButtonClick(value) {
     if (value === '/settings') {
       router.push(value);
+    }
+
+    if (value === 'follow') {
+      dispatch(toggleFollowAction(profile._id));
     }
   }
 
@@ -51,22 +58,15 @@ const ProfileHeader = ({ profile, isCurrentUser }) => {
 
           {!isCurrentUser ? (
             <div className="ml-auto">
-              {profile.following ? (
-                <Button variant="primary" className="flex items-center">
-                  Unfollow&nbsp;&nbsp;
-                  <CheckUserIcon size="xs" />
-                </Button>
-              ) : (
-                <Button
-                  variant="primary"
-                  outline
-                  className="flex items-center"
-                  onClick={() => handleButtonClick('follow')}
-                >
-                  Follow &nbsp;&nbsp;
-                  <CheckUserIcon size="xs" />
-                </Button>
-              )}
+              <Button
+                variant="primary"
+                outline={!profile.isFollowing}
+                className="flex items-center"
+                onClick={() => handleButtonClick('follow')}
+              >
+                {profile.isFollowing ? 'Unfollow' : 'Follow'} &nbsp;&nbsp;
+                <CheckUserIcon size="xs" />
+              </Button>
             </div>
           ) : (
             <div className="ml-auto">

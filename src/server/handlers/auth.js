@@ -1,4 +1,5 @@
 const validator = require('validator');
+const { decode } = require('jsonwebtoken');
 const {
   generateAccessToken,
   comparePassword,
@@ -12,6 +13,7 @@ const {
   deleteUserByEmail,
   findUserByEmail,
   findUserById,
+  toggleFollowUserService,
 } = require('../services/user');
 
 /**
@@ -258,6 +260,54 @@ exports.verifyUserToken = async (req, res, next) => {
   }
 };
 
+exports.followUserHandler = async (req, res, next) => {
+  try {
+    const followedId = req.body.userId;
+
+    const user = await decode(req.app.jwt);
+
+    if (!user) {
+      return res.status(403).json({
+        status: 403,
+        message: 'Unauthorized',
+        errors: {
+          details:
+            'You not authorized to perform this action, please re-login.',
+        },
+      });
+    }
+
+    if (String(user._id) === String(followedId)) {
+      return res.status(403).json({
+        status: 403,
+        message: 'Unauthorized',
+        errors: {
+          details: "User can't be following him/her self.",
+        },
+      });
+    }
+
+    const profile = await toggleFollowUserService(user._id, followedId);
+
+    delete profile.password;
+    delete profile.verificationToken;
+    delete profile.token;
+    delete profile.loginStrategy;
+    delete profile.links;
+    delete profile.followers;
+    delete profile.followings;
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: 'Following successfully.',
+      data: profile,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 /**
  * Logging user out
  */
@@ -364,10 +414,11 @@ exports.deleteTestingUserHandler = async (req, res, next) => {
  */
 exports.getProfileHandler = async (req, res, next) => {
   try {
+    const user = decode(req.app.jwt);
     const { username } = req.params;
-    const user = await findUserByUsername(username);
+    const profile = await findUserByUsername(username);
 
-    if (!user) {
+    if (!profile || !profile.brandname || profile.brandname.length === 0) {
       res.status(400).json({
         success: false,
         message: 'Bad Request',
@@ -377,17 +428,23 @@ exports.getProfileHandler = async (req, res, next) => {
       });
     }
 
-    delete user.password;
-    delete user.verificationToken;
-    delete user.token;
-    delete user.loginStrategy;
-    delete user.links;
+    profile.isFollowing = false;
+
+    if (user && String(user._id) !== String(profile._id)) {
+      profile.isFollowing = profile.followers.includes(String(user._id));
+    }
+
+    delete profile.password;
+    delete profile.verificationToken;
+    delete profile.token;
+    delete profile.loginStrategy;
+    delete profile.links;
 
     return res.status(200).json({
       status: 200,
       success: true,
       message: 'User updated successfully',
-      data: user,
+      data: profile,
     });
   } catch (error) {
     return next(error);

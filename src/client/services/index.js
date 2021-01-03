@@ -244,3 +244,31 @@ export const getLinkAnalyticsService = async (token, id) => {
     return errorHandler(error);
   }
 };
+
+/**
+ * Current user is following another user.
+ *
+ * We provide ID of a user who is followed, token on the server
+ * will be used to find id of the follower.
+ *
+ * @param {String} token
+ * @param {String} userId ID of the user is followed.
+ */
+export const toggleFollowService = async (token, userId) => {
+  try {
+    const response = await request({
+      method: 'POST',
+      url: path.followUser,
+      data: {
+        userId,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};

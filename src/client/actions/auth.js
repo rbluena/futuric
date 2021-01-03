@@ -4,6 +4,7 @@ import {
   registerUserService,
   logUserOutService,
   updateUserService,
+  toggleFollowService,
 } from '@app/services';
 import {
   registerUser,
@@ -16,6 +17,9 @@ import {
   updateUser,
   updateUserSuccess,
   updateUserFailure,
+  // toggleFollowing,
+  toggleFollowingSuccess,
+  // toggleFollowingFailure,
 } from '@app/slices/authSlice';
 import {
   setNotification,
@@ -192,6 +196,25 @@ export function updateUserAction(userData) {
         message: err.errors,
       };
       dispatch(updateUserFailure());
+      dispatch(setNotification(error));
+    }
+  };
+}
+
+export function toggleFollowAction(userId) {
+  return async (dispatch, getState) => {
+    try {
+      const {
+        auth: { token },
+      } = getState();
+
+      const { data } = await toggleFollowService(token, userId);
+      dispatch(toggleFollowingSuccess(data));
+    } catch (err) {
+      const error = {
+        type: 'error',
+        message: err.errors,
+      };
       dispatch(setNotification(error));
     }
   };

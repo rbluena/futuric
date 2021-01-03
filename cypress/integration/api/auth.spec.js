@@ -107,4 +107,14 @@ describe('testing authentication', () => {
       expect(status).to.equal(200);
     });
   });
+
+  // it('should follow and unfollow user', () => {
+  //   cy.request({
+  //     method: 'POST',
+  //     url: '/auth/follow',
+  //     body: {
+  //       userId: '5ff17e3f85e2ce34c26eedeb',
+  //     },
+  //   });
+  // });
 });

@@ -93,6 +93,13 @@ const authSlice = createSlice({
         state.error = false;
       },
     },
+    toggleFollowingSuccess: {
+      reducer: (state, { payload }) => {
+        state.fetching = false;
+        state.profile = payload;
+        state.error = false;
+      },
+    },
   },
 });
 
@@ -110,6 +117,7 @@ export const {
   updateUserSuccess,
   updateUserFailure,
   getUserProfileSuccess,
+  toggleFollowingSuccess,
 } = authSlice.actions;
 
 export default authSlice.reducer;

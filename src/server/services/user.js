@@ -114,6 +114,76 @@ const isUserOwnLinkService = async (userId, linkId) => {
   return false;
 };
 
+/**
+ * Following user
+ *
+ * @param {String} followingId
+ * @param {String} followedId
+ */
+const followingUserService = async (followingId, followedId) => {
+  const followingUser = await findUserById(followingId);
+  const followedUser = await findUserById(followedId);
+
+  let user;
+
+  if (followingUser && followedUser) {
+    followingUser.followings.push(followedId);
+    followedUser.followers.push(followingId);
+
+    await followingUser.save();
+    user = await followedUser.save();
+
+    user = user.toObject();
+    user.isFollowing = true;
+  }
+
+  return user;
+};
+
+/**
+ * Unfollow following user
+ *
+ * @param {String} followingId
+ * @param {String} followedId
+ */
+const unFollowUserService = async (followingId, followedId) => {
+  const followingUser = await findUserById(followingId);
+  const followedUser = await findUserById(followedId);
+
+  let user;
+
+  if (followingUser && followedUser) {
+    followingUser.followings.pull(followedId);
+    followedUser.followers.pull(followingId);
+
+    await followingUser.save();
+    user = await followedUser.save();
+
+    user = user.toObject();
+    user.isFollowing = false;
+  }
+
+  return user;
+};
+
+const toggleFollowUserService = async (followingId, followedId) => {
+  const user = await findUserById(followingId);
+
+  let followedUser;
+
+  if (user) {
+    if (user.followings.includes(String(followedId))) {
+      // We unfollow user
+      followedUser = await unFollowUserService(followingId, followedId);
+    } else {
+      // we Follow user
+      followedUser = await followingUserService(followingId, followedId);
+    }
+  }
+
+  return followedUser;
+};
+
 module.exports = {
   findUserByEmail,
   findUserByUsername,
@@ -123,4 +193,7 @@ module.exports = {
   updateUser,
   deleteUserByEmail,
   isUserOwnLinkService,
+  followingUserService,
+  unFollowUserService,
+  toggleFollowUserService,
 };

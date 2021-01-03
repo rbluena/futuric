@@ -9,6 +9,7 @@ const {
   getProfileHandler,
   deleteTestingUserHandler,
   verifyUserToken,
+  followUserHandler,
 } = require('../../handlers/auth');
 const {
   registerInputValidation,
@@ -48,6 +49,8 @@ router.post('/login', loginHandler);
  * Logging user out.
  */
 router.get('/logout', logoutHandler);
+
+router.post('/follow', isAuthenticated, followUserHandler);
 
 /**
  * Deleting user
