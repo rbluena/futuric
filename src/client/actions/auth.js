@@ -45,6 +45,7 @@ export function logoutUserAction() {
       await deleteCookieToken();
       window.location.href = '/';
     } catch (err) {
+      await deleteCookieToken();
       dispatch(logoutUserSuccess());
       window.location.href = '/';
     }
@@ -64,8 +65,8 @@ export function logUserInAction(userData) {
         type: 'local',
       });
       // dispatch(setNotification({ type: 'success', message }));
+      setCookieToken(data.jwt);
       dispatch(loginUserSuccess(data));
-      await setCookieToken(data.jwt);
       window.location.reload();
     } catch (err) {
       const error = {
@@ -95,10 +96,10 @@ export function signinUserWithGoogleAction(userData) {
       });
 
       // dispatch(setNotification({ type: 'success', message }));
-      dispatch(loginUserSuccess(data));
       // window.location.reload();
       await setCookieToken(data.jwt);
-      dispatch(closeModal());
+      dispatch(loginUserSuccess(data));
+      window.location.reload();
     } catch (err) {
       const error = {
         type: 'error',

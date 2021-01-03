@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, connect } from 'react-redux';
 import { getUserSelector } from '@app/selectors';
 import { openModal } from '@app/slices/globalSlice';
-import { logoutUserAction } from '@app/actions';
+// import { logoutUserAction } from '@app/actions';
 import { Link, Avatar, Button } from '@app/components';
 import { Dropdown } from '@app/components/Form';
 
@@ -14,12 +14,12 @@ const Nav = ({ user }) => {
   const dispatch = useDispatch();
 
   function onChangeDropdownHandler(value) {
-    if (value !== '/signout') {
+    if (value === 'signout') {
+      window.location.href = '/signout';
+    } else {
       router.push(value);
-      return;
     }
-
-    dispatch(logoutUserAction());
+    // dispatch(logoutUserAction());
   }
 
   return (
@@ -75,7 +75,7 @@ const Nav = ({ user }) => {
                 ],
                 [
                   { label: 'Settings', value: '/settings' },
-                  { label: 'Sign Out', value: '/signout' },
+                  { label: 'Sign Out', value: 'signout' },
                 ],
               ]}
               onValueChanged={onChangeDropdownHandler}
