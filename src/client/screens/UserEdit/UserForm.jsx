@@ -71,6 +71,8 @@ const UserForm = () => {
               required: 'This field is required.',
             })}
             error={get(inputErrors, 'username.message')}
+            // eslint-disable-next-line no-return-assign
+            onChange={(e) => (e.target.value = e.target.value.trim())}
           />
         </ControlWrapper>
 

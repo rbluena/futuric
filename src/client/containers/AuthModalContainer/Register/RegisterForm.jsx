@@ -44,9 +44,11 @@ const RegisterForm = ({ setApiError }) => {
             required: 'This field is required.',
             minLength: {
               value: 4,
-              message: 'Email should not be less than 4 characters.',
+              message: 'Username should not be less than 4 characters.',
             },
           })}
+          // eslint-disable-next-line no-return-assign
+          onChange={(e) => (e.target.value = e.target.value.trim())}
           error={get(inputErrors, 'username.message')}
         />
       </ControlWrapper>
