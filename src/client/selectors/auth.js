@@ -9,7 +9,7 @@ const selectUser = (state) => {
   if (token && token.length) {
     const user = decode(token);
 
-    if (!user.image) {
+    if (!user.image || !user.image.thumbnail) {
       if (!user.brandname) {
         user.initials = 'U';
       } else {

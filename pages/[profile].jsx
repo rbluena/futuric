@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
 import { useDispatch } from 'react-redux';
 import { getUserProfileService } from '@app/services';
@@ -10,6 +11,7 @@ export async function getServerSideProps({ params }) {
 
   try {
     const { profile } = params;
+    // Removing at symbol
     const username = profile.slice(1);
 
     ({ data } = await getUserProfileService(username));
@@ -45,6 +47,14 @@ const Profile = ({ data }) => {
       <Footer />
     </LayoutManager>
   );
+};
+
+Profile.defaultProps = {
+  data: {},
+};
+
+Profile.propTypes = {
+  data: PropTypes.objectOf(PropTypes.shape),
 };
 
 export default Profile;

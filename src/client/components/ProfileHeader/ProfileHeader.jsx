@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Link, Avatar, Button } from '@app/components';
-import {
-  BadgeIcon,
-  BadgeShieldIcon,
-  CheckUserIcon,
-} from '@app/components/Icons';
+import { BadgeIcon, CheckUserIcon } from '@app/components/Icons';
 
 const ProfileHeader = ({ profile, isCurrentUser }) => {
   const router = useRouter();
@@ -22,7 +18,11 @@ const ProfileHeader = ({ profile, isCurrentUser }) => {
     <div className="header border-b  border-neutral-200">
       <div className="mr-auto">
         <div className="flex flex-wrap-reverse items-center">
-          <Avatar initials="NL" size="xl" className="text-2xl" />
+          <Avatar
+            initials={profile.brandname[0]}
+            size="xl"
+            className="text-2xl"
+          />
 
           <div className="flex flex-col items-start pl-2">
             <Link
@@ -34,9 +34,8 @@ const ProfileHeader = ({ profile, isCurrentUser }) => {
               <span>{profile.brandname}</span>
               &nbsp;
               {profile.prominent && (
-                <BadgeShieldIcon size="sm" className="text-primary-700" />
+                <BadgeIcon size="xs" className="text-success-700" />
               )}
-              <BadgeIcon size="xs" className="text-success-700" />
             </Link>
             {profile.website && (
               <Link
