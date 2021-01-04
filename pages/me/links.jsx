@@ -3,7 +3,6 @@ import { decode } from 'jsonwebtoken';
 import PropTypes from 'prop-types';
 import { useEffectOnce } from 'react-use';
 import { useDispatch } from 'react-redux';
-import { useAuthentication } from '@app/hooks';
 import { getCookieToken } from '@app/utils/session';
 import { getLinksService } from '@app/services';
 import { getMyLinksSuccess } from '@app/slices/linksSlice';
@@ -42,16 +41,11 @@ export async function getServerSideProps({ req }) {
 }
 
 const MyLinks = ({ links }) => {
-  const { isAuthenticated } = useAuthentication();
   const dispatch = useDispatch();
 
   useEffectOnce(() => {
     dispatch(getMyLinksSuccess(links));
   });
-
-  if (!isAuthenticated) {
-    return null;
-  }
 
   return (
     <LayoutManager>

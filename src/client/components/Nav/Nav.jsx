@@ -67,7 +67,7 @@ const Nav = ({ user }) => {
             </button>
             <Dropdown
               options={[
-                [{ label: 'Profile', value: '/me' }],
+                [{ label: 'Me', value: '/me' }],
                 [
                   { label: 'My Links', value: '/me/links' },
                   { label: 'Waiting List', value: '/me/waitings' },

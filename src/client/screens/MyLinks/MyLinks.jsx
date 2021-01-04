@@ -9,8 +9,8 @@ import PostsContainer from '@app/containers/PostsContainer';
 import ViewMoreButton from './ViewMoreButton';
 
 const MyLinks = () => {
-  const { data, meta } = useSelector(myLinksSelector);
   const dispatch = useDispatch();
+  const { data, meta } = useSelector(myLinksSelector);
   const { hasNextPage, nextPage, limit } = meta;
 
   function loadMore() {

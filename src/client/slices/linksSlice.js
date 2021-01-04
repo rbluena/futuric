@@ -107,7 +107,6 @@ const linksSlice = createSlice({
     },
     getMyLinksSuccess: {
       reducer: (state, { payload }) => {
-        console.log('+++++ PAYLOAD ', payload);
         state.myLinks = payload;
       },
     },
