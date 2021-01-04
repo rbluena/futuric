@@ -12,6 +12,6 @@ export default {
   updateLink: (id) => `${SERVER_API}/links/${id}`,
   deleteLink: (id) => `${SERVER_API}/links/${id}`,
   getLink: (id) => `${SERVER_API}/links/${id}`,
-  getLinks: `${SERVER_API}/todos`,
+  getLinks: `${SERVER_API}/links`,
   getAnalytics: (id) => `${SERVER_API}/links/${id}`,
 };

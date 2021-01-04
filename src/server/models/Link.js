@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseAggregatePaginateV2 = require('mongoose-aggregate-paginate-v2');
 
 const { Schema } = mongoose;
 
@@ -21,5 +22,7 @@ const linkSchema = new Schema(
   },
   { timestamps: true }
 );
+
+linkSchema.plugin(mongooseAggregatePaginateV2);
 
 module.exports = mongoose.model('Link', linkSchema);

@@ -1,5 +1,6 @@
 const { decode } = require('jsonwebtoken');
 const request = require('axios');
+const { omit, isEmpty } = require('lodash');
 const {
   createLinkService,
   updateLinkService,
@@ -130,13 +131,15 @@ exports.getLinkHandler = async (req, res, next) => {
  */
 exports.getLinksHandler = async (req, res, next) => {
   try {
-    const doc = await getAllLinksService(req.query);
+    const data = await getAllLinksService(req.query);
+    const meta = omit(data, 'docs');
+    const { docs } = data;
 
     res.status(200).json({
       status: 200,
       success: true,
       message: 'Here the list of todos.',
-      data: doc,
+      data: { meta, data: docs },
     });
   } catch (error) {
     next(error);

@@ -16,9 +16,7 @@ export async function getServerSideProps({ params }) {
 
     ({ data } = await getUserProfileService(username));
 
-    console.log(data);
-
-    // If linkData is not found
+    // If data is not found
     if (!data) {
       return {
         notFound: true,

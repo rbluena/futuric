@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   fetching: false,
   links: null,
+  myLinks: {},
   createdLink: null,
   activeLink: null,
   analytics: null,
@@ -99,6 +100,11 @@ const linksSlice = createSlice({
         state.createdLink = null;
       },
     },
+    getMyLinksSuccess: {
+      reducer: (state, { payload }) => {
+        state.myLinks = payload;
+      },
+    },
   },
 });
 
@@ -119,6 +125,7 @@ export const {
   deleteLinkSuccess,
   deleteLinkFailure,
   removeCreatedLink,
+  getMyLinksSuccess,
 } = linksSlice.actions;
 
 export default linksSlice.reducer;

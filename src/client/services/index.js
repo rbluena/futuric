@@ -205,16 +205,13 @@ export const getLinkService = async (id) => {
  * @param {String} token
  * @param {Object} options
  */
-export const getLinksService = async (token, options) => {
+export const getLinksService = async (options) => {
   try {
     const response = await request({
       method: 'GET',
       url: path.getLinks,
       params: {
         ...options,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -255,6 +252,43 @@ export const getLinkAnalyticsService = async (token, id) => {
  * @param {String} userId ID of the user is followed.
  */
 export const toggleFollowService = async (token, userId) => {
+  try {
+    const response = await request({
+      method: 'POST',
+      url: path.followUser,
+      data: {
+        userId,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getUserCreatedLinks = async (token, userId) => {
+  try {
+    const response = await request({
+      method: 'POST',
+      url: path.followUser,
+      data: {
+        userId,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+export const getUserWaitingList = async (token, userId) => {
   try {
     const response = await request({
       method: 'POST',

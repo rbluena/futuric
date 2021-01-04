@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Link = require('../models/Link');
+const User = require('../models/User');
 const { findUserById } = require('./user');
 
 /**
@@ -83,20 +84,61 @@ const getLinkByIdService = async (linkId) => {
  */
 const getAllLinksService = async (options) => {
   const match = {};
-  const skip = options.skip || 0;
-  const limit = options.limit || 15;
+  const paginateOptions = {};
+  const sort = { createdAt: -1 };
+
+  const { limit, page } = options;
+
+  if (limit) {
+    paginateOptions.limit = parseInt(limit, 10);
+  }
+
+  if (page) {
+    paginateOptions.page = parseInt(page, 10);
+  }
 
   if (options.owner) {
     match.owner = mongoose.Types.ObjectId(options.owner);
   }
 
-  const aggrigated = await Link.aggregate([
+  const aggregate = Link.aggregate([
     { $match: match },
-    { $limit: limit },
-    { $skip: skip },
+    { $sort: sort },
+    {
+      $lookup: {
+        from: User.collection.name,
+        localField: 'owner',
+        foreignField: '_id',
+        as: 'owner',
+      },
+    },
+    { $unwind: '$owner' },
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        description: 1,
+        shortenUrl: 1,
+        longUrl: 1,
+        postUrl: 1,
+        topic: 1,
+        category: 1,
+        isActive: 1,
+        availableDate: 1,
+        'owner._id': 1,
+        'owner.firstname': 1,
+        'owner.lastname': 1,
+        'owner.username': 1,
+        'owner.email': 1,
+        'owner.brandname': 1,
+        'owner.website': 1,
+        'owner.image': 1,
+        'owner.verified': 1,
+      },
+    },
   ]);
 
-  return aggrigated;
+  return Link.aggregatePaginate(aggregate, paginateOptions);
 };
 
 // const getTodosFromCalendarsService = async (queries) => {
