@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import router from 'next/router';
-import { myLinksSelector } from '@app/selectors';
+import { myLinksSelector, myWaitingsSelector } from '@app/selectors';
 import { Section, ContentWrapper, Link } from '@app/components';
 import ProfileHeaderContainer from '@app/containers/ProfileHeaderContainer';
 import PostsContainer from '@app/containers/PostsContainer';
@@ -9,9 +9,9 @@ import ViewAllButton from './ViewAllButton';
 
 const User = () => {
   const { data: links } = useSelector(myLinksSelector);
-  const waitingList = [];
+  const waitings = useSelector(myWaitingsSelector);
 
-  const noActivities = links.length === 0 && waitingList.length === 0;
+  const noActivities = links.length === 0 && waitings.length === 0;
 
   return (
     <div className="pb-6">
@@ -32,10 +32,10 @@ const User = () => {
 
       {/* start: rendering user's waiting list */}
       <ContentWrapper>
-        {waitingList && waitingList.length > 0 && (
+        {waitings && waitings.length > 0 && (
           <>
             <Section heading="Waiting list">
-              <PostsContainer posts={waitingList} />
+              <PostsContainer posts={waitings} />
             </Section>
 
             <div className="max-w-xs mx-auto">

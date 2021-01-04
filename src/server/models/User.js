@@ -56,6 +56,7 @@ const userSchema = new Schema(
       },
     },
     links: [{ type: Schema.Types.ObjectId, ref: 'Link' }],
+    waitings: [{ type: Schema.Types.ObjectId, ref: 'Link' }],
   },
   { timestamps: true }
 );

@@ -7,8 +7,8 @@ const linkSchema = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String },
-    shortenUrl: { type: String }, // Shortened url to be shared to the public
-    longUrl: { type: String }, // Longest link to the original content
+    shortenUrl: { type: String }, // Shortened url to be shared to the public.
+    longUrl: { type: String }, // Longest link to the original content.
     postUrl: { type: String },
     availableDate: { type: Date }, // The day the link is active for the post/content.
     isActive: { type: Boolean, default: false }, //
@@ -19,6 +19,7 @@ const linkSchema = new Schema(
     category: { type: String },
     archived: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
+    waitings: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );

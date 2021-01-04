@@ -10,10 +10,16 @@ const selectMyLinks = (state) => {
   return { data: data || {}, meta: meta || {} };
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export const getLinksStateSelector = createSelector(
   selectSelf,
   (state) => state.links
 );
 
+export const selectMyWaitings = (state) => state.links.myWaitings;
+
 export const myLinksSelector = createSelector(selectMyLinks, (links) => links);
+
+export const myWaitingsSelector = createSelector(
+  selectMyWaitings,
+  (waitings) => waitings
+);

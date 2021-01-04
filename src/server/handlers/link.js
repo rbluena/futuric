@@ -1,14 +1,13 @@
 const { decode } = require('jsonwebtoken');
 const request = require('axios');
-const { omit, isEmpty } = require('lodash');
+const { omit } = require('lodash');
 const {
   createLinkService,
   updateLinkService,
   deleteLinkService,
   getLinkByIdService,
   getAllLinksService,
-  // getTodosFromCalendarsService,
-  // getTodosByWorkspaceService,
+  getWaitingLinksService,
 } = require('../services/link');
 
 /**
@@ -143,5 +142,36 @@ exports.getLinksHandler = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+};
+
+/**
+ * Request handler for getting user's waitings.
+ */
+exports.getWaitingsHandler = async (req, res, next) => {
+  try {
+    const user = decode(req.app.jwt);
+
+    if (!user) {
+      return res.status(403).json({
+        status: 403,
+        success: false,
+        message: 'Unauthorized',
+        errors: {
+          details: 'You are not logged in. Please login',
+        },
+      });
+    }
+
+    const data = await getWaitingLinksService(user._id, req.query);
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: 'Here the list of todos.',
+      data: data.waitings,
+    });
+  } catch (error) {
+    return next(error);
   }
 };

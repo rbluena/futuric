@@ -141,75 +141,16 @@ const getAllLinksService = async (options) => {
   return Link.aggregatePaginate(aggregate, paginateOptions);
 };
 
-// const getTodosFromCalendarsService = async (queries) => {
-//   let match = {};
-//   const skipTodos = queries.skipTodo || 0;
-//   const sliceTodos = queries.sliceTodos || 15;
+const getWaitingLinksService = async (userId) => {
+  const waitings = await User.findOne(
+    {
+      _id: mongoose.Types.ObjectId(userId),
+    },
+    { waitings: 1, _id: 0 }
+  ).populate('waitings');
 
-//   if (queries.workspaceId) {
-//     match = {
-//       ...match,
-//       workspace: mongoose.Types.ObjectId(queries.workspaceId),
-//     };
-//   }
-
-//   if (queries.from) {
-//     match = { ...match, date: { $gte: new Date(queries.from) } };
-//   }
-
-//   if (queries.to) {
-//     match = { ...match, date: { ...match.date, $lte: new Date(queries.to) } };
-//   }
-
-//   const aggrigate = await Calendar.aggregate([
-//     {
-//       $match: match,
-//     },
-//     { $limit: 15 },
-//     { $sort: { date: 1 } },
-//     {
-//       $project: {
-//         todos: 1,
-//         workspace: 1,
-//         date: 1,
-//         calendar: {
-//           date: {
-//             $dateToString: { format: '%d', date: '$date' },
-//           },
-//           month: {
-//             $dateToString: { format: '%m', date: '$date' },
-//           },
-//           year: {
-//             $dateToString: { format: '%Y', date: '$date' },
-//           },
-//         },
-//       },
-//     },
-//     {
-//       $lookup: {
-//         from: Todo.collection.name,
-//         localField: 'todos',
-//         foreignField: '_id',
-//         as: 'todos',
-//       },
-//     },
-//   ]);
-
-//   Mapping data
-//   const todos = aggrigate.map((item) => {
-//     item.todos = item.todos.reduce((data, next) => {
-//       if (next) {
-//         data[next._id] = next;
-//       }
-
-//       return data;
-//     }, {});
-
-//     return item;
-//   });
-
-//   return aggrigate;
-// };
+  return waitings;
+};
 
 module.exports = {
   createLinkService,
@@ -217,4 +158,5 @@ module.exports = {
   deleteLinkService,
   getLinkByIdService,
   getAllLinksService,
+  getWaitingLinksService,
 };

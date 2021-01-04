@@ -17,7 +17,10 @@ export async function getServerSideProps({ req }) {
 
     if (!token) {
       return {
-        notFound: true,
+        redirect: {
+          destination: '/#signin-modal',
+          permanent: false,
+        },
       };
     }
 
@@ -25,6 +28,15 @@ export async function getServerSideProps({ req }) {
 
     ({ data } = await getLinksService({ owner: user._id, limit: 1 }));
   } catch (error) {
+    if (error.status === 403) {
+      return {
+        redirect: {
+          destination: '/#signin-modal',
+          permanent: false,
+        },
+      };
+    }
+
     return {
       notFound: true,
     };

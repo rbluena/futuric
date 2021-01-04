@@ -4,6 +4,7 @@ const initialState = {
   fetching: false,
   links: null,
   myLinks: {},
+  myWaitings: [],
   createdLink: null,
   activeLink: null,
   analytics: null,
@@ -115,6 +116,11 @@ const linksSlice = createSlice({
         state.fetching = false;
       },
     },
+    getMyWaitingsSuccess: {
+      reducer: (state, { payload }) => {
+        state.myWaitings = payload;
+      },
+    },
   },
 });
 
@@ -137,6 +143,7 @@ export const {
   removeCreatedLink,
   getMyLinksSuccess,
   getMyLinksFailure,
+  getMyWaitingsSuccess,
 } = linksSlice.actions;
 
 export default linksSlice.reducer;

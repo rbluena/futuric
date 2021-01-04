@@ -13,5 +13,6 @@ export default {
   deleteLink: (id) => `${SERVER_API}/links/${id}`,
   getLink: (id) => `${SERVER_API}/links/${id}`,
   getLinks: `${SERVER_API}/links`,
+  getWaitings: `${SERVER_API}/links/me/waitings`,
   getAnalytics: (id) => `${SERVER_API}/links/${id}`,
 };

@@ -3,15 +3,18 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useEffectOnce } from 'react-use';
 import { decode } from 'jsonwebtoken';
-import { getLinksService } from '@app/services';
+import { getUserWaitingsService, getLinksService } from '@app/services';
 import { getCookieToken } from '@app/utils/session';
-import { getMyLinksSuccess } from '@app/slices/linksSlice';
+import {
+  getMyLinksSuccess,
+  getMyWaitingsSuccess,
+} from '@app/slices/linksSlice';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
 import MeScreen from '@app/screens/Me';
 
 export async function getServerSideProps({ req }) {
-  // const waitingList = {};
-  let myLinks = {};
+  let linksResponse = {};
+  let waitingsResponse = {};
 
   try {
     const token = getCookieToken(req);
@@ -27,12 +30,38 @@ export async function getServerSideProps({ req }) {
 
     const user = decode(token);
 
-    const response = await Promise.all([
+    const [links, waitings] = await Promise.allSettled([
       getLinksService({ owner: user._id, limit: 4 }),
+      getUserWaitingsService(token, { limit: 4 }),
     ]);
 
-    // eslint-disable-next-line prefer-destructuring
-    ({ data: myLinks } = response[0]);
+    const { status: linksStatus, reason: reasonLinks } = links;
+    const { status: waitingsStatus, reason: reasonWaitings } = waitings;
+
+    if (linksStatus === 'rejected') {
+      if (reasonLinks.status === 403) {
+        return {
+          redirect: {
+            destination: '/#signin-modal',
+            permanent: false,
+          },
+        };
+      }
+    }
+
+    if (waitingsStatus === 'rejected') {
+      if (reasonWaitings.status === 403) {
+        return {
+          redirect: {
+            destination: '/#signin-modal',
+            permanent: false,
+          },
+        };
+      }
+    }
+
+    ({ value: linksResponse } = links);
+    ({ value: waitingsResponse } = waitings);
   } catch (error) {
     return {
       notFound: true,
@@ -41,19 +70,18 @@ export async function getServerSideProps({ req }) {
 
   return {
     props: {
-      links: {
-        data: myLinks.data || {},
-        meta: myLinks.meta || {},
-      },
+      links: linksResponse.data || {},
+      waitings: waitingsResponse.data || {},
     },
   };
 }
 
-const Me = ({ links }) => {
+const Me = ({ links, waitings }) => {
   const dispatch = useDispatch();
 
   useEffectOnce(() => {
     dispatch(getMyLinksSuccess(links));
+    dispatch(getMyWaitingsSuccess(waitings));
   });
 
   return (
@@ -66,8 +94,17 @@ const Me = ({ links }) => {
   );
 };
 
+Me.defaultProps = {
+  links: {},
+  waitings: {},
+};
+
 Me.propTypes = {
-  links: PropTypes.objectOf(PropTypes.shape).isRequired,
+  links: PropTypes.objectOf(PropTypes.shape),
+  waitings: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.shape),
+    PropTypes.arrayOf(PropTypes.shape),
+  ]),
 };
 
 export default Me;

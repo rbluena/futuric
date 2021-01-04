@@ -270,37 +270,13 @@ export const toggleFollowService = async (token, userId) => {
   }
 };
 
-export const getUserCreatedLinks = async (token, userId) => {
+export const getUserWaitingsService = async (token, options) => {
   try {
     const response = await request({
-      method: 'POST',
-      url: path.followUser,
-      data: {
-        userId,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      method: 'GET',
+      url: path.getWaitings,
+      params: options || {},
     });
-
-    return response.data;
-  } catch (error) {
-    return errorHandler(error);
-  }
-};
-export const getUserWaitingList = async (token, userId) => {
-  try {
-    const response = await request({
-      method: 'POST',
-      url: path.followUser,
-      data: {
-        userId,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
     return response.data;
   } catch (error) {
     return errorHandler(error);
