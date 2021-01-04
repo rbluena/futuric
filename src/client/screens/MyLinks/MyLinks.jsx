@@ -1,21 +1,14 @@
 import React from 'react';
-import { Section, ContentWrapper, Button } from '@app/components';
+import { Section, ContentWrapper } from '@app/components';
 import ProfileHeaderContainer from '@app/containers/ProfileHeaderContainer';
-import PostsContainer from '@app/containers/PostsContainer';
+import MyLinksContainer from '@app/containers/MyLinksContainer';
 
 const MyLinks = () => (
   <div className="pb-4">
     <ContentWrapper>
       <ProfileHeaderContainer />
       <Section heading="Created Links">
-        <PostsContainer />
-        <PostsContainer />
-
-        <div className="max-w-xs mx-auto">
-          <Button variant="primary" outline size="lg">
-            View More
-          </Button>
-        </div>
+        <MyLinksContainer />
       </Section>
     </ContentWrapper>
   </div>

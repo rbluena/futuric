@@ -6,6 +6,7 @@ import {
   updateLinkService,
   deleteLinkService,
   getLinkAnalyticsService,
+  getLinksService,
 } from '@app/services';
 
 import {
@@ -24,6 +25,8 @@ import {
   deleteLink,
   deleteLinkSuccess,
   deleteLinkFailure,
+  getMyLinksSuccess,
+  getMyLinksFailure,
 } from '@app/slices/linksSlice';
 
 import { setNotification } from '@app/slices/globalSlice';
@@ -147,6 +150,44 @@ export function getAnalyticsAction(linkdId) {
         message: err.errors,
       };
       dispatch(setNotification(error));
+    }
+  };
+}
+
+/**
+ * Retrieving current user's links has created
+ * @param {Object} options Filters eg. limit, page
+ */
+export function getMyLinksAction(options = {}) {
+  return async (dispatch, getState) => {
+    try {
+      const {
+        auth: { token },
+        links: { myLinks },
+      } = getState();
+
+      if (token) {
+        const user = decode(token);
+
+        const { data } = await getLinksService({
+          owner: user._id,
+          ...options,
+        });
+
+        let myNewLinks = {};
+
+        if (myLinks.data && myLinks.data.length > 0) {
+          myNewLinks = {
+            data: [...myLinks.data, ...data.data],
+            meta: data.meta,
+          };
+        } else {
+          myNewLinks = data;
+        }
+        dispatch(getMyLinksSuccess(myNewLinks));
+      }
+    } catch (err) {
+      dispatch(getMyLinksFailure());
     }
   };
 }

@@ -100,9 +100,20 @@ const linksSlice = createSlice({
         state.createdLink = null;
       },
     },
+    getMyLinks: {
+      reducer: (state) => {
+        state.fetching = true;
+      },
+    },
     getMyLinksSuccess: {
       reducer: (state, { payload }) => {
+        console.log('+++++ PAYLOAD ', payload);
         state.myLinks = payload;
+      },
+    },
+    getMyLinksFailure: {
+      reducer: (state) => {
+        state.fetching = false;
       },
     },
   },
@@ -126,6 +137,7 @@ export const {
   deleteLinkFailure,
   removeCreatedLink,
   getMyLinksSuccess,
+  getMyLinksFailure,
 } = linksSlice.actions;
 
 export default linksSlice.reducer;

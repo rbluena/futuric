@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Link } from '@app/components';
-import { BellOutlineIcon } from '@app/components/Icons';
+import { BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
+import { format } from 'date-fns';
 
 const PostCard = ({ children, small }) => (
   <div
@@ -24,17 +25,23 @@ PostCard.propTypes = {
 
 PostCard.Header = ({ publisher, small }) => (
   <div className="flex w-full items-center">
-    <Avatar src={publisher.image} initials={publisher.brandname[0]} />
+    <Avatar
+      src={publisher.image && publisher.image.thumbnail}
+      initials={publisher.brandname[0]}
+    />
     <div className="flex pl-2">
       <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
         From
       </span>
       &nbsp;
       <Link
-        href={publisher.profile}
-        className={`font-bold ${small ? 'text-xs' : 'text-sm'}`}
+        href={`/@${publisher.username}`}
+        className={`font-bold flex ${small ? 'text-xs' : 'text-sm'}`}
       >
-        {publisher.brandname}
+        {publisher.brandname}&nbsp;
+        {publisher.prominent && (
+          <BadgeIcon size="xs" className="text-success-700" />
+        )}
       </Link>
     </div>
   </div>
@@ -62,42 +69,50 @@ PostCard.Avatar.propTypes = {
   small: PropTypes.bool,
 };
 
-PostCard.Content = ({ post, small }) => (
-  <div className="w-full pl-10">
-    <h2
-      className={`text-neutral-600 ${
-        small
-          ? 'text-sm leading-4 font-semibold'
-          : 'text-sm font-bold text-neutral-800 leading-4'
-      }`}
-    >
-      <Link href={post.postUrl} variant="secondary">
-        {post.title}
-      </Link>
-    </h2>
+PostCard.Content = ({ post, small }) => {
+  console.log(post);
 
-    <div className="flex items-center justify-items-start mt-2">
-      <span className="text-xs text-neutral-600">{post.availableAt}</span>
-      &nbsp;&nbsp;
-      <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
-      &nbsp;&nbsp;
-      {/* start: shorten url */}
-      {post.isActive ? (
-        <Link href={post.longUrl} className="text-xs">
-          {post.shortenUrl}
+  return (
+    <div className="w-full pl-10">
+      <h2
+        className={`text-neutral-600 ${
+          small
+            ? 'text-sm leading-4 font-semibold'
+            : 'text-sm font-bold text-neutral-800 leading-4'
+        }`}
+      >
+        <Link href={post.longUrl} variant="secondary">
+          {post.title}
         </Link>
-      ) : (
-        <span className="text-xs text-neutral-600">{post.shortenUrl}</span>
-      )}
-      {/* end: shorten url */}
-      {/* start: Notification button. */}
-      <button type="button" className="ml-auto p-3" title="Get notified">
-        <BellOutlineIcon size="xs" className="text-primary-700" />
-      </button>
-      {/* end: Notification button. */}
+      </h2>
+
+      <div className="flex items-center justify-items-start mt-2">
+        <span className="text-xs text-neutral-600">
+          {format(new Date(post.availableDate), 'MMM d')}
+        </span>
+        &nbsp;&nbsp;
+        <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
+        &nbsp;&nbsp;
+        {/* start: shorten url */}
+        {post.isActive ? (
+          <Link href={post.longUrl} className="text-xs">
+            {post.shortenUrl}
+          </Link>
+        ) : (
+          <Link href={post.longUrl} variant="secondary" className="text-xs">
+            {post.shortenUrl}
+          </Link>
+        )}
+        {/* end: shorten url */}
+        {/* start: Notification button. */}
+        <button type="button" className="ml-auto p-3" title="Get notified">
+          <BellOutlineIcon size="xs" className="text-primary-700" />
+        </button>
+        {/* end: Notification button. */}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 PostCard.Content.propTypes = {
   title: PropTypes.string.isRequired,
