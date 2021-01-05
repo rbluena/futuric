@@ -48,7 +48,7 @@ const Dropdown = ({
                 <button
                   key={list.value}
                   type="button"
-                  className=" w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  className="w-full text-left px-4 py-2 text-xs text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900"
                   role="menuitem"
                   onClick={() => {
                     onValueChanged(list.value);
@@ -66,7 +66,7 @@ const Dropdown = ({
           <button
             key={item.value}
             type="button"
-            className=" w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+            className=" w-full text-left px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900"
             role="menuitem"
             onClick={() => {
               onValueChanged(item.value);
