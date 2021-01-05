@@ -1,20 +1,53 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import { getCookieToken } from '@app/utils/session';
+import { getLinksService } from '@app/services';
+import { getLinksSuccess } from '@app/slices/linksSlice';
 import { LayoutManager, Head, Footer, Header } from '@app/components';
-// import { bootstrapApp } from '@app/actions';
 import { getAuthSelector } from '@app/selectors';
 import LandingPage from '@app/screens/LandingPage';
 
-export default function Home() {
+export async function getServerSideProps({ req, query }) {
+  let data = {};
+
+  try {
+    const token = getCookieToken(req);
+
+    if (token) {
+      // Retreive specific data based on authenticated user
+    }
+
+    ({ data } = await getLinksService({ ...query, limit: 15 }));
+  } catch (error) {
+    // Log exceptions
+  }
+
+  return {
+    props: {
+      links: {
+        data: data.data || {},
+        meta: data.meta || {},
+      },
+    },
+  };
+}
+
+export default function Home({ links }) {
   const { redirectUserToSettings } = useSelector(getAuthSelector);
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getLinksSuccess(links));
+  }, [dispatch, links]);
 
   useEffect(() => {
     if (redirectUserToSettings) {
       return router.push('/settings');
     }
-    // dispatch(bootstrapApp());
 
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,3 +66,11 @@ export default function Home() {
 
   return null;
 }
+
+Home.defaultProps = {
+  links: {},
+};
+
+Home.propTypes = {
+  links: PropTypes.objectOf(PropTypes.shape),
+};

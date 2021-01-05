@@ -87,7 +87,9 @@ const getAllLinksService = async (options) => {
   const paginateOptions = {};
   const sort = { createdAt: -1 };
 
-  const { limit, page } = options;
+  console.log(options);
+
+  const { limit, page, topic } = options;
 
   if (limit) {
     paginateOptions.limit = parseInt(limit, 10);
@@ -99,6 +101,10 @@ const getAllLinksService = async (options) => {
 
   if (options.owner) {
     match.owner = mongoose.Types.ObjectId(options.owner);
+  }
+
+  if (topic) {
+    match.topic = { $in: [topic] };
   }
 
   const aggregate = Link.aggregate([

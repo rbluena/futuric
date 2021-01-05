@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useEffectOnce } from 'react-use';
 import { getCookieToken } from '@app/utils/session';
 import { getLinksService } from '@app/services';
 import { getLinksSuccess } from '@app/slices/linksSlice';
@@ -10,7 +9,6 @@ import LinksPage from '@app/screens/AllLinks';
 
 export async function getServerSideProps({ req, query }) {
   let data = {};
-  const options = query;
 
   try {
     const token = getCookieToken(req);
@@ -19,7 +17,7 @@ export async function getServerSideProps({ req, query }) {
       // Retreive specific data based on authenticated user
     }
 
-    ({ data } = await getLinksService({ ...options, limit: 15 }));
+    ({ data } = await getLinksService({ ...query, limit: 15 }));
   } catch (error) {
     // Log exceptions
   }
@@ -37,9 +35,10 @@ export async function getServerSideProps({ req, query }) {
 const ViewLink = ({ links }) => {
   const dispatch = useDispatch();
 
-  useEffectOnce(() => {
+  useEffect(() => {
     dispatch(getLinksSuccess(links));
-  });
+  }, [dispatch, links]);
+
   return (
     <LayoutManager>
       <Head title="View Link" />

@@ -34,6 +34,8 @@ const FilterContainer = () => {
     //   newQuery = { ...query, topic: value };
     // }
 
+    // dispatch(getLinksAction({ ...query, page: nextPage, limit }));
+
     router.push({
       pathname,
       query: newQuery,

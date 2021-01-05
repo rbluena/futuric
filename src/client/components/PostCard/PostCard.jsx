@@ -5,7 +5,6 @@ import { getUserSelector } from '@app/selectors';
 import { Avatar, Link } from '@app/components';
 import { BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
-import Post from '../../containers/PostsContainer/Post';
 
 const PostCard = ({ children, small }) => (
   <div
@@ -74,8 +73,8 @@ PostCard.Content = ({ post, small }) => {
       <h2
         className={`text-neutral-600 ${
           small
-            ? 'text-sm leading-4 font-semibold'
-            : 'text-sm font-bold text-neutral-800 leading-4'
+            ? 'leading-4 font-semibold'
+            : 'font-bold text-neutral-800 leading-4'
         }`}
       >
         <Link href={post.longUrl} variant="secondary">
@@ -84,13 +83,6 @@ PostCard.Content = ({ post, small }) => {
       </h2>
 
       <div className="flex items-center justify-items-start mt-2">
-        <span className="text-xs text-neutral-600">
-          {format(new Date(post.availableDate), 'MMM d')}
-        </span>
-        &nbsp;&nbsp;
-        <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
-        &nbsp;&nbsp;
-        {/* start: shorten url */}
         {post.isActive ? (
           <Link href={post.longUrl} className="text-xs">
             {post.shortenUrl}
@@ -100,6 +92,13 @@ PostCard.Content = ({ post, small }) => {
             {post.shortenUrl}
           </Link>
         )}
+        &nbsp;&nbsp;
+        <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
+        &nbsp;&nbsp;
+        <span className="text-xs text-neutral-600">
+          {format(new Date(post.availableDate), 'MMM d')}
+        </span>
+        {/* start: shorten url */}
         {/* end: shorten url */}
         {/* start: Notification button. */}
         {!isAuthUserOwner && (
