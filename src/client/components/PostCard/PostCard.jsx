@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { getUserSelector } from '@app/selectors';
 import { Avatar, Link } from '@app/components';
 import { BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
@@ -70,7 +72,13 @@ PostCard.Avatar.propTypes = {
 };
 
 PostCard.Content = ({ post, small }) => {
-  console.log(post);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const user = useSelector(getUserSelector);
+  let isAuthUserOwner = false;
+
+  if (user) {
+    isAuthUserOwner = user._id === post.owner._id;
+  }
 
   return (
     <div className="w-full pl-10">
@@ -105,9 +113,15 @@ PostCard.Content = ({ post, small }) => {
         )}
         {/* end: shorten url */}
         {/* start: Notification button. */}
-        <button type="button" className="ml-auto p-3" title="Get notified">
-          <BellOutlineIcon size="xs" className="text-primary-700" />
-        </button>
+        {!isAuthUserOwner && (
+          <button
+            type="button"
+            className="ml-auto p-1 rounded-sm hover:bg-primary-400 text-primary-700 hover:text-white"
+            title="Get notified"
+          >
+            <BellOutlineIcon size="xs" className="" />
+          </button>
+        )}
         {/* end: Notification button. */}
       </div>
     </div>
