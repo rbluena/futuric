@@ -35,9 +35,19 @@ const Nav = ({ user }) => {
           <Link className="px-2 font-bold" href="/links">
             Explore
           </Link>
-          <Link className="px-2 font-bold" href="/links/create">
-            Create
-          </Link>
+          {user ? (
+            <Link className="px-2 font-bold" href="/links/create">
+              Create
+            </Link>
+          ) : (
+            <Button
+              variant="text-button"
+              className="hover:underline text-primary-700 font-bold text-base hover:text-primary-900"
+              onClick={() => dispatch(openModal('signin'))}
+            >
+              Create
+            </Button>
+          )}
           <Link className="px-2 font-bold" href="/learn">
             Learn
           </Link>
