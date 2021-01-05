@@ -82,7 +82,7 @@ const getLinkByIdService = async (linkId) => {
  * Grabing all links for the user.
  * @param {Object} options
  */
-const getAllLinksService = async (options) => {
+const getAllLinksService = async (options, userId) => {
   const match = {};
   const paginateOptions = {};
   const sort = { createdAt: -1 };
@@ -130,6 +130,12 @@ const getAllLinksService = async (options) => {
         isActive: 1,
         availableDate: 1,
         waitings: 1,
+        isUserWaiting: {
+          $in: [
+            mongoose.Types.ObjectId(userId),
+            { $ifNull: ['$waitings', []] },
+          ],
+        },
         'owner._id': 1,
         'owner.firstname': 1,
         'owner.lastname': 1,
@@ -186,12 +192,14 @@ const addWaitingService = async (userId, linkId) => {
 
   const savedObject = savedLink.toObject();
 
+  savedObject.isUserWaiting = true; // Is authenticated user waiting
   savedObject.waitingsCount = savedObject.waitings.length;
   savedObject.commentsCount = savedObject.comments
     ? savedObject.comments.length
     : 0;
 
   delete savedObject.comments;
+  delete savedObject.waitings;
   delete savedObject.owner.followings;
   delete savedObject.owner.followers;
   delete savedObject.owner.password;
@@ -227,12 +235,14 @@ const removeWaitingService = async (userId, linkId) => {
 
   const savedObject = removedLink.toObject();
 
+  savedObject.isUserWaiting = false; // I authenticated user waiting this?
   savedObject.waitingsCount = savedObject.waitings.length;
   savedObject.commentsCount = savedObject.comments
     ? savedObject.comments.length
     : 0;
 
   delete savedObject.comments;
+  delete savedObject.waitings;
   delete savedObject.owner.followings;
   delete savedObject.owner.followers;
   delete savedObject.owner.password;

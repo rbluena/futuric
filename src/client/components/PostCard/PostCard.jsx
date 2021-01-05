@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { openModal } from '@app/slices/globalSlice';
 import { getUserSelector } from '@app/selectors';
 import { Avatar, Link } from '@app/components';
-import { BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
+import { BellIcon, BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
 
 const PostCard = ({ children, small }) => (
@@ -60,12 +62,21 @@ PostCard.Header.propTypes = {
 };
 
 PostCard.Content = ({ post, small, toggleWaiting }) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const dispatch = useDispatch();
   const user = useSelector(getUserSelector);
   let isAuthUserOwner = false;
 
   if (user) {
     isAuthUserOwner = user._id === post.owner._id;
+  }
+
+  function toggleNotification() {
+    if (user) {
+      const type = post.isUserWaiting ? 'remove' : 'add';
+      toggleWaiting(post._id, type);
+    } else {
+      dispatch(openModal('signin'));
+    }
   }
 
   return (
@@ -106,9 +117,13 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
             type="button"
             className="ml-auto p-1 rounded-sm hover:bg-primary-400 text-primary-700 hover:text-white"
             title="Get notified"
-            onClick={() => toggleWaiting(post._id)}
+            onClick={toggleNotification}
           >
-            <BellOutlineIcon size="xs" className="" />
+            {post.isUserWaiting ? (
+              <BellIcon size="sm" />
+            ) : (
+              <BellOutlineIcon size="sm" />
+            )}
           </button>
         )}
         {/* end: Notification button. */}

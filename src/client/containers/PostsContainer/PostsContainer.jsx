@@ -7,8 +7,15 @@ import Post from './Post';
 const PostsContainer = ({ sidebar, posts }) => {
   const dispatch = useDispatch();
 
-  function toggleWaiting(linkId) {
-    dispatch(toggleWaitingAction(linkId, 'remove'));
+  /**
+   * This function is used for adding and removing item
+   * waiting list.
+   *
+   * @param {String} linkId ID a link post.
+   * @param {String} type add | remove
+   */
+  function toggleWaiting(linkId, type) {
+    dispatch(toggleWaitingAction(linkId, type));
   }
 
   return (

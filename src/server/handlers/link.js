@@ -132,7 +132,15 @@ exports.getLinkHandler = async (req, res, next) => {
  */
 exports.getLinksHandler = async (req, res, next) => {
   try {
-    const data = await getAllLinksService(req.query);
+    const user = decode(req.app.jwt);
+
+    let data = [];
+
+    if (user) {
+      data = await getAllLinksService(req.query, user._id);
+    } else {
+      data = await getAllLinksService(req.query, null);
+    }
     const meta = omit(data, 'docs');
     const { docs } = data;
 
