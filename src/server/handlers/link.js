@@ -8,6 +8,8 @@ const {
   getLinkByIdService,
   getAllLinksService,
   getWaitingLinksService,
+  addWaitingService,
+  removeWaitingService,
 } = require('../services/link');
 
 /**
@@ -168,8 +170,50 @@ exports.getWaitingsHandler = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       success: true,
-      message: 'Here the list of todos.',
+      message: 'Your items in waiting list.',
       data: data.waitings,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+/**
+ * Adding link to the waiting list
+ */
+exports.addWaitingHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = decode(req.app.jwt);
+
+    const data = await addWaitingService(user._id, id);
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: 'Item added to the waiting list successfully.',
+      data,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+/**
+ * Removing item from the waiting list
+ */
+exports.removeWaitingHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = decode(req.app.jwt);
+
+    const data = await removeWaitingService(user._id, id);
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: 'Item removed to the waiting list successfully.',
+      data,
     });
   } catch (error) {
     return next(error);

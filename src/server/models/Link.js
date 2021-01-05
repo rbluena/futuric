@@ -20,6 +20,7 @@ const linkSchema = new Schema(
     archived: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
     waitings: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    // comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true }
 );

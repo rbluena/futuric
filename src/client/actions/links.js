@@ -7,6 +7,8 @@ import {
   deleteLinkService,
   getLinkAnalyticsService,
   getLinksService,
+  addWaitingService,
+  removeWaitingService,
 } from '@app/services';
 
 import {
@@ -30,9 +32,13 @@ import {
   deleteLinkFailure,
   getMyLinksSuccess,
   getMyLinksFailure,
+  toggleWaiting,
+  toggleWaitingSuccess,
+  toggleWaitingFailure,
 } from '@app/slices/linksSlice';
 
 import { setNotification } from '@app/slices/globalSlice';
+import { findIndex } from 'lodash';
 
 /**
  * Retreiving a link based on link's id
@@ -228,6 +234,44 @@ export function getLinksAction(options = {}) {
       dispatch(getLinksSuccess(links));
     } catch (error) {
       dispatch(getLinksFailure());
+    }
+  };
+}
+
+/**
+ * Adding or removing item from waiting list.
+ * @param {String} linkId ID of a link post that user is adding to waiting list
+ * @param {String} type Either "add" or "remove". Either adding or removing items from list
+ */
+export function toggleWaitingAction(linkId, type) {
+  return async (dispatch, getState) => {
+    dispatch(toggleWaiting());
+    let data = null;
+
+    try {
+      const {
+        auth: { token },
+        links: { links },
+      } = getState();
+
+      if (type === 'add') {
+        ({ data } = await addWaitingService(token, linkId));
+      }
+
+      if (type === 'remove') {
+        ({ data } = await removeWaitingService(token, linkId));
+      }
+
+      if (data) {
+        // Links is read only, can't be updated.
+        const oldData = [...links.data];
+        const dataIndex = findIndex(oldData, (item) => item._id === data._id);
+        oldData.splice(dataIndex, 1, data);
+        const updatedLinks = { data: oldData, meta: links.meta };
+        dispatch(toggleWaitingSuccess(updatedLinks));
+      }
+    } catch (error) {
+      dispatch(toggleWaitingFailure());
     }
   };
 }

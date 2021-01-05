@@ -14,5 +14,7 @@ export default {
   getLink: (id) => `${SERVER_API}/links/${id}`,
   getLinks: `${SERVER_API}/links`,
   getWaitings: `${SERVER_API}/links/me/waitings`,
+  addWaiting: (linkId) => `${SERVER_API}/links/${linkId}/waitings/add`,
+  removeWaiting: (linkId) => `${SERVER_API}/links/${linkId}/waitings/remove`,
   getAnalytics: (id) => `${SERVER_API}/links/${id}`,
 };

@@ -137,6 +137,22 @@ const linksSlice = createSlice({
         state.myWaitings = payload;
       },
     },
+    toggleWaiting: {
+      reducer: (state) => {
+        state.fetching = true;
+      },
+    },
+    toggleWaitingSuccess: {
+      reducer: (state, { payload }) => {
+        state.fetching = false;
+        state.links = payload;
+      },
+    },
+    toggleWaitingFailure: {
+      reducer: (state) => {
+        state.fetching = false;
+      },
+    },
   },
 });
 
@@ -163,6 +179,9 @@ export const {
   getMyLinksSuccess,
   getMyLinksFailure,
   getMyWaitingsSuccess,
+  toggleWaiting,
+  toggleWaitingSuccess,
+  toggleWaitingFailure,
 } = linksSlice.actions;
 
 export default linksSlice.reducer;

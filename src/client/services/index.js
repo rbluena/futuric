@@ -276,7 +276,60 @@ export const getUserWaitingsService = async (token, options) => {
       method: 'GET',
       url: path.getWaitings,
       params: options || {},
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
+ * Adding link to the waiting list.
+ *
+ * Once item added, user will receive notification item is updated.
+ *
+ * @param {String} token
+ * @param {String} userId
+ * @param {String} linkId
+ */
+export const addWaitingService = async (token, linkId) => {
+  try {
+    const response = await request({
+      method: 'GET',
+      url: path.addWaiting(linkId),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
+ * Removing link from the waiting list.
+ *
+ * Once item removed, user will not receive any notification.
+ *
+ * @param {String} token
+ * @param {String} userId
+ * @param {String} linkId
+ */
+export const removeWaitingService = async (token, linkId) => {
+  try {
+    const response = await request({
+      method: 'DELETE',
+      url: path.removeWaiting(linkId),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     return errorHandler(error);

@@ -87,8 +87,6 @@ const getAllLinksService = async (options) => {
   const paginateOptions = {};
   const sort = { createdAt: -1 };
 
-  console.log(options);
-
   const { limit, page, topic } = options;
 
   if (limit) {
@@ -131,6 +129,7 @@ const getAllLinksService = async (options) => {
         category: 1,
         isActive: 1,
         availableDate: 1,
+        waitings: 1,
         'owner._id': 1,
         'owner.firstname': 1,
         'owner.lastname': 1,
@@ -140,6 +139,8 @@ const getAllLinksService = async (options) => {
         'owner.website': 1,
         'owner.image': 1,
         'owner.verified': 1,
+        waitingsCount: { $size: { $ifNull: ['$waitings', []] } },
+        commentsCount: { $size: { $ifNull: ['$comments', []] } },
       },
     },
   ]);
@@ -158,6 +159,90 @@ const getWaitingLinksService = async (userId) => {
   return waitings;
 };
 
+/**
+ * Adding link item to the list.
+ * @param {String} userId
+ * @param {String} linkId
+ */
+const addWaitingService = async (userId, linkId) => {
+  const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+  const link = await Link.findOne({ _id: mongoose.Types.ObjectId(linkId) });
+
+  let savedLink = null;
+
+  if (user && link) {
+    user.waitings.push(linkId);
+    link.waitings.push(userId);
+
+    await user.save();
+    savedLink = await link.save();
+  }
+
+  if (savedLink) {
+    await Link.populate(savedLink, 'owner');
+    await Link.populate(savedLink, 'comments');
+    await Link.populate(savedLink, 'waitings');
+  }
+
+  const savedObject = savedLink.toObject();
+
+  savedObject.waitingsCount = savedObject.waitings.length;
+  savedObject.commentsCount = savedObject.comments
+    ? savedObject.comments.length
+    : 0;
+
+  delete savedObject.comments;
+  delete savedObject.owner.followings;
+  delete savedObject.owner.followers;
+  delete savedObject.owner.password;
+  delete savedObject.owner.verificationToken;
+  delete savedObject.owner.waitings;
+  delete savedObject.owner.links;
+
+  return savedObject;
+};
+
+/**
+ * Removing item from the list.
+ * @param {String} userId
+ * @param {String} linkId
+ */
+const removeWaitingService = async (userId, linkId) => {
+  const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+  const link = await Link.findOne({ _id: mongoose.Types.ObjectId(linkId) });
+
+  let removedLink = null;
+
+  if (user && link) {
+    user.waitings.pull(linkId);
+    link.waitings.pull(userId);
+    removedLink = await link.save();
+  }
+
+  if (removedLink) {
+    await Link.populate(removedLink, 'owner');
+    await Link.populate(removedLink, 'comments');
+    await Link.populate(removedLink, 'waitings');
+  }
+
+  const savedObject = removedLink.toObject();
+
+  savedObject.waitingsCount = savedObject.waitings.length;
+  savedObject.commentsCount = savedObject.comments
+    ? savedObject.comments.length
+    : 0;
+
+  delete savedObject.comments;
+  delete savedObject.owner.followings;
+  delete savedObject.owner.followers;
+  delete savedObject.owner.password;
+  delete savedObject.owner.verificationToken;
+  delete savedObject.owner.waitings;
+  delete savedObject.owner.links;
+
+  return savedObject;
+};
+
 module.exports = {
   createLinkService,
   updateLinkService,
@@ -165,4 +250,6 @@ module.exports = {
   getLinkByIdService,
   getAllLinksService,
   getWaitingLinksService,
+  addWaitingService,
+  removeWaitingService,
 };

@@ -59,7 +59,7 @@ PostCard.Header.propTypes = {
   publisher: PropTypes.objectOf(PropTypes.shape).isRequired,
 };
 
-PostCard.Content = ({ post, small }) => {
+PostCard.Content = ({ post, small, toggleWaiting }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const user = useSelector(getUserSelector);
   let isAuthUserOwner = false;
@@ -83,6 +83,7 @@ PostCard.Content = ({ post, small }) => {
       </h2>
 
       <div className="flex items-center justify-items-start mt-2">
+        {/* start: shorten url */}
         {post.isActive ? (
           <Link href={post.longUrl} className="text-xs">
             {post.shortenUrl}
@@ -92,20 +93,20 @@ PostCard.Content = ({ post, small }) => {
             {post.shortenUrl}
           </Link>
         )}
+        {/* end: shorten url */}
         &nbsp;&nbsp;
         <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
         &nbsp;&nbsp;
         <span className="text-xs text-neutral-600">
           {format(new Date(post.availableDate), 'MMM d')}
         </span>
-        {/* start: shorten url */}
-        {/* end: shorten url */}
         {/* start: Notification button. */}
         {!isAuthUserOwner && (
           <button
             type="button"
             className="ml-auto p-1 rounded-sm hover:bg-primary-400 text-primary-700 hover:text-white"
             title="Get notified"
+            onClick={() => toggleWaiting(post._id)}
           >
             <BellOutlineIcon size="xs" className="" />
           </button>
@@ -122,6 +123,7 @@ PostCard.Content.defaultProps = {
 
 PostCard.Content.propTypes = {
   post: PropTypes.objectOf(PropTypes.shape).isRequired,
+  toggleWaiting: PropTypes.func.isRequired,
   small: PropTypes.bool,
 };
 
