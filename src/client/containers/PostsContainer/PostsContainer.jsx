@@ -8,7 +8,7 @@ const PostsContainer = ({ sidebar, posts }) => (
 
     <div className="mx-auto">
       {posts.map((item) => (
-        <Post owner={item.owner} post={item} />
+        <Post key={item._id} owner={item.owner} post={item} />
       ))}
     </div>
   </div>

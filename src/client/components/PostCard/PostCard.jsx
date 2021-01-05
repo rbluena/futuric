@@ -5,6 +5,7 @@ import { getUserSelector } from '@app/selectors';
 import { Avatar, Link } from '@app/components';
 import { BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
+import Post from '../../containers/PostsContainer/Post';
 
 const PostCard = ({ children, small }) => (
   <div
@@ -30,6 +31,7 @@ PostCard.Header = ({ publisher, small }) => (
     <Avatar
       src={publisher.image && publisher.image.thumbnail}
       initials={publisher.brandname[0]}
+      alt={publisher.brandname}
     />
     <div className="flex pl-2">
       <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
@@ -55,20 +57,7 @@ PostCard.Header.defaultProps = {
 
 PostCard.Header.propTypes = {
   small: PropTypes.bool,
-  publisher: PropTypes.objectOf(PropTypes).isRequired,
-};
-
-PostCard.Avatar = ({ src, small }) => (
-  <Avatar src={src} alt="brand image" size={`${small ? 'md' : 'lg'}`} />
-);
-
-PostCard.Avatar.defaultProps = {
-  small: false,
-};
-
-PostCard.Avatar.propTypes = {
-  src: PropTypes.string.isRequired,
-  small: PropTypes.bool,
+  publisher: PropTypes.objectOf(PropTypes.shape).isRequired,
 };
 
 PostCard.Content = ({ post, small }) => {
@@ -128,10 +117,13 @@ PostCard.Content = ({ post, small }) => {
   );
 };
 
+PostCard.Content.defaultProps = {
+  small: false,
+};
+
 PostCard.Content.propTypes = {
-  title: PropTypes.string.isRequired,
   post: PropTypes.objectOf(PropTypes.shape).isRequired,
-  small: PropTypes.bool.isRequired,
+  small: PropTypes.bool,
 };
 
 export default PostCard;

@@ -4,7 +4,7 @@ import { PostCard } from '@app/components';
 
 const Post = ({ owner, post }) => (
   <PostCard>
-    <PostCard.Header publisher={owner} />
+    <PostCard.Header publisher={owner} alt={owner.brandname} />
     <PostCard.Content post={post} />
   </PostCard>
 );

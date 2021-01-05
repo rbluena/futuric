@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   fetching: false,
-  links: null,
+  links: {},
   myLinks: {},
   myWaitings: [],
   createdLink: null,
@@ -48,9 +48,25 @@ const linksSlice = createSlice({
         state.fetching = false;
       },
     },
-    getLink: {
+    getLinks: {
       reducer: (state) => {
         state.fetching = true;
+      },
+    },
+    getLinksSuccess: {
+      reducer: (state, { payload }) => {
+        state.fetching = true;
+        state.links = payload;
+      },
+    },
+    getLinksFailure: {
+      reducer: (state) => {
+        state.fetching = false;
+      },
+    },
+    getLink: {
+      reducer: (state) => {
+        state.fetching = false;
       },
     },
     getLinkSuccess: {
@@ -128,6 +144,9 @@ export const {
   getLink,
   getLinkSuccess,
   getLinkFailure,
+  getLinks,
+  getLinksSuccess,
+  getLinksFailure,
   getAnalytics,
   getAnalyticsSuccess,
   getAnalyticsFailure,

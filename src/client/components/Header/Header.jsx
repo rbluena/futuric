@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Nav, NavTopics, Hero } from '@app/components';
+import { Nav, Hero } from '@app/components';
+import FilterContainer from '@app/containers/FilterContainer';
 
 const Header = ({ showHero, showTopics }) => (
   <div>
     <div className="container mx-auto">
       <Nav />
-      {showTopics && <NavTopics />}
+      {showTopics && <FilterContainer />}
     </div>
     {showHero && <Hero />}
   </div>

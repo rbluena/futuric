@@ -19,7 +19,6 @@ const Nav = ({ user }) => {
     } else {
       router.push(value);
     }
-    // dispatch(logoutUserAction());
   }
 
   return (

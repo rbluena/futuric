@@ -13,6 +13,9 @@ import {
   getLink,
   getLinkSuccess,
   getLinkFailure,
+  getLinks,
+  getLinksSuccess,
+  getLinksFailure,
   getAnalytics,
   getAnalyticsSuccess,
   getAnalyticsFailure,
@@ -188,6 +191,43 @@ export function getMyLinksAction(options = {}) {
       }
     } catch (err) {
       dispatch(getMyLinksFailure());
+    }
+  };
+}
+
+/**
+ * Retrieving links from the server
+ * @param {Object} options Query options
+ */
+export function getLinksAction(options = {}) {
+  return async (dispatch, getState) => {
+    dispatch(getLinks());
+
+    try {
+      const {
+        auth: { token },
+        links: oldLinks,
+      } = getState();
+
+      if (token) {
+        // Get more related links based on user followings/subscription.
+      }
+
+      const { data } = await getLinksService(options);
+      let links = {};
+
+      if (oldLinks.data && oldLinks.data.length > 0) {
+        links = {
+          data: { ...oldLinks.data, ...data.data },
+          meta: data.meta,
+        };
+      } else {
+        links = data;
+      }
+
+      dispatch(getLinksSuccess(links));
+    } catch (error) {
+      dispatch(getLinksFailure());
     }
   };
 }
