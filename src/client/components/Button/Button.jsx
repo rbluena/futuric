@@ -9,7 +9,8 @@ const Button = ({ children, outline, className, size, variant, ...rest }) => {
   }
 
   if (variant === 'primary' && !outline) {
-    className += ' text-neutral-50 bg-primary-700';
+    className +=
+      ' text-neutral-50 bg-primary-700 hover:bg-neutral-50 hover:text-primary-700';
   }
 
   if (variant === 'primary' && outline) {
@@ -21,7 +22,8 @@ const Button = ({ children, outline, className, size, variant, ...rest }) => {
   }
 
   if (variant === 'secondary' && outline) {
-    className += ' border border-neutral-50 text-neutral-50';
+    className +=
+      ' border border-neutral-50 text-neutral-50 hover:bg-neutral-200 hover:text-neutral-900';
   }
 
   if (size === 'lg') {
