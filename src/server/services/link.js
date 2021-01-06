@@ -3,6 +3,8 @@ const Link = require('../models/Link');
 const User = require('../models/User');
 const { findUserById } = require('./user');
 
+const findLinkById = async (id) => Link.findById(mongoose.Types.ObjectId(id));
+
 /**
  * Service to update existing link
  *
@@ -149,7 +151,6 @@ const getAllLinksService = async (options, userId) => {
         'owner.firstname': 1,
         'owner.lastname': 1,
         'owner.username': 1,
-        'owner.email': 1,
         'owner.brandname': 1,
         'owner.website': 1,
         'owner.image': 1,
@@ -237,7 +238,7 @@ const addWaitingService = async (userId, linkId) => {
 };
 
 /**
- * Removing item from the list.
+ * Removing item from the waiting list.
  * @param {String} userId
  * @param {String} linkId
  */
@@ -280,6 +281,7 @@ const removeWaitingService = async (userId, linkId) => {
 };
 
 module.exports = {
+  findLinkById,
   createLinkService,
   updateLinkService,
   deleteLinkService,

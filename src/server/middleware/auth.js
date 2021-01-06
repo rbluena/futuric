@@ -47,9 +47,9 @@ exports.isAuthorized = async (req, res, next) => {
     const isOwner = await isUserOwnLinkService(user._id, id);
 
     if (!isOwner) {
-      res.status(403).json({
+      return res.status(403).json({
         status: 403,
-        message: 'unauthorized',
+        message: 'Unauthorized',
         errors: { details: 'You are not authorized to perform this request.' },
       });
     }
