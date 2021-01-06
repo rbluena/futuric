@@ -84,10 +84,15 @@ const getLinkByIdService = async (linkId) => {
  */
 const getAllLinksService = async (options, userId) => {
   const match = {};
-  const paginateOptions = {};
-  const sort = { createdAt: -1 };
+  const paginateOptions = { limit: 15 };
+  let sort = { createdAt: -1 };
 
-  const { limit, page, topic } = options;
+  const { limit, page, topic, category, sort: sortQuery } = options;
+
+  if (sortQuery) {
+    // Property to be sorted and type to be either ascending or descending
+    sort = { [sortQuery.property]: sortQuery.type };
+  }
 
   if (limit) {
     paginateOptions.limit = parseInt(limit, 10);
@@ -99,6 +104,10 @@ const getAllLinksService = async (options, userId) => {
 
   if (options.owner) {
     match.owner = mongoose.Types.ObjectId(options.owner);
+  }
+
+  if (category) {
+    match.category = { $in: [category] };
   }
 
   if (topic) {
