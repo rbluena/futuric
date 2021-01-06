@@ -15,11 +15,15 @@ import {
   Textarea,
   Submit,
 } from '@app/components/Form';
-import { Section } from '@app/components';
+import { PencilIcon } from '@app/components/Icons';
+import { Section, Button } from '@app/components';
 
 import countries from './countries.json';
 
 const UserForm = () => {
+  const [showOnlinePrecense, setShowOnlinePrecense] = useState(false);
+  const [showAddress, setShowAddress] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const [characters, setCharacters] = useState('');
   const user = useSelector(getUserSelector);
   const dispatch = useDispatch();
@@ -80,28 +84,11 @@ const UserForm = () => {
           <TextInput
             name="brandname"
             label="Brand Name: *"
-            placeholder="Brand Name"
+            placeholder="Use your brand name or full name."
             register={register({
               required: 'This field is required.',
             })}
             error={get(inputErrors, 'brandname.message')}
-          />
-        </ControlWrapper>
-
-        <ControlWrapper>
-          <TextInput
-            name="website"
-            label="Website:"
-            placeholder="Website"
-            register={register({
-              validate: (value) => {
-                if (value.length && !isURL(value))
-                  return 'This is not valid website URL.';
-
-                return true;
-              },
-            })}
-            error={get(inputErrors, 'website.message')}
           />
         </ControlWrapper>
 
@@ -140,78 +127,202 @@ const UserForm = () => {
         </ControlWrapper>
       </Section>
 
-      <Section heading="Address">
-        <ControlWrapper>
-          <TextInput
-            name="address.address"
-            label="Address:"
-            placeholder="Address"
-            register={register}
-            error={get(inputErrors, 'address.address.message')}
-          />
-        </ControlWrapper>
-        <ControlWrapper>
-          <TextInput
-            name="address.city"
-            label="City:"
-            placeholder="City"
-            register={register}
-            error={get(inputErrors, 'address.message')}
-          />
-        </ControlWrapper>
+      {/* start: website and social media */}
+      {!showOnlinePrecense ? (
+        <Button
+          variant="text-button"
+          className="text-primary-700 hover:text-primary-900 text-sm font-light flex items-center"
+          onClick={() => setShowOnlinePrecense(true)}
+        >
+          <span>Online presence</span>&nbsp;
+          <PencilIcon size="xs" />
+        </Button>
+      ) : (
+        <Section heading="Online Presence">
+          <ControlWrapper>
+            <TextInput
+              name="website"
+              label="Website:"
+              placeholder="Website"
+              register={register({
+                validate: (value) => {
+                  if (value.length && !isURL(value))
+                    return 'This is not valid URL.';
 
-        <ControlWrapper>
-          <Select
-            label="Country:"
-            name="address.country"
-            options={[{ label: 'Select country', value: '' }, ...countries]}
-            register={register({
-              minLength: {
-                value: 2,
-                message: 'This value is required.',
-              },
-            })}
-            error={get(inputErrors, 'address.country.message')}
-          >
-            <option value="">Select country</option>
-            {countries.map((item) => (
-              <option value={item.value}>{item.label}</option>
-            ))}
-          </Select>
-        </ControlWrapper>
-      </Section>
+                  return true;
+                },
+              })}
+              error={get(inputErrors, 'website.message')}
+            />
+          </ControlWrapper>
 
-      <Section heading="Change Password (Optional):">
-        <ControlWrapper>
-          <PasswordInput
-            name="oldPassword"
-            label="Old Password:"
-            placeholder="Old Password"
-            register={register({
-              minLength: {
-                value: 5,
-                message: 'Password should not be less than 5 characters.',
-              },
-            })}
-            error={get(inputErrors, 'oldPassword.message')}
-          />
-        </ControlWrapper>
+          <ControlWrapper>
+            <TextInput
+              name="social.twitter"
+              label="Twitter:"
+              placeholder="Twitter profile"
+              register={register({
+                validate: (value) => {
+                  if (value.length && !isURL(value))
+                    return 'This is not valid URL.';
 
-        <ControlWrapper>
-          <PasswordInput
-            name="password"
-            label="New Password:"
-            placeholder="New Password"
-            register={register({
-              minLength: {
-                value: 5,
-                message: 'Password should not be less than 5 characters.',
-              },
-            })}
-            error={get(inputErrors, 'password.message')}
-          />
-        </ControlWrapper>
-      </Section>
+                  return true;
+                },
+              })}
+              error={get(inputErrors, 'social.twitter.message')}
+            />
+          </ControlWrapper>
+
+          <ControlWrapper>
+            <TextInput
+              name="social.instagram"
+              label="Instagram:"
+              placeholder="Instagram profile"
+              register={register({
+                validate: (value) => {
+                  if (value.length && !isURL(value))
+                    return 'This is not valid URL.';
+
+                  return true;
+                },
+              })}
+              error={get(inputErrors, 'social.instagram.message')}
+            />
+          </ControlWrapper>
+
+          <ControlWrapper>
+            <TextInput
+              name="social.youtube"
+              label="YouTube:"
+              placeholder="Youtube profile"
+              register={register({
+                validate: (value) => {
+                  if (value.length && !isURL(value))
+                    return 'This is not valid URL.';
+
+                  return true;
+                },
+              })}
+              error={get(inputErrors, 'social.youtube.message')}
+            />
+          </ControlWrapper>
+
+          <ControlWrapper>
+            <TextInput
+              name="social.facebook"
+              label="Facebook:"
+              placeholder="Facebook profile or page"
+              register={register({
+                validate: (value) => {
+                  if (value.length && !isURL(value))
+                    return 'This is not valid  URL.';
+
+                  return true;
+                },
+              })}
+              error={get(inputErrors, 'social.facebook.message')}
+            />
+          </ControlWrapper>
+        </Section>
+      )}
+      {/* end: website and social media */}
+
+      {/* start: profile's address */}
+      {!showAddress ? (
+        <Button
+          variant="text-button"
+          className="text-primary-700 hover:text-primary-900 text-sm font-light flex items-center"
+          onClick={() => setShowAddress(true)}
+        >
+          <span>Profile address</span>&nbsp;
+          <PencilIcon size="xs" />
+        </Button>
+      ) : (
+        <Section heading="Address">
+          <ControlWrapper>
+            <TextInput
+              name="address.address"
+              label="Address:"
+              placeholder="Address"
+              register={register}
+              error={get(inputErrors, 'address.address.message')}
+            />
+          </ControlWrapper>
+          <ControlWrapper>
+            <TextInput
+              name="address.city"
+              label="City:"
+              placeholder="City"
+              register={register}
+              error={get(inputErrors, 'address.message')}
+            />
+          </ControlWrapper>
+
+          <ControlWrapper>
+            <Select
+              label="Country:"
+              name="address.country"
+              options={[{ label: 'Select country', value: '' }, ...countries]}
+              register={register({
+                minLength: {
+                  value: 2,
+                  message: 'This value is required.',
+                },
+              })}
+              error={get(inputErrors, 'address.country.message')}
+            >
+              <option value="">Select country</option>
+              {countries.map((item) => (
+                <option value={item.value}>{item.label}</option>
+              ))}
+            </Select>
+          </ControlWrapper>
+        </Section>
+      )}
+      {/* end: profile's address */}
+
+      {!showChangePassword ? (
+        <Button
+          variant="text-button"
+          className="text-primary-700 hover:text-primary-900 text-sm font-light flex items-center"
+          onClick={() => setShowChangePassword(true)}
+        >
+          <span>Change password</span>&nbsp;
+          <PencilIcon size="xs" />
+        </Button>
+      ) : (
+        <Section heading="Change Password (Optional):">
+          <ControlWrapper>
+            <PasswordInput
+              name="oldPassword"
+              label="Old Password:"
+              placeholder="Old Password"
+              register={register({
+                minLength: {
+                  value: 5,
+                  message: 'Password should not be less than 5 characters.',
+                },
+              })}
+              error={get(inputErrors, 'oldPassword.message')}
+            />
+          </ControlWrapper>
+
+          <ControlWrapper>
+            <PasswordInput
+              name="password"
+              label="New Password:"
+              placeholder="New Password"
+              register={register({
+                minLength: {
+                  value: 5,
+                  message: 'Password should not be less than 5 characters.',
+                },
+              })}
+              error={get(inputErrors, 'password.message')}
+            />
+          </ControlWrapper>
+        </Section>
+      )}
 
       <ControlWrapper>
         <Submit>Submit</Submit>

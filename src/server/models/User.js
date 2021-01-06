@@ -10,7 +10,13 @@ const userSchema = new Schema(
     username: { type: String, min: 4 },
     brandname: { type: String },
     description: { type: String },
-    website: { type: String },
+    website: String,
+    social: {
+      twitter: String,
+      instagram: String,
+      youtube: String,
+      facebook: String,
+    },
     email: {
       type: String,
       required: true,
