@@ -14,7 +14,8 @@ const Button = ({ children, outline, className, size, variant, ...rest }) => {
   }
 
   if (variant === 'primary' && outline) {
-    className += ' border border-primary-700 text-primary-500';
+    className +=
+      ' border border-primary-700 text-primary-500 hover:bg-primary-700 hover:text-white';
   }
 
   if (variant === 'secondary' && !outline) {

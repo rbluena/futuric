@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import { openModal } from '@app/slices/globalSlice';
 import { Link, Avatar, Button } from '@app/components';
 import { BadgeIcon, CheckUserIcon } from '@app/components/Icons';
 import { toggleFollowAction } from '@app/actions';
 
-const ProfileHeader = ({ profile, isCurrentUser }) => {
+const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -17,7 +18,11 @@ const ProfileHeader = ({ profile, isCurrentUser }) => {
     }
 
     if (value === 'follow') {
-      dispatch(toggleFollowAction(profile._id));
+      if (isAuthenticated) {
+        dispatch(toggleFollowAction(profile._id));
+      } else {
+        dispatch(openModal('signin'));
+      }
     }
   }
 
@@ -94,10 +99,12 @@ const ProfileHeader = ({ profile, isCurrentUser }) => {
 
 ProfileHeader.defaultProps = {
   isCurrentUser: false,
+  isAuthenticated: false,
 };
 
 ProfileHeader.propTypes = {
   profile: PropTypes.objectOf(PropTypes.shape).isRequired,
   isCurrentUser: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
 };
 export default ProfileHeader;

@@ -8,11 +8,11 @@ const Profile = () => (
   <ContentWrapper>
     <ProfileHeaderContainer />
     <div className="pt-6">
-      <RecentlyPublishedContainer />
+      {/* <RecentlyPublishedContainer /> */}
       <div className="border-b border-neutral-200">
         <h2 className="text-xl px-12">Upcoming contents</h2>
       </div>
-      <PostsContainer />
+      {/* <PostsContainer /> */}
     </div>
   </ContentWrapper>
 );
