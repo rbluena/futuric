@@ -175,11 +175,14 @@ exports.getWaitingsHandler = async (req, res, next) => {
 
     const data = await getWaitingLinksService(user._id, req.query);
 
+    const meta = omit(data, 'docs');
+    const { docs } = data;
+
     return res.status(200).json({
       status: 200,
       success: true,
       message: 'Your items in waiting list.',
-      data: data.waitings,
+      data: { meta, data: docs },
     });
   } catch (error) {
     return next(error);

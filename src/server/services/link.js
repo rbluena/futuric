@@ -163,15 +163,32 @@ const getAllLinksService = async (options, userId) => {
   return Link.aggregatePaginate(aggregate, paginateOptions);
 };
 
-const getWaitingLinksService = async (userId) => {
-  const waitings = await User.findOne(
-    {
-      _id: mongoose.Types.ObjectId(userId),
-    },
-    { waitings: 1, _id: 0 }
-  ).populate('waitings');
+/**
+ * Retrieving waitings from the list.
+ * @param {String} userId
+ */
+const getWaitingLinksService = async (userId, options = {}) => {
+  const paginateOptions = { limit: 15 };
+  const { limit, page } = options;
 
-  return waitings;
+  // const waitings = await Link.find({
+  //   waitings: { $in: [mongoose.Types.ObjectId(userId)] },
+  // }).populate('owner', 'firstname lastname username brandname prominent');
+
+  if (page) {
+    paginateOptions.page = parseInt(page, 10);
+  }
+
+  if (limit) {
+    paginateOptions.limit = parseInt(limit, 10);
+  }
+
+  return Link.paginate(
+    {
+      waitings: { $in: [mongoose.Types.ObjectId(userId)] },
+    },
+    { ...paginateOptions, populate: 'owner' }
+  );
 };
 
 /**

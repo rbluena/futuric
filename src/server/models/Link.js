@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongooseAggregatePaginateV2 = require('mongoose-aggregate-paginate-v2');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema } = mongoose;
 
@@ -20,11 +21,12 @@ const linkSchema = new Schema(
     archived: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
     waitings: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    // comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true }
 );
 
 linkSchema.plugin(mongooseAggregatePaginateV2);
+linkSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Link', linkSchema);

@@ -8,7 +8,7 @@ describe('testing links', () => {
   let linkId = null;
 
   before(() => {
-    cy.apiSignin('rbluena@gmail.com', 'password').then((token) => {
+    cy.apiSignin('luenarabii@gmail.com', 'password').then((token) => {
       authToken = token;
     });
   });
@@ -100,6 +100,21 @@ describe('testing links', () => {
     cy.request({
       method: 'DELETE',
       url: `/links/${linkId}`,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    }).then((response) => {
+      const { status, body } = response;
+
+      expect(status).to.equal(200);
+      expect(body).to.have.property('data');
+    });
+  });
+
+  it('should retrieve user waitings', () => {
+    cy.request({
+      method: 'GET',
+      url: '/links/me/waitings',
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
