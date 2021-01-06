@@ -90,7 +90,7 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
 
       <div className=" pl-16 pb-4">
         {profile.description && (
-          <p className="text-sm text-neutral-900">{profile.description}</p>
+          <p className="text-neutral-900">{profile.description}</p>
         )}
       </div>
     </div>

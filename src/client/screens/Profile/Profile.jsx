@@ -25,7 +25,16 @@ const Profile = () => {
         <div className="border-b border-neutral-200">
           <h2 className="text-xl px-12">Upcoming</h2>
         </div>
-        <PostsContainer posts={data} />
+
+        {data && data.length > 0 ? (
+          <PostsContainer posts={data} />
+        ) : (
+          <div className="flex flex-col items-center py-6">
+            <h2 className="text-xl mb-6">
+              This user haven&apos;t created any link post.
+            </h2>
+          </div>
+        )}
       </div>
     </ContentWrapper>
   );
