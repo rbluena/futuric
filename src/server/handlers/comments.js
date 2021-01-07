@@ -101,12 +101,8 @@ exports.getCommentsHandler = async (req, res, next) => {
   try {
     let data = [];
     const user = decode(req.app.jwt);
+    data = await getCommentsService(req.query, user._id || null);
 
-    if (user) {
-      data = await getCommentsService(req.query, user._id);
-    } else {
-      data = await getCommentsService(req.query);
-    }
     const meta = omit(data, 'docs');
     const { docs } = data;
 
