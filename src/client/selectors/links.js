@@ -30,13 +30,22 @@ export const getLinksStateSelector = createSelector(
   (state) => state.links
 );
 
-export const selectMyWaitings = (state) => state.links.myWaitings;
+export const selectWaitings = (state) => {
+  const { waitings } = state.links;
+  const { data, meta } = waitings;
+
+  if (isEmpty(data)) {
+    return { data: [], meta: {} };
+  }
+
+  return { data, meta };
+};
 
 export const linksSelector = createSelector(selectLinks, (links) => links);
 
 export const myLinksSelector = createSelector(selectMyLinks, (links) => links);
 
-export const myWaitingsSelector = createSelector(
-  selectMyWaitings,
+export const waitingsSelector = createSelector(
+  selectWaitings,
   (waitings) => waitings
 );

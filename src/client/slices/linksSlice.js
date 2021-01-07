@@ -4,7 +4,7 @@ const initialState = {
   fetching: false,
   links: {},
   myLinks: {},
-  myWaitings: [],
+  waitings: {},
   createdLink: null,
   activeLink: null,
   analytics: null,
@@ -153,6 +153,22 @@ const linksSlice = createSlice({
         state.fetching = false;
       },
     },
+    getWaitings: {
+      reducer: (state) => {
+        state.fetching = true;
+      },
+    },
+    getWaitingsSuccess: {
+      reducer: (state, { payload }) => {
+        state.fetching = false;
+        state.waitings = payload;
+      },
+    },
+    getWaitingsFilure: {
+      reducer: (state) => {
+        state.fetching = false;
+      },
+    },
   },
 });
 
@@ -182,6 +198,9 @@ export const {
   toggleWaiting,
   toggleWaitingSuccess,
   toggleWaitingFailure,
+  getWaitings,
+  getWaitingsSuccess,
+  getWaitingsFailure,
 } = linksSlice.actions;
 
 export default linksSlice.reducer;

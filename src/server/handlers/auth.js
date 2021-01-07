@@ -229,7 +229,12 @@ exports.loginHandler = async (req, res, next) => {
     delete user.password;
     delete user.loginStrategy;
     delete user.verificationToken;
+    delete user.token;
     delete user.links;
+    delete user.waitings;
+    delete user.comments;
+    delete user.followings;
+    delete user.followers;
 
     const jwt = await generateAccessToken(user);
     req.app.jwt = jwt;

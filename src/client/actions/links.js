@@ -1,5 +1,6 @@
 import { decode } from 'jsonwebtoken';
 import router from 'next/router';
+import { mergeUpdatedItem } from '@app/utils/common';
 import {
   getLinkService,
   createLinkService,
@@ -7,6 +8,7 @@ import {
   deleteLinkService,
   getLinkAnalyticsService,
   getLinksService,
+  getUserWaitingsService,
   addWaitingService,
   removeWaitingService,
 } from '@app/services';
@@ -35,6 +37,9 @@ import {
   toggleWaiting,
   toggleWaitingSuccess,
   toggleWaitingFailure,
+  getWaitings,
+  getWaitingsSuccess,
+  getWaitingsFailure,
 } from '@app/slices/linksSlice';
 
 import { setNotification } from '@app/slices/globalSlice';
@@ -251,7 +256,7 @@ export function toggleWaitingAction(linkId, type) {
     try {
       const {
         auth: { token },
-        links: { links },
+        links: { links, waitings },
       } = getState();
 
       if (type === 'add') {
@@ -263,15 +268,46 @@ export function toggleWaitingAction(linkId, type) {
       }
 
       if (data) {
-        // Links is read only, can't be updated.
-        const oldData = [...links.data];
-        const dataIndex = findIndex(oldData, (item) => item._id === data._id);
-        oldData.splice(dataIndex, 1, data);
-        const updatedLinks = { data: oldData, meta: links.meta };
-        dispatch(toggleWaitingSuccess(updatedLinks));
+        if (links.data && links.data.length) {
+          const updatedLinks = mergeUpdatedItem(links.data, data);
+          dispatch(getLinksSuccess({ data: updatedLinks, meta: links.meta }));
+        }
+
+        if (waitings.data && waitings.data.length) {
+          const updatedWaitings = mergeUpdatedItem(waitings.data, data, true);
+          dispatch(
+            getWaitingsSuccess({ data: updatedWaitings, meta: waitings.meta })
+          );
+        }
       }
     } catch (error) {
       dispatch(toggleWaitingFailure());
+    }
+  };
+}
+
+export function getWaitingsAction(options) {
+  return async (dispatch, getState) => {
+    dispatch(getWaitings());
+
+    try {
+      const {
+        auth: { token },
+        links: { waitings },
+      } = getState();
+
+      const { data } = await getUserWaitingsService(token, options);
+      let newWaitings = {};
+
+      if (waitings.data && waitings.data.length > 0) {
+        newWaitings.data = [...waitings.data, ...data.data];
+        newWaitings.meta = data.meta;
+      } else {
+        newWaitings = data;
+      }
+      dispatch(getWaitingsSuccess(newWaitings));
+    } catch (error) {
+      dispatch(getWaitingsFailure());
     }
   };
 }

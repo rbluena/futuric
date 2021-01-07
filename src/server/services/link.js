@@ -184,12 +184,52 @@ const getWaitingLinksService = async (userId, options = {}) => {
     paginateOptions.limit = parseInt(limit, 10);
   }
 
-  return Link.paginate(
+  const aggregate = Link.aggregate([
+    { $match: { waitings: { $in: [mongoose.Types.ObjectId(userId)] } } },
+    { $sort: { createdAt: -1 } },
     {
-      waitings: { $in: [mongoose.Types.ObjectId(userId)] },
+      $lookup: {
+        from: User.collection.name,
+        localField: 'owner',
+        foreignField: '_id',
+        as: 'owner',
+      },
     },
-    { ...paginateOptions, populate: 'owner' }
-  );
+    { $unwind: '$owner' },
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        description: 1,
+        shortenUrl: 1,
+        longUrl: 1,
+        postUrl: 1,
+        topic: 1,
+        category: 1,
+        isActive: 1,
+        availableDate: 1,
+        waitings: 1,
+        isUserWaiting: {
+          $in: [
+            mongoose.Types.ObjectId(userId),
+            { $ifNull: ['$waitings', []] },
+          ],
+        },
+        'owner._id': 1,
+        'owner.firstname': 1,
+        'owner.lastname': 1,
+        'owner.username': 1,
+        'owner.brandname': 1,
+        'owner.website': 1,
+        'owner.image': 1,
+        'owner.verified': 1,
+        waitingsCount: { $size: { $ifNull: ['$waitings', []] } },
+        commentsCount: { $size: { $ifNull: ['$comments', []] } },
+      },
+    },
+  ]);
+
+  return Link.aggregatePaginate(aggregate, paginateOptions);
 };
 
 /**

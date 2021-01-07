@@ -270,12 +270,12 @@ export const toggleFollowService = async (token, userId) => {
   }
 };
 
-export const getUserWaitingsService = async (token, options) => {
+export const getUserWaitingsService = async (token, options = {}) => {
   try {
     const response = await request({
       method: 'GET',
       url: path.getWaitings,
-      params: options || {},
+      params: options,
       headers: {
         Authorization: `Bearer ${token}`,
       },

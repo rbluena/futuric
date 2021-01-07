@@ -78,8 +78,8 @@ const Nav = ({ user }) => {
               options={[
                 [{ label: 'Me', value: '/me' }],
                 [
-                  { label: 'My Links', value: '/me/links' },
-                  { label: 'Waiting List', value: '/me/waitings' },
+                  { label: 'Links', value: '/me/links' },
+                  { label: 'Waitlisted', value: '/me/waitings' },
                   { label: 'Notifications', value: '/me/notifications' },
                 ],
                 [

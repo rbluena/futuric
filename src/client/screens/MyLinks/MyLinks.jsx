@@ -1,15 +1,20 @@
 import React from 'react';
 import router from 'next/router';
-import { Button, Section, ContentWrapper } from '@app/components';
+import {
+  Button,
+  Section,
+  ContentWrapper,
+  ProfileHeader,
+} from '@app/components';
 import { useSelector, useDispatch } from 'react-redux';
-import { myLinksSelector } from '@app/selectors';
+import { myLinksSelector, getAuthSelector } from '@app/selectors';
 import { getMyLinksAction } from '@app/actions';
-import ProfileHeaderContainer from '@app/containers/ProfileHeaderContainer';
 import PostsContainer from '@app/containers/PostsContainer';
 import ViewMoreButton from './ViewMoreButton';
 
 const MyLinks = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector(getAuthSelector);
   const { data, meta } = useSelector(myLinksSelector);
   const { hasNextPage, nextPage, limit } = meta;
 
@@ -18,10 +23,13 @@ const MyLinks = () => {
   }
 
   return (
-    <div className="pb-4">
+    <div className="pb-6">
       <ContentWrapper>
-        <ProfileHeaderContainer />
-        <Section heading="My Links">
+        {/* start: PROFILE HEADER */}
+        <ProfileHeader profile={user} isCurrentUser isAuthenticated />
+        {/* end: PROFILE HEADER */}
+
+        <Section heading="Created Links">
           {data && data.length > 0 ? (
             <PostsContainer posts={data} />
           ) : (

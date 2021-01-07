@@ -5,10 +5,7 @@ import { useEffectOnce } from 'react-use';
 import { decode } from 'jsonwebtoken';
 import { getUserWaitingsService, getLinksService } from '@app/services';
 import { getCookieToken } from '@app/utils/session';
-import {
-  getMyLinksSuccess,
-  getMyWaitingsSuccess,
-} from '@app/slices/linksSlice';
+import { getMyLinksSuccess, getWaitingsSuccess } from '@app/slices/linksSlice';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
 import MeScreen from '@app/screens/Me';
 
@@ -81,7 +78,7 @@ const Me = ({ links, waitings }) => {
 
   useEffectOnce(() => {
     dispatch(getMyLinksSuccess(links));
-    dispatch(getMyWaitingsSuccess(waitings));
+    dispatch(getWaitingsSuccess(waitings));
   });
 
   return (
@@ -100,8 +97,11 @@ Me.defaultProps = {
 };
 
 Me.propTypes = {
-  links: PropTypes.objectOf(PropTypes.shape),
   waitings: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.shape),
+    PropTypes.arrayOf(PropTypes.shape),
+  ]),
+  links: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.shape),
     PropTypes.arrayOf(PropTypes.shape),
   ]),

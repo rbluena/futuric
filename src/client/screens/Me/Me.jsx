@@ -1,22 +1,26 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import router from 'next/router';
-import { myLinksSelector, myWaitingsSelector } from '@app/selectors';
-import { Section, ContentWrapper, Link } from '@app/components';
-import ProfileHeaderContainer from '@app/containers/ProfileHeaderContainer';
+import {
+  myLinksSelector,
+  waitingsSelector,
+  getAuthSelector,
+} from '@app/selectors';
+import { Section, ContentWrapper, Link, ProfileHeader } from '@app/components';
 import PostsContainer from '@app/containers/PostsContainer';
 import ViewAllButton from './ViewAllButton';
 
-const User = () => {
+const Me = () => {
   const { data: links } = useSelector(myLinksSelector);
-  const waitings = useSelector(myWaitingsSelector);
+  const { user } = useSelector(getAuthSelector);
+  const { data: waitings } = useSelector(waitingsSelector);
 
   const noActivities = links.length === 0 && waitings.length === 0;
 
   return (
     <div className="pb-6">
       <ContentWrapper>
-        <ProfileHeaderContainer />
+        <ProfileHeader profile={user} isCurrentUser isAuthenticated />
         {links && links.length > 0 && (
           <>
             <Section heading="My Links">
@@ -53,8 +57,8 @@ const User = () => {
               You don&apos;t have any activities. <br />
             </h2>
             <p className="text-neutral-700 my-4">
-              Create a link or add links in waiting list by clicking
-              notification button.
+              Create a link or add links in waiting list for this page to be
+              active.
             </p>
 
             <Link href="/learn" size="lg">
@@ -67,6 +71,6 @@ const User = () => {
   );
 };
 
-User.propTypes = {};
+Me.propTypes = {};
 
-export default User;
+export default Me;
