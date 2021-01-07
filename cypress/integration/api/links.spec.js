@@ -125,4 +125,19 @@ describe('testing links', () => {
       expect(body).to.have.property('data');
     });
   });
+
+  it('should retrieve analytics', () => {
+    cy.request({
+      method: 'GET',
+      url: `/links/${linkId}/analytics`,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    }).then((response) => {
+      const { status, body } = response;
+
+      expect(status).to.equal(200);
+      expect(body).to.have.property('data');
+    });
+  });
 });

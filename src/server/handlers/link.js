@@ -10,6 +10,7 @@ const {
   getWaitingLinksService,
   addWaitingService,
   removeWaitingService,
+  linkVisitCount,
 } = require('../services/link');
 
 /**
@@ -106,6 +107,8 @@ exports.getLinkHandler = async (req, res, next) => {
       // Is the link owned by current authenticated user?
       if (String(user._id) === String(doc.owner._id)) {
         doc.isUserOwner = true;
+      } else {
+        await linkVisitCount(doc._id);
       }
 
       // Is current user a follower of link's author

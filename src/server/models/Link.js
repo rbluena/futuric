@@ -22,6 +22,7 @@ const linkSchema = new Schema(
     deleted: { type: Boolean, default: false },
     waitings: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    visits: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

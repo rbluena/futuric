@@ -280,6 +280,11 @@ const removeWaitingService = async (userId, linkId) => {
   return savedObject;
 };
 
+const linkVisitCount = async (linkId) => {
+  // await Link.findByIdAndUpdate({_id: 'entityId'}, {$inc: { seq: 1} }
+  await Link.findOneAndUpdate({ _id: linkId }, { $inc: { visits: 1 } });
+};
+
 module.exports = {
   findLinkById,
   createLinkService,
@@ -290,4 +295,5 @@ module.exports = {
   getWaitingLinksService,
   addWaitingService,
   removeWaitingService,
+  linkVisitCount,
 };
