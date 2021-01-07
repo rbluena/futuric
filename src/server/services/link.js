@@ -140,7 +140,6 @@ const getAllLinksService = async (options, userId) => {
         category: 1,
         isActive: 1,
         availableDate: 1,
-        waitings: 1,
         isUserWaiting: {
           $in: [
             mongoose.Types.ObjectId(userId),

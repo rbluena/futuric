@@ -35,7 +35,6 @@ import {
   getMyLinksSuccess,
   getMyLinksFailure,
   toggleWaiting,
-  toggleWaitingSuccess,
   toggleWaitingFailure,
   getWaitings,
   getWaitingsSuccess,
@@ -43,7 +42,8 @@ import {
 } from '@app/slices/linksSlice';
 
 import { setNotification } from '@app/slices/globalSlice';
-import { findIndex } from 'lodash';
+
+import { logoutUserAction } from '@app/actions';
 
 /**
  * Retreiving a link based on link's id
@@ -281,6 +281,10 @@ export function toggleWaitingAction(linkId, type) {
         }
       }
     } catch (error) {
+      if (error.status === 403) {
+        dispatch(logoutUserAction());
+        return;
+      }
       dispatch(toggleWaitingFailure());
     }
   };
