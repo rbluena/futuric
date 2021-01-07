@@ -22,17 +22,12 @@ const AllLinks = () => {
   }
 
   return (
-    <div className="">
-      <div className="max-w-6xl mx-auto flex">
-        <div className=" fixed top-18">
-          <NavCategories />
-        </div>
-
-        {/* start: all posts */}
-        <div className="mx-auto">
-          <PostsContainer posts={data} />
-        </div>
-        {/* end: all posts */}
+    <div className="mx-auto flex max-w-6xl">
+      <div className=" fixed top-18">
+        <NavCategories />
+      </div>
+      <div className="w-full">
+        <PostsContainer posts={data} />
       </div>
     </div>
   );

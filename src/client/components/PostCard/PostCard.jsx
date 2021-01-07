@@ -8,23 +8,14 @@ import { Avatar, Link } from '@app/components';
 import { BellIcon, BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
 
-const PostCard = ({ children, small }) => (
-  <div
-    className={` transform transition-all mb-2 items-start bg-neutral-50 hover:scale-105 hover:bg-neutral-100  hover:shadow-md mx-2 p-2 ${
-      small ? 'max-w-sm' : ' max-w-xl'
-    }`}
-  >
+const PostCard = ({ children }) => (
+  <div className="transform transition-all my-2 items-start bg-neutral-50 hover:scale-105 hover:bg-neutral-100  hover:shadow-md mx-auto p-2 max-w-lg">
     {children}
   </div>
 );
 
-PostCard.defaultProps = {
-  small: false,
-};
-
 PostCard.propTypes = {
   children: PropTypes.node.isRequired,
-  small: PropTypes.bool,
 };
 
 PostCard.Header = ({ publisher, small }) => (
@@ -109,7 +100,7 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
         <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
         &nbsp;&nbsp;
         <span className="text-xs text-neutral-600">
-          {format(new Date(post.availableDate), 'MMM d')}
+          {post.availableDate && format(new Date(post.availableDate), 'MMM d')}
         </span>
         {/* start: Notification button. */}
         {!isAuthUserOwner && (

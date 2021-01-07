@@ -1,4 +1,4 @@
-exports.validateLinkData = (req, res, next) => {
+exports.validateCommentData = (req, res, next) => {
   try {
     const { text, author, link } = req.body;
 

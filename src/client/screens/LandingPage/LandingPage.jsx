@@ -6,7 +6,7 @@ import { getLinksAction } from '@app/actions';
 import PostsContainer from '@app/containers/PostsContainer';
 // import RecentlyPublishedContainer from '@app/containers/RecentlyPublishedContainer';
 // import FeaturedPostsContainer from '@app/containers/FeaturedPostsContainer';
-import { NavCategories, Section } from '@app/components';
+import { NavCategories } from '@app/components';
 
 const LandingPage = () => {
   const { data, meta } = useSelector(linksSelector);
@@ -28,17 +28,16 @@ const LandingPage = () => {
   // console.log(data);
 
   return (
-    <div>
-      <PostsContainer
-        posts={trending}
-        sidebar={<NavCategories categories={[]} />}
-      />
-      {/* <RecentlyPublishedContainer /> */}
-      {upcomings && upcomings.length > 0 && (
-        <Section heading="Upcoming">
+    <div className="mx-auto flex max-w-6xl">
+      <div className=" fixed top-18">
+        <NavCategories />
+      </div>
+      <div className="w-full">
+        <PostsContainer posts={trending} />
+        {upcomings && upcomings.length > 0 && (
           <PostsContainer posts={upcomings} />
-        </Section>
-      )}
+        )}
+      </div>
     </div>
   );
 };

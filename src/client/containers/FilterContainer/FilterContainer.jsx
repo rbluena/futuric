@@ -14,7 +14,13 @@ const FilterContainer = () => {
    */
   function onChange(evt) {
     const { value } = evt.target;
-    const newQuery = { ...query, topic: value };
+    const newQuery = query;
+
+    if (topic && topic === value) {
+      delete newQuery.topic;
+    } else {
+      newQuery.topic = value;
+    }
 
     // if (topic) {
     //   if (typeof topic === 'string') {
