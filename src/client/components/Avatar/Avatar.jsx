@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Avatar = ({ size, className, src, alt, initials }) => {
+const Avatar = ({ size, className, src, alt, square, initials }) => {
   if (size === 'sm') {
     className += ' h-6 w-6';
   }
@@ -18,10 +18,16 @@ const Avatar = ({ size, className, src, alt, initials }) => {
     className += ' h-14 w-14';
   }
 
+  if (size === '2xl') {
+    className += ' h-24 w-24';
+  }
+
   if (!src || src.length === 0) {
     return (
       <div
-        className={`rounded-full border-2 border-primary-700 bg-primary-200 text-neutral-800 flex justify-center items-center font-semibold ${className} `}
+        className={`border-2  border-primary-700 bg-primary-200 text-neutral-800 flex justify-center items-center font-semibold ${className} ${
+          square ? 'rounded-lg' : 'rounded-full'
+        } `}
       >
         {initials}
       </div>

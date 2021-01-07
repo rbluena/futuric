@@ -20,6 +20,8 @@ import HeartOutlineIcon from './HeartOutlineIcon';
 import LinkedinIcon from './LinkedinIcon';
 import TwitterIcon from './TwitterIcon';
 import FacebookIcon from './FacebookIcon';
+import InstagramIcon from './InstagramIcon';
+import YoutubeIcon from './YoutubeIcon';
 import CheckUserIcon from './CheckUserIcon';
 import InfoIcon from './InfoIcon';
 import AlertIcon from './AlertIcon';
@@ -47,6 +49,8 @@ export {
   LinkedinIcon,
   TwitterIcon,
   FacebookIcon,
+  InstagramIcon,
+  YoutubeIcon,
   CheckUserIcon,
   InfoIcon,
   AlertIcon,
