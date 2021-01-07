@@ -3,7 +3,7 @@ import { decode } from 'jsonwebtoken';
 import PropTypes from 'prop-types';
 import { useEffectOnce } from 'react-use';
 import { useDispatch } from 'react-redux';
-import { getCookieToken } from '@app/utils/session';
+import { getCookieToken, deleteCookieToken } from '@app/utils/session';
 import { getLinksService } from '@app/services';
 import { getMyLinksSuccess } from '@app/slices/linksSlice';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
@@ -18,7 +18,7 @@ export async function getServerSideProps({ req }) {
     if (!token) {
       return {
         redirect: {
-          destination: '/#signin-modal',
+          destination: 'signout',
           permanent: false,
         },
       };
@@ -29,9 +29,10 @@ export async function getServerSideProps({ req }) {
     ({ data } = await getLinksService({ owner: user._id, limit: 1 }));
   } catch (error) {
     if (error.status === 403) {
+      await deleteCookieToken();
       return {
         redirect: {
-          destination: '/#signin-modal',
+          destination: '/signout',
           permanent: false,
         },
       };

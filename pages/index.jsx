@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useEffectOnce } from 'react-use';
 import { getCookieToken } from '@app/utils/session';
 import { getLinksService } from '@app/services';
 import { getLinksSuccess } from '@app/slices/linksSlice';
+import { openModal } from '@app/slices/globalSlice';
 import { LayoutManager, Head, Footer, Header } from '@app/components';
 import { getAuthSelector } from '@app/selectors';
 import LandingPage from '@app/screens/LandingPage';
@@ -39,6 +41,12 @@ export default function Home({ links }) {
   const router = useRouter();
 
   const dispatch = useDispatch();
+
+  useEffectOnce(() => {
+    if (router.asPath === '/#signin-modal') {
+      dispatch(openModal('signin'));
+    }
+  });
 
   useEffect(() => {
     dispatch(getLinksSuccess(links));

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useEffectOnce } from 'react-use';
-import { getCookieToken } from '@app/utils/session';
+import { getCookieToken, deleteCookieToken } from '@app/utils/session';
 import { getUserWaitingsService } from '@app/services';
 import { getWaitingsSuccess } from '@app/slices/linksSlice';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
@@ -17,7 +17,7 @@ export async function getServerSideProps({ req }) {
     if (!token) {
       return {
         redirect: {
-          destination: '/#signin-modal',
+          destination: '/signout',
           permanent: false,
         },
       };
@@ -26,9 +26,10 @@ export async function getServerSideProps({ req }) {
     ({ data: waitings } = await getUserWaitingsService(token, { limit: 4 }));
   } catch (error) {
     if (error.status === 403) {
+      await deleteCookieToken();
       return {
         redirect: {
-          destination: '/#signin-modal',
+          destination: '/signout',
           permanent: false,
         },
       };

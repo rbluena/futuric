@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useEffectOnce } from 'react-use';
 import { decode } from 'jsonwebtoken';
 import { getUserWaitingsService, getLinksService } from '@app/services';
-import { getCookieToken } from '@app/utils/session';
+import { getCookieToken, deleteCookieToken } from '@app/utils/session';
 import { getMyLinksSuccess, getWaitingsSuccess } from '@app/slices/linksSlice';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
 import MeScreen from '@app/screens/Me';
@@ -37,9 +37,10 @@ export async function getServerSideProps({ req }) {
 
     if (linksStatus === 'rejected') {
       if (reasonLinks.status === 403) {
+        await deleteCookieToken();
         return {
           redirect: {
-            destination: '/#signin-modal',
+            destination: '/signout',
             permanent: false,
           },
         };
@@ -48,9 +49,10 @@ export async function getServerSideProps({ req }) {
 
     if (waitingsStatus === 'rejected') {
       if (reasonWaitings.status === 403) {
+        await deleteCookieToken();
         return {
           redirect: {
-            destination: '/#signin-modal',
+            destination: '/signout',
             permanent: false,
           },
         };

@@ -38,7 +38,7 @@ const Me = () => {
       <ContentWrapper>
         {waitings && waitings.length > 0 && (
           <>
-            <Section heading="Waiting list">
+            <Section heading="Waitlisted">
               <PostsContainer posts={waitings} />
             </Section>
 
