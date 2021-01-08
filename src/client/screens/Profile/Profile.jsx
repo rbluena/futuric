@@ -23,7 +23,7 @@ const Profile = () => {
       <div className="pt-6">
         {/* <RecentlyPublishedContainer /> */}
         <div className="border-b border-neutral-200">
-          <h2 className="text-xl px-12">Upcoming</h2>
+          {/* <h2 className="text-xl px-12">Upcoming</h2> */}
         </div>
 
         {data && data.length > 0 ? (

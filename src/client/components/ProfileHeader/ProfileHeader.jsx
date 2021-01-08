@@ -34,7 +34,7 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
   }
 
   return (
-    <div className="header border-b  border-neutral-200 pb-4">
+    <div className="header pb-5">
       <div className="mr-auto">
         <div className="flex flex-wrap items-start">
           <Avatar
@@ -44,25 +44,70 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
             square
           />
 
-          <div className="flex flex-col items-start pl-4">
-            <Link
-              href={`@${profile.username}`}
-              variant="secondary"
-              size="lg"
-              className="font-bold flex items-center text-2xl"
-            >
-              <span>{profile.brandname}</span>
-              &nbsp;
-              {profile.prominent && (
-                <BadgeIcon size="xs" className="text-success-700" />
-              )}
-            </Link>
+          <div className="flex flex-col items-start flex-1 pl-12">
+            <div className="pb-4 w-full flex">
+              <Link
+                href={`@${profile.username}`}
+                variant="secondary"
+                size="lg"
+                className="font-bold flex items-center text-2xl"
+              >
+                <span>
+                  {profile.brandname}&nbsp;
+                  <span className="font-light">(@{profile.username})</span>
+                </span>
+                &nbsp;
+                {profile.prominent && (
+                  <BadgeIcon size="xs" className="text-success-500" />
+                )}
+              </Link>
 
+              {/* START: follow or edit button */}
+              {!isCurrentUser ? (
+                <div className="ml-auto">
+                  <Button
+                    variant="primary"
+                    outline={!profile.isFollowing}
+                    className="flex items-center"
+                    size="sm"
+                    onClick={() => handleButtonClick('follow')}
+                  >
+                    {profile.isFollowing ? 'Unfollow' : 'Follow'} &nbsp;&nbsp;
+                    <CheckUserIcon size="xs" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="ml-auto">
+                  <Button
+                    variant="primary"
+                    outline
+                    className="flex items-center"
+                    size="sm"
+                    onClick={() => handleButtonClick('/settings')}
+                  >
+                    Edit Profile
+                  </Button>
+                </div>
+              )}
+              {/* END: follow or edit button */}
+            </div>
+
+            {/* start: description */}
+            <div className="pb-2">
+              {profile.description && (
+                <p className="text-neutral-900 text-xl font-light">
+                  {profile.description}
+                </p>
+              )}
+            </div>
+            {/* end: description */}
+
+            {/* start: PROFILE ONLINE PRECENSE */}
             {profile.website && (
               <Link
                 href={profile.website}
                 size="sm"
-                variant="secondary"
+                variant="primary"
                 className="mb-2"
               >
                 {profile.website}
@@ -103,42 +148,8 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
                 )}
               </div>
             )}
-
-            {/* start: description */}
-            <div className="pb-2">
-              {profile.description && (
-                <p className="text-neutral-900 text-lg">
-                  {profile.description}
-                </p>
-              )}
-            </div>
-            {/* end: description */}
+            {/* end: PROFILE ONLINE PRECENSE */}
           </div>
-
-          {!isCurrentUser ? (
-            <div className="ml-auto">
-              <Button
-                variant="primary"
-                outline={!profile.isFollowing}
-                className="flex items-center"
-                onClick={() => handleButtonClick('follow')}
-              >
-                {profile.isFollowing ? 'Unfollow' : 'Follow'} &nbsp;&nbsp;
-                <CheckUserIcon size="xs" />
-              </Button>
-            </div>
-          ) : (
-            <div className="ml-auto">
-              <Button
-                variant="primary"
-                outline
-                className="flex items-center"
-                onClick={() => handleButtonClick('/settings')}
-              >
-                Edit Profile
-              </Button>
-            </div>
-          )}
         </div>
       </div>
     </div>

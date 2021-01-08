@@ -27,6 +27,10 @@ const Button = ({ children, outline, className, size, variant, ...rest }) => {
       ' border border-neutral-50 text-neutral-50 hover:bg-neutral-200 hover:text-neutral-900';
   }
 
+  if (size === 'sm') {
+    className += ' p-2 text-sm font-semibold';
+  }
+
   if (size === 'lg') {
     className += ' w-full py-3 px-6 text-lg font-bold';
   }

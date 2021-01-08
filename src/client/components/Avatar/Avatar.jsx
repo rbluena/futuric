@@ -19,24 +19,30 @@ const Avatar = ({ size, className, src, alt, square, initials }) => {
   }
 
   if (size === '2xl') {
-    className += ' h-24 w-24';
+    className += ' h-28 w-28';
   }
 
   if (!src || src.length === 0) {
     return (
       <div
-        className={`border-2  border-primary-700 bg-primary-200 text-neutral-800 flex justify-center items-center font-semibold ${className} ${
+        className={`border-2 border-primary-700  text-neutral-800 ${className} ${
           square ? 'rounded-lg' : 'rounded-full'
         } `}
       >
-        {initials}
+        <div
+          className={`bg-primary-200 w-full h-full flex justify-center items-center font-semibold ${
+            square ? 'rounded-lg' : 'rounded-full'
+          }`}
+        >
+          {initials}
+        </div>
       </div>
     );
   }
 
   return (
     <img
-      className={`rounded-full border-2 border-primary-700 ${className}`}
+      className={`rounded-full border-2 ${className} square ? 'rounded-lg' : 'rounded-full'`}
       src={src}
       alt={alt}
     />
@@ -48,6 +54,7 @@ Avatar.defaultProps = {
   className: '',
   initials: '',
   src: '',
+  square: false,
 };
 
 Avatar.propTypes = {
@@ -65,6 +72,8 @@ Avatar.propTypes = {
 
   /** Initials that can be used if no avatar created. */
   initials: PropTypes.string,
+
+  square: PropTypes.bool,
 };
 
 export default Avatar;
