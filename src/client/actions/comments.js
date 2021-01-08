@@ -27,6 +27,7 @@ import {
   deleteCommentSuccess,
   deleteCommentFailure,
 } from '@app/slices/commentSlice';
+import { SIDEBARS } from '@app/constants';
 
 /**
  *
@@ -190,7 +191,7 @@ export function getCommentsAction(options) {
 
 export function loadLinkCommentsAction(options = {}) {
   return async (dispatch) => {
-    dispatch(toggleSidebar(true));
+    dispatch(toggleSidebar(SIDEBARS.comments));
     dispatch(getCommentsAction(options));
   };
 }

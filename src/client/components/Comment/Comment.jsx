@@ -5,7 +5,7 @@ import millify from 'millify';
 import { Avatar, Link, Button } from '@app/components';
 import { HeartIcon, BadgeIcon } from '@app/components/Icons';
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, isCommentorCreatorOfPost }) => {
   const { author } = comment;
   const formattedDistance = formatDistanceStrict(
     Date.now(),
@@ -22,7 +22,7 @@ const Comment = ({ comment }) => {
       <section className="pl-3 w-full">
         <header>
           <p className="font-semibold text-neutral-700 flex items-center">
-            {comment.isCurrentUserAuthor ? (
+            {isCommentorCreatorOfPost ? (
               <span className=" text-xs bg-neutral-600 text-white px-2 rounded-full">
                 {author.brandname}
               </span>
@@ -66,8 +66,13 @@ const Comment = ({ comment }) => {
   );
 };
 
+Comment.defaultProps = {
+  isCommentorCreatorOfPost: false,
+};
+
 Comment.propTypes = {
   comment: PropTypes.objectOf(PropTypes.shape).isRequired,
+  isCommentorCreatorOfPost: PropTypes.bool,
 };
 
 export default Comment;

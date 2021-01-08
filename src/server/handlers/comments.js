@@ -99,9 +99,8 @@ exports.deleteCommentHandler = async (req, res, next) => {
 
 exports.getCommentsHandler = async (req, res, next) => {
   try {
-    let data = [];
     const user = decode(req.app.jwt);
-    data = await getCommentsService(req.query, user._id || null);
+    const data = await getCommentsService(req.query, user ? user._id : null);
 
     const meta = omit(data, 'docs');
     const { docs } = data;

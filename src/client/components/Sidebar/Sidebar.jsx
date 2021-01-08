@@ -36,9 +36,7 @@ Sidebar.Header.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-Sidebar.Content = ({ children }) => (
-  <div className="divide-y divide-neutral-200">{children}</div>
-);
+Sidebar.Content = ({ children }) => <div>{children}</div>;
 
 Sidebar.Content.propTypes = {
   children: PropTypes.node.isRequired,

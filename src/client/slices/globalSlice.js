@@ -4,7 +4,7 @@ const initialState = {
   isLoading: true,
   notification: null, // {type: 'success', message: 'String'} || { type: 'error', message: {}
   modal: null,
-  isSidebarOpen: true,
+  sidebar: null,
   toggleAuthMenu: false,
 };
 
@@ -34,9 +34,9 @@ const globalSlice = createSlice({
     toggleSidebar: {
       reducer(state, { payload }) {
         if (payload !== undefined) {
-          state.isSidebarOpen = payload;
+          state.sidebar = payload;
         } else {
-          state.isSidebarOpen = !state.isSidebarOpen;
+          state.sidebar = null;
         }
       },
     },
@@ -67,7 +67,7 @@ const globalSlice = createSlice({
         state.modal = null;
         state.notification = null;
         state.toggleAuthMenu = false;
-        state.isSidebarOpen = false;
+        state.sidebar = false;
       },
     },
   },

@@ -4,15 +4,18 @@ import {
   getAuthSelector,
   linksStateSelector,
   commentsStateSelector,
+  globalStateSelector,
 } from '@app/selectors';
 import { Sidebar, CommentBox, Comment, Button } from '@app/components';
-import { openModal } from '@app/slices/globalSlice';
+import { toggleSidebar, openModal } from '@app/slices/globalSlice';
 import { createCommentAction } from '@app/actions';
+import { SIDEBARS } from '@app/constants';
 
 const CommentsSidebarContainer = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(getAuthSelector);
   const { activeLink } = useSelector(linksStateSelector);
+  const { sidebar } = useSelector(globalStateSelector);
   const {
     comments: { data, meta },
   } = useSelector(commentsStateSelector);
@@ -32,27 +35,50 @@ const CommentsSidebarContainer = () => {
   function loadMoreComments() {}
 
   return (
-    <Sidebar isOpen>
-      <Sidebar.Header>
+    <Sidebar isOpen={sidebar === SIDEBARS.comments}>
+      <Sidebar.Header onClose={() => dispatch(toggleSidebar())}>
         <div className="">
-          <h1 className="text-xl font-bold text-neutral-700">
-            Comments <span>(500)</span>
-          </h1>
+          <h1 className="text-xl font-bold text-neutral-700">Comments</h1>
         </div>
       </Sidebar.Header>
       <Sidebar.Content>
-        {isAuthenticated ? (
+        {isAuthenticated && !activeLink.isCommentingDisabled ? (
           <CommentBox author={user} onSubmit={onSubmitComment} />
         ) : (
-          <Button variant="primary" outline size="lg" onClick={openSigninModal}>
-            Sign In
-          </Button>
+          <div className="px-4">
+            <Button
+              variant="primary"
+              outline
+              size="lg"
+              onClick={openSigninModal}
+            >
+              Sign In
+            </Button>
+          </div>
         )}
 
         {/* start: RENDERING COMMENTS */}
-        {data &&
-          data.length &&
-          data.map((comment) => <Comment comment={comment} />)}
+        <div className="divide-y divide-neutral-200">
+          {data && data.length ? (
+            data.map((comment) => {
+              const isCommentorCreatorOfPost = !!(
+                comment.author._id === activeLink.owner._id
+              );
+              return (
+                <Comment
+                  comment={comment}
+                  isCommentorCreatorOfPost={isCommentorCreatorOfPost}
+                />
+              );
+            })
+          ) : (
+            <div className="flex justify-center items-center h-60">
+              <p className="text-2xl text-neutral-400">
+                No comments available.
+              </p>
+            </div>
+          )}
+        </div>
 
         {/* end: RENDERING COMMENTS */}
       </Sidebar.Content>

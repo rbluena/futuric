@@ -26,7 +26,7 @@ const CommentBox = ({ author, onSubmit }) => {
       <section className="px-2 w-full relative">
         <header className="flex items-center">
           <Avatar
-            src={author.image && author.image.thumnail}
+            src={author.image && author.image.thumbnail}
             initials={author.initials}
             alt={author.brandname}
           />
@@ -37,11 +37,12 @@ const CommentBox = ({ author, onSubmit }) => {
         </header>
         <ContentEditable
           className="p-1 bg-white border-b border-neutral-300 focus:outline-none
-           focus:border-primary-500 h-12 my-4 text-sm"
+           focus:border-primary-500 my-4 text-sm"
           content={content}
           onChange={onChange}
           onKeyDown={onKeyDown}
           tabIndex="0"
+          style={{ minHeight: '50px' }}
         />
         <footer className="flex justify-end">
           <Button variant="primary" size="sm" onClick={submitData}>
