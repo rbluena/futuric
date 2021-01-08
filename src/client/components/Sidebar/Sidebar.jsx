@@ -37,7 +37,7 @@ Sidebar.Header.propTypes = {
 };
 
 Sidebar.Content = ({ children }) => (
-  <div className="divide-y-2 divide-neutral-200">{children}</div>
+  <div className="divide-y divide-neutral-200">{children}</div>
 );
 
 Sidebar.Content.propTypes = {

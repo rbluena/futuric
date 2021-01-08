@@ -52,7 +52,7 @@ const commentSlice = createSlice({
     getCommentsSuccess: {
       reducer: (state, { payload }) => {
         state.fetching = true;
-        state.links = payload;
+        state.comments = payload;
       },
     },
     getCommentsFailure: {

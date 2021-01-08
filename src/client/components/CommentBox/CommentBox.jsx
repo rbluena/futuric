@@ -7,15 +7,22 @@ const CommentBox = ({ author, onSubmit }) => {
   const [content, setContent] = useState('');
 
   function onChange(evt, value) {
-    setContent({ text: value });
+    setContent(value);
   }
 
   function submitData() {
-    onSubmit({ text: content.text });
+    onSubmit({ text: content });
+    setContent('');
+  }
+
+  function onKeyDown(evt) {
+    if (evt.code === 'Enter') {
+      submitData();
+    }
   }
 
   return (
-    <div className="flex max-w-sm bg-neutral-50 rounded-md shadow-lg p-2 relative">
+    <div className="flex max-w-sm rounded-md shadow-lg p-2 py-4 relative">
       <section className="px-2 w-full relative">
         <header className="flex items-center">
           <Avatar
@@ -31,8 +38,10 @@ const CommentBox = ({ author, onSubmit }) => {
         <ContentEditable
           className="p-1 bg-white border-b border-neutral-300 focus:outline-none
            focus:border-primary-500 h-12 my-4 text-sm"
-          content={content.text}
+          content={content}
           onChange={onChange}
+          onKeyDown={onKeyDown}
+          tabIndex="0"
         />
         <footer className="flex justify-end">
           <Button variant="primary" size="sm" onClick={submitData}>

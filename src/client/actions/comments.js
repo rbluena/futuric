@@ -36,7 +36,9 @@ export function createCommentAction(commentData) {
   return async (dispatch, getState) => {
     const {
       auth: { token },
-      comments: { comments },
+      comments: {
+        comments: { data: oldData, meta },
+      },
     } = getState();
     try {
       dispatch(createComment());
@@ -46,9 +48,11 @@ export function createCommentAction(commentData) {
         ...commentData,
         author: user._id,
       });
-      console.log(commentData);
-      const updatedComments = mergeUpdatedItem(comments.data, data);
-      dispatch(createCommentSuccess(updatedComments));
+      const updatedComments = mergeUpdatedItem(oldData || [], data);
+
+      dispatch(
+        createCommentSuccess({ data: updatedComments, meta: meta || {} })
+      );
     } catch (err) {
       dispatch(createCommentFailure());
 
@@ -186,7 +190,6 @@ export function getCommentsAction(options) {
 
 export function loadLinkCommentsAction(options = {}) {
   return async (dispatch) => {
-    console.log('+++++ THIS IS CLICKED');
     dispatch(toggleSidebar(true));
     dispatch(getCommentsAction(options));
   };
