@@ -8,7 +8,7 @@ import {
 } from '@app/selectors';
 import { Sidebar, CommentBox, Comment, Button } from '@app/components';
 import { toggleSidebar, openModal } from '@app/slices/globalSlice';
-import { createCommentAction } from '@app/actions';
+import { createCommentAction, toggleCommentLikeAction } from '@app/actions';
 import { SIDEBARS } from '@app/constants';
 
 const CommentsSidebarContainer = () => {
@@ -33,6 +33,13 @@ const CommentsSidebarContainer = () => {
   }
 
   function loadMoreComments() {}
+
+  /**
+   *
+   */
+  function toggleCommentLike(commentId) {
+    dispatch(toggleCommentLikeAction(commentId));
+  }
 
   return (
     <Sidebar isOpen={sidebar === SIDEBARS.comments}>
@@ -67,6 +74,7 @@ const CommentsSidebarContainer = () => {
               return (
                 <Comment
                   comment={comment}
+                  toggleCommentLike={toggleCommentLike}
                   isCommentorCreatorOfPost={isCommentorCreatorOfPost}
                 />
               );

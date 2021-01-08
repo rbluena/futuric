@@ -369,7 +369,7 @@ export const updateCommentService = async (token, id, data) => {
   try {
     const response = await request({
       method: 'PUT',
-      url: path.updateLink(id),
+      url: path.updateComment(id),
       data: JSON.stringify(data),
       headers: {
         Authorization: `Bearer ${token}`,

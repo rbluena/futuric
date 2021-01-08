@@ -5,7 +5,7 @@ import millify from 'millify';
 import { Avatar, Link, Button } from '@app/components';
 import { HeartIcon, BadgeIcon } from '@app/components/Icons';
 
-const Comment = ({ comment, isCommentorCreatorOfPost }) => {
+const Comment = ({ comment, toggleCommentLike, isCommentorCreatorOfPost }) => {
   const { author } = comment;
   const formattedDistance = formatDistanceStrict(
     Date.now(),
@@ -48,6 +48,7 @@ const Comment = ({ comment, isCommentorCreatorOfPost }) => {
               variant="text-button"
               size="xs"
               className="flex items-center text-sm text-primary-700 hover:text-primary-900 hover:underline"
+              onClick={() => toggleCommentLike(comment._id)}
             >
               <HeartIcon size="xs" />
               &nbsp; &nbsp;
@@ -57,9 +58,17 @@ const Comment = ({ comment, isCommentorCreatorOfPost }) => {
             </Button>
           </div>
           <span className="mx-2 text-neutral-300">-</span>
-          <Link href="/" className="text-md font-semibold">
+          <Link href="/" className="text-md">
             Reply
           </Link>
+          <span className="mx-2 text-neutral-300">-</span>
+          <Button
+            variant="text-button"
+            size="xs"
+            className="flex items-center text-md text-primary-700 hover:text-primary-900 hover:underline"
+          >
+            Edit
+          </Button>
         </footer>
       </section>
     </div>
@@ -72,6 +81,7 @@ Comment.defaultProps = {
 
 Comment.propTypes = {
   comment: PropTypes.objectOf(PropTypes.shape).isRequired,
+  toggleCommentLike: PropTypes.func.isRequired,
   isCommentorCreatorOfPost: PropTypes.bool,
 };
 

@@ -80,7 +80,9 @@ export function updateCommentAction(commentId, commentData) {
   return async (dispatch, getState) => {
     const {
       auth: { token },
-      comments: { comments },
+      comments: {
+        comments: { data: oldData, meta },
+      },
     } = getState();
     try {
       dispatch(updateComment());
@@ -91,9 +93,11 @@ export function updateCommentAction(commentId, commentData) {
         commentData
       );
 
-      const updatedComments = mergeUpdatedItem(comments.data, data);
+      const updatedComments = mergeUpdatedItem(oldData, data);
 
-      dispatch(updateCommentSuccess(updatedComments));
+      dispatch(
+        updateCommentSuccess({ data: updatedComments, meta: meta || {} })
+      );
     } catch (err) {
       dispatch(updateCommentFailure());
 
@@ -169,6 +173,7 @@ export function getCommentsAction(options) {
       const {
         comments: { comments },
       } = getState();
+
       dispatch(getComments());
 
       const { data } = await getCommentsService(options);
@@ -189,9 +194,38 @@ export function getCommentsAction(options) {
   };
 }
 
+export function toggleCommentLikeAction(id) {
+  return async (dispatch, getState) => {
+    const {
+      auth: { token },
+      comments: {
+        comments: { data: oldData, meta },
+      },
+    } = getState();
+    try {
+      const { data } = await updateCommentService(token, id, { like: true });
+
+      const updatedComments = mergeUpdatedItem(oldData, data);
+
+      if (!data.parent) {
+        // Updating parent comment.
+        dispatch(
+          updateCommentSuccess({ data: updatedComments, meta: meta || {} })
+        );
+      } else {
+        // Updating from replies.
+      }
+    } catch (err) {
+      dispatch(updateCommentFailure());
+    }
+  };
+}
+
 export function loadLinkCommentsAction(options = {}) {
   return async (dispatch) => {
     dispatch(toggleSidebar(SIDEBARS.comments));
     dispatch(getCommentsAction(options));
   };
 }
+
+export function loadRepliesAction(options) {}

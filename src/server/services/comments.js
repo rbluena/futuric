@@ -146,6 +146,7 @@ const getCommentsService = async (options, userId) => {
         pinned: 1,
         parent: 1,
         link: 1,
+        createdAt: 1,
         'author._id': 1,
         'author.firstname': 1,
         'author.lastname': 1,
