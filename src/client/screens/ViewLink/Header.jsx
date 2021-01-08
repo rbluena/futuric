@@ -4,30 +4,30 @@ import { format } from 'date-fns';
 import { Link, Button } from '@app/components';
 import {
   BellOutlineIcon,
-  // LinkedinIcon,
-  // TwitterIcon,
-  // FacebookIcon,
+  LinkedinIcon,
+  TwitterIcon,
+  FacebookIcon,
   BadgeIcon,
 } from '@app/components/Icons';
 
-const Header = ({ link, owner }) => (
+const Header = ({ post, owner }) => (
   <div className="header flex border-b border-neutral-200">
     <div className="">
       <Link
-        href={link.longUrl || ''}
-        variant={link.isActive ? 'primary' : 'secondary'}
+        href={post.longUrl || ''}
+        variant={post.isActive ? 'primary' : 'secondary'}
       >
-        {link.shortenUrl}
+        {post.shortenUrl}
       </Link>
 
       <br />
-      {link.availableDate && (
+      {post.availableDate && (
         <div className="text-neutral-600 text-sm">
           <span className="font-bold text-neutral-800">Available At:</span>{' '}
-          {link.isActive
+          {post.isActive
             ? 'Published'
-            : link.availableDate &&
-              format(new Date(link.availableDate), 'MMM d')}
+            : post.availableDate &&
+              format(new Date(post.availableDate), 'MMM d')}
         </div>
       )}
 
@@ -41,7 +41,7 @@ const Header = ({ link, owner }) => (
           <BellOutlineIcon size="xs" className="text-primary-700" />
         </Button>
         <span className="text-neutral-500 mr-2">|</span>
-        {/* <Button variant="text-button" size="" className="mr-2">
+        <Button variant="text-button" size="" className="mr-2">
           <TwitterIcon size="xs" className="text-primary-700" />
         </Button>
         <Button variant="text-button" size="" className="mr-2">
@@ -49,7 +49,7 @@ const Header = ({ link, owner }) => (
         </Button>
         <Button variant="text-button" size="" className="mr-2">
           <FacebookIcon size="xs" className="text-primary-700" />
-        </Button> */}
+        </Button>
       </div>
     </div>
 
@@ -68,7 +68,7 @@ const Header = ({ link, owner }) => (
               <BadgeIcon size="xs" className="text-success-500" />
             )}
           </Link>
-          {/* {!link.isUserOwner && (
+          {/* {!post.isUserOwner && (
             <Button
               variant="text-button"
               size="sm"
@@ -85,12 +85,12 @@ const Header = ({ link, owner }) => (
 );
 
 Header.defaultProps = {
-  link: {},
+  post: {},
   owner: {},
 };
 
 Header.propTypes = {
-  link: PropTypes.objectOf(PropTypes.shape),
+  post: PropTypes.objectOf(PropTypes.shape),
   owner: PropTypes.objectOf(PropTypes.shape),
 };
 

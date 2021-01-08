@@ -1,24 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Content = ({ link }) => (
+const Content = ({ post }) => (
   <div className="pt-10">
     <div className="focus:outline-none text-4xl font-serif py-1 font-light">
-      {link.title}
+      {post.title}
     </div>
 
     <div className="text-lg font-serif mt-6 mb-3 font-light">
-      {link.description}
+      {post.description}
     </div>
   </div>
 );
 
 Content.defaultProps = {
-  link: {},
+  post: {},
 };
 
 Content.propTypes = {
-  link: PropTypes.objectOf(PropTypes.shape),
+  post: PropTypes.objectOf(PropTypes.shape),
 };
 
 export default Content;

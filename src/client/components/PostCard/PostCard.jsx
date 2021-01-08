@@ -79,7 +79,7 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
             : 'font-bold text-neutral-800 leading-4'
         }`}
       >
-        <Link href={post.longUrl} variant="secondary">
+        <Link href={`/links/${post._id}`} variant="secondary">
           {post.title}
         </Link>
       </h2>
@@ -106,14 +106,14 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
         {!isAuthUserOwner && (
           <button
             type="button"
-            className="ml-auto p-1 rounded-sm hover:bg-primary-400 text-primary-700 hover:text-white"
+            className="ml-auto p-1 rounded-sm hover:bg-primary-400 text-primary-700 hover:text-white "
             title="Get notified"
             onClick={toggleNotification}
           >
             {post.isUserWaiting ? (
-              <BellIcon size="sm" />
+              <BellIcon size="xs" />
             ) : (
-              <BellOutlineIcon size="sm" />
+              <BellOutlineIcon size="xs" />
             )}
           </button>
         )}

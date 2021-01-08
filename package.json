@@ -36,6 +36,7 @@
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
+    "millify": "^3.5.0",
     "mongoose": "^5.11.8",
     "mongoose-aggregate-paginate-v2": "^1.0.42",
     "mongoose-paginate-v2": "^1.3.13",

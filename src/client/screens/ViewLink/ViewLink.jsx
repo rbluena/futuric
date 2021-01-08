@@ -6,31 +6,31 @@ import Header from './Header';
 import Footer from './Footer';
 import Content from './Content';
 
-const ViewLink = ({ link }) => {
+const ViewLink = ({ post }) => {
   let owner = {};
 
-  if (link) {
-    owner = link.owner;
+  if (post) {
+    owner = post.owner;
   }
 
   return (
     <div className="py-10">
       <div className=" max-w-3xl mx-auto">
-        <Header link={link} owner={owner} />
-        <Content link={link} />
-        <Footer link={link} />
+        <Header post={post} owner={owner} />
+        <Content post={post} />
+        <Footer post={post} />
       </div>
     </div>
   );
 };
 
 ViewLink.propTypes = {
-  link: PropTypes.objectOf(PropTypes.shape).isRequired,
+  post: PropTypes.objectOf(PropTypes.shape).isRequired,
   // user: PropTypes.objectOf(PropTypes.shape),
 };
 
 const mapStateToProps = (state) => ({
-  link: getLinksStateSelector(state).activeLink || {},
+  post: getLinksStateSelector(state).activeLink || {},
   // user: getUserSelector(state),
 });
 

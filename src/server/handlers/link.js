@@ -100,6 +100,9 @@ exports.getLinkHandler = async (req, res, next) => {
     const doc = document.toObject();
     doc.isUserOwner = false;
     doc.owner.isUserFollowingAuthor = false;
+    doc.owner.followersCount = doc.owner.followers.length;
+    doc.commentsCount = doc.comments ? doc.comments.length : 0;
+    doc.waitingsCount = doc.waitings ? doc.waitings.length : 0;
 
     if (req.app.jwt) {
       const user = decode(req.app.jwt);
@@ -115,9 +118,11 @@ exports.getLinkHandler = async (req, res, next) => {
       if (doc.owner.followers.includes(user._id)) {
         doc.owner.isUserFollowingAuthor = true;
       }
-
-      delete doc.owner.followers;
     }
+
+    delete doc.owner.followers;
+    delete doc.comments;
+    delete doc.waitings;
 
     res.status(200).json({
       status: 200,
