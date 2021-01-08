@@ -108,6 +108,14 @@ const commentSlice = createSlice({
         state.fetching = false;
       },
     },
+    resetComments: {
+      reducer: (state) => {
+        state.fetching = false;
+        state.comments = {};
+        state.active = null;
+        state.error = null;
+      },
+    },
   },
 });
 
@@ -131,6 +139,7 @@ export const {
   toggleLike,
   toggleLikeSuccess,
   toggleLikeFailure,
+  resetComments,
 } = commentSlice.actions;
 
 export default commentSlice.reducer;

@@ -26,6 +26,7 @@ import {
   deleteComment,
   deleteCommentSuccess,
   deleteCommentFailure,
+  resetComments,
 } from '@app/slices/commentSlice';
 import { SIDEBARS } from '@app/constants';
 
@@ -229,3 +230,12 @@ export function loadLinkCommentsAction(options = {}) {
 }
 
 export function loadRepliesAction(options) {}
+
+/**
+ * Action to reset all properties from auth slice.
+ */
+export function resetCommentsAction() {
+  return (dispatch) => {
+    dispatch(resetComments());
+  };
+}

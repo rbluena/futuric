@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useUnmount } from 'react-use';
 import {
   getAuthSelector,
   linksStateSelector,
@@ -8,7 +9,11 @@ import {
 } from '@app/selectors';
 import { Sidebar, CommentBox, Comment, Button } from '@app/components';
 import { toggleSidebar, openModal } from '@app/slices/globalSlice';
-import { createCommentAction, toggleCommentLikeAction } from '@app/actions';
+import {
+  createCommentAction,
+  toggleCommentLikeAction,
+  resetCommentsAction,
+} from '@app/actions';
 import { SIDEBARS } from '@app/constants';
 
 const CommentsSidebarContainer = () => {
@@ -41,9 +46,18 @@ const CommentsSidebarContainer = () => {
     dispatch(toggleCommentLikeAction(commentId));
   }
 
+  function onClose() {
+    dispatch(toggleSidebar());
+    dispatch(resetCommentsAction());
+  }
+
+  useUnmount(() => {
+    onClose();
+  });
+
   return (
     <Sidebar isOpen={sidebar === SIDEBARS.comments}>
-      <Sidebar.Header onClose={() => dispatch(toggleSidebar())}>
+      <Sidebar.Header onClose={onClose}>
         <div className="">
           <h1 className="text-xl font-bold text-neutral-700">Comments</h1>
         </div>
