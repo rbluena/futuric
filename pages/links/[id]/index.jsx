@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useEffectOnce } from 'react-use';
 import { useDispatch } from 'react-redux';
 import { getLinkSuccess } from '@app/slices/linksSlice';
 import { getLinkService } from '@app/services';
@@ -36,12 +35,7 @@ export async function getServerSideProps({ params }) {
 
 const ViewLink = ({ linkData }) => {
   const dispatch = useDispatch();
-
-  useEffectOnce(() => {
-    if (linkData) {
-      dispatch(getLinkSuccess(linkData));
-    }
-  });
+  dispatch(getLinkSuccess(linkData));
 
   return (
     <LayoutManager>

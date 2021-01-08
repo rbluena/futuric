@@ -31,11 +31,19 @@ export const mergeUpdatedItem = (
 ) => {
   const data = [...oldData];
 
-  const dataIndex = findIndex(oldData, (item) => item._id === newData._id);
+  const dataIndex = findIndex(data, (item) => item._id === newData._id);
+
+  if (dataIndex === -1) {
+    // Adding new item
+    data.splice(0, 0, newData);
+    return data;
+  }
 
   if (shouldBeRemoved) {
+    // Item is removed completely
     data.splice(dataIndex, 1);
   } else {
+    // Item is replaced from list
     data.splice(dataIndex, 1, newData);
   }
   return data;

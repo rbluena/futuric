@@ -17,4 +17,9 @@ export default {
   addWaiting: (linkId) => `${SERVER_API}/links/${linkId}/waitings/add`,
   removeWaiting: (linkId) => `${SERVER_API}/links/${linkId}/waitings/remove`,
   getAnalytics: (id) => `${SERVER_API}/links/${id}`,
+  createComment: `${SERVER_API}/comments/create`,
+  getComment: (id) => `${SERVER_API}/comments/${id}`,
+  getComments: `${SERVER_API}/comments`,
+  updateComment: (id) => `${SERVER_API}/comments/${id}`,
+  deleteComment: (id) => `${SERVER_API}/comments/${id}`,
 };

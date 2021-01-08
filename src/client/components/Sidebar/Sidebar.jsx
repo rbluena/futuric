@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@app/components/Icons';
+import { Button } from '@app/components';
 
 const Sidebar = ({ children, isOpen }) => (
   <aside
-    className={`transition-all duration-500 ease-in-out transform max-w-xs overflow-y-scroll ${
+    className={`transition-all duration-500 ease-in-out transform max-w-sm overflow-y-scroll ${
       isOpen ? '' : 'translate-x-full'
     }  bg-neutral-50 fixed right-0 top-0 z-50 shadow-lg min-h-screen max-h-screen w-full md:w-2/6`}
   >
@@ -18,11 +19,11 @@ Sidebar.propTypes = {
 };
 
 Sidebar.Header = ({ children, onClose }) => (
-  <div className="flex flex-row  justify-between">
+  <div className="flex px-4 py-6">
     {children}
-    <button type="button" className="" onClick={onClose}>
+    <Button outline size="xs" className="ml-auto" onClick={onClose}>
       <CloseIcon size="sm" />
-    </button>
+    </Button>
   </div>
 );
 

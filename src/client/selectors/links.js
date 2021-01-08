@@ -3,6 +3,8 @@ import { createSelector } from '@reduxjs/toolkit';
 
 const selectSelf = (state) => state;
 
+const selectLinksState = (state) => state.links;
+
 const selectLinks = (state) => {
   const { links } = state.links;
   const { data, meta } = links;
@@ -40,6 +42,11 @@ export const selectWaitings = (state) => {
 
   return { data, meta };
 };
+
+export const linksStateSelector = createSelector(
+  selectLinksState,
+  (links) => links
+);
 
 export const linksSelector = createSelector(selectLinks, (links) => links);
 

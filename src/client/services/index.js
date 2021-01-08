@@ -335,3 +335,107 @@ export const removeWaitingService = async (token, linkId) => {
     return errorHandler(error);
   }
 };
+
+/**
+ * Service to create a comment.
+ * @param {Object} data
+ */
+export const createCommentService = async (token, data) => {
+  try {
+    const response = await request({
+      method: 'POST',
+      url: path.createComment,
+      data: JSON.stringify(data),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
+ * Service to update a comment.
+ *
+ * @param {String} token
+ * @param {String} id
+ * @param {Object} data
+ */
+export const updateCommentService = async (token, id, data) => {
+  try {
+    const response = await request({
+      method: 'PUT',
+      url: path.updateLink(id),
+      data: JSON.stringify(data),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
+ * Service to delete a comment.
+ *
+ * @param {String} token
+ * @param {String} id
+ */
+export const deleteCommentService = async (token, id) => {
+  try {
+    const response = await request({
+      method: 'DELETE',
+      url: path.deleteComment(id),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
+ * Retrieving a comment based on its id
+ * @param {String} id
+ */
+export const getCommentService = async (id) => {
+  try {
+    const response = await request({
+      method: 'GET',
+      url: path.getComment(id),
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
+ * Retrieving all comments conditionally
+ * @param {Object} options
+ */
+export const getCommentsService = async (options = {}) => {
+  try {
+    const response = await request({
+      method: 'GET',
+      url: path.getComments,
+      params: options,
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
