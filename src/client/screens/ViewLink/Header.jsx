@@ -1,30 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useCopyToClipboard } from 'react-use';
 import { format } from 'date-fns';
 import { Link, Button } from '@app/components';
 import {
-  BellIcon,
-  BellOutlineIcon,
-  LinkedinIcon,
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
   TwitterIcon,
   FacebookIcon,
+  LinkedinIcon,
+} from 'react-share';
+import {
+  BellIcon,
+  BellOutlineIcon,
+  ClipboardListIcon,
+  // LinkedinIcon,
+  // TwitterIcon,
+  // FacebookIcon,
   BadgeIcon,
 } from '@app/components/Icons';
 
 const Header = ({ post, owner, toggleWaiting }) => {
+  const [, copyToClipboard] = useCopyToClipboard();
   const url = post.isActive ? post.longUrl : `/links/${post._id}`;
   const isCurrentUserOwner = post.isUserOwner;
+
+  function copyTextToClipboard() {
+    copyToClipboard(post.shortenUrl);
+    // eslint-disable-next-line no-alert
+    window.alert('Copied to the clipboard!');
+  }
 
   return (
     <div className="header flex border-b border-neutral-200">
       <div className="">
-        <Link
-          href={url || ''}
-          variant={post.isActive ? 'primary' : 'secondary'}
-          className="sm:text-lg md:text-2xl font-light"
-        >
-          {post.shortenUrl}
-        </Link>
+        <div className="flex items-center">
+          <Link
+            href={url || ''}
+            // variant={post.isActive ? 'primary' : 'secondary'}
+            variant="primary"
+            className="sm:text-lg md:text-2xl font-light"
+          >
+            {post.shortenUrl}
+          </Link>
+
+          <Button
+            variant="text-button"
+            className="text-neutral-400 p-0"
+            title="Copy to clipboard"
+            onClick={copyTextToClipboard}
+          >
+            <ClipboardListIcon size="sm" />
+          </Button>
+        </div>
 
         <br />
         {post.availableDate && (
@@ -56,15 +85,22 @@ const Header = ({ post, owner, toggleWaiting }) => {
               <span className="text-neutral-500 mr-2">|</span>
             </>
           )}
-          <Button variant="text-button" size="sm" className="mr-2">
-            <TwitterIcon size="sm" className="text-primary-700" />
-          </Button>
-          <Button variant="text-button" size="sm" className="mr-2">
-            <LinkedinIcon size="sm" className="text-primary-700" />
-          </Button>
-          <Button variant="text-button" size="sm" className="mr-2">
-            <FacebookIcon size="sm" className="text-primary-700" />
-          </Button>
+          <TwitterShareButton title={post.title} url={post.shortenUrl}>
+            <TwitterIcon size={28} />
+          </TwitterShareButton>
+          &nbsp;
+          <FacebookShareButton title={post.title} url={post.shortenUrl}>
+            <FacebookIcon size={28} />
+          </FacebookShareButton>
+          &nbsp;
+          <LinkedinShareButton
+            source={post.shortenUrl}
+            url={post.shortenUrl}
+            title={post.title}
+          >
+            <LinkedinIcon size={28} />
+          </LinkedinShareButton>
+          <div className="sharethis-inline-share-buttons" />
         </div>
       </div>
 
@@ -84,16 +120,15 @@ const Header = ({ post, owner, toggleWaiting }) => {
               )}
             </Link>
             {/* {!post.isUserOwner && (
-            <Button
-              variant="text-button"
-              size="sm"
-              className="text-sm hover:underline text-primary-700"
-            >
-              {owner.isUserFollowingAuthor ? 'Unfollow' : 'Follow'}
-            </Button>
-          )} */}
+              <Button
+                variant="text-button"
+                size="sm"
+                className="text-sm hover:underline text-primary-700"
+              >
+                {owner.isUserFollowingAuthor ? 'Unfollow' : 'Follow'}
+              </Button>
+            )} */}
           </div>
-          {/* <Avatar initials="NL" size="xl" className="text-2xl" /> */}
         </div>
       </div>
     </div>
