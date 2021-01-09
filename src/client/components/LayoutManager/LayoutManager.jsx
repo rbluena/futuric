@@ -14,9 +14,8 @@ const LayoutManager = ({ children }) => {
       <NotificationContainer />
       <div className="bg-neutral-50 min-h-screen">{children}</div>
       <AuthModalContainer />
-      <StatsModalContainer />
-
       {router.pathname === '/links/[id]' && <CommentsSidebarContainer />}
+      {router.pathname === '/links/[id]' && <StatsModalContainer />}
     </>
   );
 };
