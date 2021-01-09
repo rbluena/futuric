@@ -8,6 +8,7 @@ import CommentEditBox from './CommentEditBox';
 
 const Comment = ({
   comment,
+  // deleteComment,
   onSubmitUpdate,
   toggleCommentLike,
   isCommentorCreatorOfPost,
@@ -114,6 +115,19 @@ const Comment = ({
               </Button>
             </>
           )}
+          {/* {comment.isCurrentUserAuthor && (
+            <>
+              <span className="mx-2 text-neutral-300">-</span>
+              <Button
+                variant="text-button"
+                size="xs"
+                className="flex items-center text-md text-primary-700 hover:text-primary-900 hover:underline"
+                onClick={() => deleteComment(comment._id)}
+              >
+                Delete
+              </Button>
+            </>
+          )} */}
         </footer>
       </section>
     </div>
@@ -128,6 +142,7 @@ Comment.propTypes = {
   comment: PropTypes.objectOf(PropTypes.shape).isRequired,
   toggleCommentLike: PropTypes.func.isRequired,
   onSubmitUpdate: PropTypes.func.isRequired,
+  // deleteComment: PropTypes.func.isRequired,
   isCommentorCreatorOfPost: PropTypes.bool,
 };
 

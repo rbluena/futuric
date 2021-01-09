@@ -122,16 +122,20 @@ export function deleteCommentAction(commentId) {
   return async (dispatch, getState) => {
     const {
       auth: { token },
-      comments: { comments },
+      comments: {
+        comments: { data: oldData, meta },
+      },
     } = getState();
 
     try {
       dispatch(deleteComment());
 
       const { data } = await deleteCommentService(token, commentId);
-      const updatedComments = mergeUpdatedItem(comments.data, data);
+      const updatedComments = mergeUpdatedItem(oldData, data, true);
 
-      dispatch(deleteCommentSuccess(updatedComments));
+      dispatch(
+        deleteCommentSuccess({ data: updatedComments, meta: meta || {} })
+      );
     } catch (err) {
       dispatch(deleteCommentFailure());
 

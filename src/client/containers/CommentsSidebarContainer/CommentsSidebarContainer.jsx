@@ -12,9 +12,11 @@ import { toggleSidebar, openModal } from '@app/slices/globalSlice';
 import {
   createCommentAction,
   updateCommentAction,
+  deleteCommentAction,
   toggleCommentLikeAction,
   resetCommentsAction,
 } from '@app/actions';
+
 import { SIDEBARS } from '@app/constants';
 
 const CommentsSidebarContainer = () => {
@@ -36,6 +38,10 @@ const CommentsSidebarContainer = () => {
 
   function openSigninModal() {
     dispatch(openModal('signin'));
+  }
+
+  function deleteComment(commentId) {
+    dispatch(deleteCommentAction(commentId));
   }
 
   function loadMoreComments() {}
@@ -93,6 +99,7 @@ const CommentsSidebarContainer = () => {
               return (
                 <Comment
                   comment={comment}
+                  deleteComment={deleteComment}
                   onSubmitUpdate={onSubmitUpdate}
                   toggleCommentLike={toggleCommentLike}
                   isCommentorCreatorOfPost={isCommentorCreatorOfPost}

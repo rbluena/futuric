@@ -110,7 +110,7 @@ const deleteCommentService = async (commentId) => {
   }
 
   return {
-    id: deleted._doc._id,
+    _id: deleted._doc._id,
   };
 };
 

@@ -46,5 +46,6 @@ export const mergeUpdatedItem = (
     // Item is replaced from list
     data.splice(dataIndex, 1, newData);
   }
+
   return data;
 };

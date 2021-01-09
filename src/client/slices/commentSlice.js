@@ -84,7 +84,7 @@ const commentSlice = createSlice({
     deleteCommentSuccess: {
       reducer: (state, { payload }) => {
         state.fetching = false;
-        state.activeLink = payload;
+        state.comments = payload;
       },
     },
     deleteCommentFailure: {
