@@ -37,10 +37,14 @@ const createCommentService = async (data) => {
         '_id firstname lastname brandname username image prominent verified',
     });
 
-    const objComment = { ...savedComment._doc, isCurrentUserAuthor: true };
-    objComment.likesCount = objComment.likes.length;
-    delete objComment.likes;
+    const objComment = {
+      ...savedComment._doc,
+      isCurrentUserAuthor: true,
+      likesCount: 0,
+      isCurrentUserLiked: false,
+    };
 
+    delete objComment.likes;
     return objComment;
   }
 
@@ -83,7 +87,12 @@ const updateCommentService = async (commentId, data, userId) => {
   });
 
   const objComment = savedComment.toObject();
-  objComment.isCurrentUserAuthor = true;
+
+  objComment.isCurrentUserLiked = comment.likes.includes(
+    String(mongoose.Types.ObjectId(userId))
+  );
+  objComment.isCurrentUserAuthor =
+    userId && String(userId) === String(objComment.author._id);
   objComment.likesCount = objComment.likes.length;
   delete objComment.likes;
 
@@ -155,6 +164,9 @@ const getCommentsService = async (options, userId) => {
         'author.prominent': 1,
         'author.image': 1,
         'author.verified': 1,
+        isCurrentUserLiked: {
+          $in: [mongoose.Types.ObjectId(userId), { $ifNull: ['$likes', []] }],
+        },
         isCurrentUserAuthor: {
           $eq: ['$author._id', mongoose.Types.ObjectId(userId)],
         },

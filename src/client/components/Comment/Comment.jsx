@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceStrict } from 'date-fns';
 import millify from 'millify';
-import { Avatar, Link, Button } from '@app/components';
-import { HeartIcon, BadgeIcon } from '@app/components/Icons';
+import { Avatar, Button } from '@app/components';
+import { HeartIcon, HeartOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import CommentEditBox from './CommentEditBox';
 
 const Comment = ({
@@ -91,17 +91,21 @@ const Comment = ({
               className="flex items-center text-sm text-primary-700 hover:text-primary-900 hover:underline"
               onClick={() => toggleCommentLike(comment._id)}
             >
-              <HeartIcon size="xs" />
-              &nbsp; &nbsp;
+              {comment.isCurrentUserLiked ? (
+                <HeartIcon size="xs" />
+              ) : (
+                <HeartOutlineIcon size="xs" />
+              )}
+              &nbsp;&nbsp;
               <span className="text-sm italic text-neutral-600">
                 {millify(comment.likesCount || 0)}
               </span>
             </Button>
           </div>
-          <span className="mx-2 text-neutral-300">-</span>
+          {/* <span className="mx-2 text-neutral-300">-</span>
           <Link href="/" className="text-md">
             Reply
-          </Link>
+          </Link> */}
           {comment.isCurrentUserAuthor && (
             <>
               <span className="mx-2 text-neutral-300">-</span>
