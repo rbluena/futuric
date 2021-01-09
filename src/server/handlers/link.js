@@ -96,33 +96,15 @@ exports.deleteLinkHandler = async (req, res, next) => {
 exports.getLinkHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const document = await getLinkByIdService(id);
-    const doc = document.toObject();
-    doc.isUserOwner = false;
-    doc.owner.isUserFollowingAuthor = false;
-    doc.owner.followersCount = doc.owner.followers.length;
-    doc.commentsCount = doc.comments ? doc.comments.length : 0;
-    doc.waitingsCount = doc.waitings ? doc.waitings.length : 0;
+    const user = decode(req.app.jwt);
+    const doc = await getLinkByIdService(id, user && user._id);
 
-    if (req.app.jwt) {
-      const user = decode(req.app.jwt);
-
-      // Is the link owned by current authenticated user?
-      if (String(user._id) === String(doc.owner._id)) {
-        doc.isUserOwner = true;
-      } else {
-        await linkVisitCount(doc._id);
-      }
-
-      // Is current user a follower of link's author
-      if (doc.owner.followers.includes(user._id)) {
-        doc.owner.isUserFollowingAuthor = true;
-      }
+    if (user && String(user._id) === String(doc.owner._id)) {
+      doc.isUserOwner = true;
+    } else {
+      doc.visits += doc.visits;
+      await linkVisitCount(doc._id);
     }
-
-    delete doc.owner.followers;
-    delete doc.comments;
-    delete doc.waitings;
 
     res.status(200).json({
       status: 200,

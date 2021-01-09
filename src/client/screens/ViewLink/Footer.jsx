@@ -22,7 +22,7 @@ const Footer = ({ post }) => {
   }
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mt-8 border-t border-neutral-200 pt-2">
       <Button
         variant="text-button"
         size="xs"

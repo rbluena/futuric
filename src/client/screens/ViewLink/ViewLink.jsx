@@ -1,22 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getLinksStateSelector } from '@app/selectors';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { getLinksStateSelector, getUserSelector } from '@app/selectors';
+import { openModal } from '@app/slices/globalSlice';
+import { toggleWaitingAction } from '@app/actions';
 import Header from './Header';
 import Footer from './Footer';
 import Content from './Content';
 
 const ViewLink = ({ post }) => {
+  const dispatch = useDispatch();
+  const user = useSelector(getUserSelector);
   let owner = {};
 
   if (post) {
     owner = post.owner;
   }
 
+  function toggleWaiting() {
+    if (user) {
+      const type = post.isUserWaiting ? 'remove' : 'add';
+      dispatch(toggleWaitingAction(post._id, type));
+    } else {
+      dispatch(openModal('signin'));
+    }
+  }
+
   return (
     <div className="py-10">
       <div className=" max-w-3xl mx-auto">
-        <Header post={post} owner={owner} />
+        <Header post={post} owner={owner} toggleWaiting={toggleWaiting} />
         <Content post={post} />
         <Footer post={post} />
       </div>

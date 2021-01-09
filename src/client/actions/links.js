@@ -1,5 +1,6 @@
 import { decode } from 'jsonwebtoken';
 import router from 'next/router';
+import { isEmpty } from 'lodash';
 import { mergeUpdatedItem } from '@app/utils/common';
 import {
   getLinkService,
@@ -256,7 +257,7 @@ export function toggleWaitingAction(linkId, type) {
     try {
       const {
         auth: { token },
-        links: { links, waitings },
+        links: { links, waitings, activeLink },
       } = getState();
 
       if (type === 'add') {
@@ -268,6 +269,10 @@ export function toggleWaitingAction(linkId, type) {
       }
 
       if (data) {
+        if (!isEmpty(activeLink)) {
+          dispatch(getLinkSuccess(data));
+        }
+
         if (links.data && links.data.length) {
           const updatedLinks = mergeUpdatedItem(links.data, data);
           dispatch(getLinksSuccess({ data: updatedLinks, meta: links.meta }));

@@ -27,7 +27,17 @@ const updateLinkService = async (linkId, data) => {
   if (!updated) {
     throw Error('Something went wrong. Our team are fixing it');
   }
-  await updated.populate('owner');
+  await updated.populate('owner', [
+    '_id',
+    'brandname',
+    'username',
+    'prominent',
+    'firstname',
+    'lastname',
+    'verified',
+    'followers',
+    'comments',
+  ]);
 
   return updated._doc;
 };
@@ -66,16 +76,40 @@ const deleteLinkService = async (linkId) => {
  * Retrieving link based on link id
  * @param {String} linkId
  */
-const getLinkByIdService = async (linkId) => {
-  const link = await Link.findById(linkId).populate('owner', [
-    '_id',
-    'brandname',
-    'username',
-    'prominent',
-    'firstname',
-    'lastname',
-    'followers',
-  ]);
+const getLinkByIdService = async (linkId, userId) => {
+  const link = await Link.findOne(
+    { _id: mongoose.Types.ObjectId(linkId) },
+    {
+      _id: 1,
+      title: 1,
+      description: 1,
+      shortenUrl: 1,
+      longUrl: 1,
+      postUrl: 1,
+      topic: 1,
+      category: 1,
+      isActive: 1,
+      availableDate: 1,
+      owner: 1,
+      visits: 1,
+      isUserWaiting: {
+        $in: [mongoose.Types.ObjectId(userId), { $ifNull: ['$waitings', []] }],
+      },
+      waitingsCount: { $size: { $ifNull: ['$waitings', []] } },
+      commentsCount: { $size: { $ifNull: ['$comments', []] } },
+    }
+  )
+    .populate('owner', [
+      '_id',
+      'firstname',
+      'lastname',
+      'username',
+      'brandname',
+      'prominet',
+      'image',
+      'verified',
+    ])
+    .lean();
 
   return link;
 };
@@ -269,8 +303,11 @@ const addWaitingService = async (userId, linkId) => {
   delete savedObject.owner.followings;
   delete savedObject.owner.followers;
   delete savedObject.owner.password;
+  delete savedObject.owner.email;
+  delete savedObject.owner.address;
   delete savedObject.owner.verificationToken;
   delete savedObject.owner.waitings;
+  delete savedObject.owner.comments;
   delete savedObject.owner.links;
 
   return savedObject;
@@ -311,9 +348,12 @@ const removeWaitingService = async (userId, linkId) => {
   delete savedObject.waitings;
   delete savedObject.owner.followings;
   delete savedObject.owner.followers;
+  delete savedObject.owner.email;
+  delete savedObject.owner.address;
   delete savedObject.owner.password;
   delete savedObject.owner.verificationToken;
   delete savedObject.owner.waitings;
+  delete savedObject.owner.comments;
   delete savedObject.owner.links;
 
   return savedObject;
