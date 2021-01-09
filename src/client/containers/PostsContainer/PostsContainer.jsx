@@ -19,7 +19,7 @@ const PostsContainer = ({ posts }) => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto divide-y divide-neutral-100 py-4">
       {posts.map((item) => (
         <Post
           key={item._id}

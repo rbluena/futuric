@@ -1,14 +1,15 @@
 [
-  { "name": "Literature", "code": "literature" },
-  { "name": "Politics", "code": "politics" },
   { "name": "Business", "code": "business" },
-  { "name": "Startup", "code": "startup" },
   { "name": "Comedy", "code": "comedy" },
-  { "name": "Science and Technology", "code": "sci-tech" },
+  { "name": "Education", "code": "education" },
   { "name": "Health", "code": "health" },
   { "name": "Language", "code": "language" },
-  { "name": "Sports", "code": "sports" },
-  { "name": "Personal Development", "code": "personal" },
+  { "name": "Literature", "code": "literature" },
+  { "name": "Politics", "code": "politics" },
   { "name": "Programming", "code": "programming" },
-  { "name": "Relationships", "code": "relationships" }
+  { "name": "Relationships", "code": "relationships" },
+  { "name": "Religious", "code": "religious" },
+  { "name": "Science and Technology", "code": "sci-tech" },
+  { "name": "Startup", "code": "startup" },
+  { "name": "Sports & Entertainment", "code": "entertainment" }
 ]

@@ -1,11 +1,12 @@
 [
-  { "name": "Articles", "code": "articles" },
   { "name": "Apps & Websites", "code": "apps" },
-  { "name": "Arts", "code": "arts" },
+  { "name": "Articles", "code": "articles" },
+  { "name": "Audio", "code": "audio" },
   { "name": "Books", "code": "books" },
-  { "name": "Documentary", "code": "documentaries" },
-  { "name": "Podcasts", "code": "podcasts" },
-  { "name": "Videos", "code": "videos" },
+  { "name": "Documentaries", "code": "documentaries" },
+  { "name": "Films", "code": "films" },
   { "name": "Livestreams", "code": "livestreams" },
-  { "name": "Films", "code": "films" }
+  { "name": "Music", "code": "music" },
+  { "name": "Podcasts", "code": "podcasts" },
+  { "name": "Videos", "code": "videos" }
 ]

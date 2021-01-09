@@ -9,7 +9,7 @@ import { BellIcon, BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
 
 const PostCard = ({ children }) => (
-  <div className="transform transition-all my-2 items-start bg-neutral-50 hover:scale-105 hover:bg-neutral-100  hover:shadow-md mx-auto p-2 max-w-lg">
+  <div className="transform transition-all items-start bg-white hover:translate-x-1 hover:shadow-sm mx-auto p-4 py-6 max-w-lg">
     {children}
   </div>
 );
