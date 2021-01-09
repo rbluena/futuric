@@ -1,8 +1,10 @@
-import millify from 'millify';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import millify from 'millify';
+import { openModal } from '@app/slices/globalSlice';
 import { Link, Button } from '@app/components';
+import { MODALS } from '@app/constants';
 import { deleteLinkAction, loadLinkCommentsAction } from '@app/actions';
 
 const Footer = ({ post }) => {
@@ -13,6 +15,10 @@ const Footer = ({ post }) => {
    */
   function loadComments() {
     dispatch(loadLinkCommentsAction({ linkId: post._id }));
+  }
+
+  function openStatsModal() {
+    dispatch(openModal(MODALS.linkStats));
   }
 
   return (
@@ -31,9 +37,14 @@ const Footer = ({ post }) => {
         <>
           <span className="ml-2 text-neutral-300">|</span>
           <div className="flex items-center">
-            <Link href="/links/787388/analytics" size="sm" className="ml-2">
+            <Button
+              variant="text-button"
+              size="xs"
+              className="ml-2 text-sm text-primary-700 hover:text-primary-900 hover:underline"
+              onClick={openStatsModal}
+            >
               Stats
-            </Link>
+            </Button>
             <span className="ml-2 text-neutral-300">-</span>
             <Button
               variant="text-button"
