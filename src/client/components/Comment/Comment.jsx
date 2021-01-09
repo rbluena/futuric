@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceStrict } from 'date-fns';
 import millify from 'millify';
@@ -31,6 +31,11 @@ const Comment = ({
     }
   }
 
+  useEffect(() => {
+    setEditText(comment.text);
+    setEdit(false);
+  }, [comment]);
+
   return (
     <div className="flex max-w-sm p-2 py-6 bg-white pl-4">
       <Avatar
@@ -60,7 +65,7 @@ const Comment = ({
         </header>
 
         {/* start: EDITING COMMENT */}
-        {edit ? (
+        {edit && comment.isCurrentUserAuthor ? (
           <CommentEditBox
             text={editText}
             onKeyDown={onKeyDown}
@@ -96,15 +101,19 @@ const Comment = ({
           <Link href="/" className="text-md">
             Reply
           </Link>
-          <span className="mx-2 text-neutral-300">-</span>
-          <Button
-            variant="text-button"
-            size="xs"
-            className="flex items-center text-md text-primary-700 hover:text-primary-900 hover:underline"
-            onClick={() => setEdit(true)}
-          >
-            Edit
-          </Button>
+          {comment.isCurrentUserAuthor && (
+            <>
+              <span className="mx-2 text-neutral-300">-</span>
+              <Button
+                variant="text-button"
+                size="xs"
+                className="flex items-center text-md text-primary-700 hover:text-primary-900 hover:underline"
+                onClick={() => setEdit(true)}
+              >
+                Edit
+              </Button>
+            </>
+          )}
         </footer>
       </section>
     </div>
