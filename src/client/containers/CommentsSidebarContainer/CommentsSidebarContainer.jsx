@@ -11,6 +11,7 @@ import { Sidebar, CommentBox, Comment, Button } from '@app/components';
 import { toggleSidebar, openModal } from '@app/slices/globalSlice';
 import {
   createCommentAction,
+  updateCommentAction,
   toggleCommentLikeAction,
   resetCommentsAction,
 } from '@app/actions';
@@ -51,6 +52,10 @@ const CommentsSidebarContainer = () => {
     dispatch(resetCommentsAction());
   }
 
+  function onSubmitUpdate(commentId, commentData) {
+    dispatch(updateCommentAction(commentId, commentData));
+  }
+
   useUnmount(() => {
     onClose();
   });
@@ -88,6 +93,7 @@ const CommentsSidebarContainer = () => {
               return (
                 <Comment
                   comment={comment}
+                  onSubmitUpdate={onSubmitUpdate}
                   toggleCommentLike={toggleCommentLike}
                   isCommentorCreatorOfPost={isCommentorCreatorOfPost}
                 />

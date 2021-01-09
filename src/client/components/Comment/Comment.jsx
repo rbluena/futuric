@@ -1,16 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceStrict } from 'date-fns';
 import millify from 'millify';
 import { Avatar, Link, Button } from '@app/components';
 import { HeartIcon, BadgeIcon } from '@app/components/Icons';
+import CommentEditBox from './CommentEditBox';
 
-const Comment = ({ comment, toggleCommentLike, isCommentorCreatorOfPost }) => {
+const Comment = ({
+  comment,
+  onSubmitUpdate,
+  toggleCommentLike,
+  isCommentorCreatorOfPost,
+}) => {
+  const [edit, setEdit] = useState(false);
+  const [editText, setEditText] = useState(comment.text);
   const { author } = comment;
   const formattedDistance = formatDistanceStrict(
     Date.now(),
     new Date(comment.createdAt || Date.now())
   );
+
+  function submitData() {
+    onSubmitUpdate(comment._id, { text: editText });
+    setEdit(false);
+  }
+
+  function onKeyDown(evt) {
+    if (evt.code === 'Enter') {
+      submitData();
+    }
+  }
 
   return (
     <div className="flex max-w-sm p-2 py-6 bg-white pl-4">
@@ -39,9 +58,25 @@ const Comment = ({ comment, toggleCommentLike, isCommentorCreatorOfPost }) => {
               : `${formattedDistance} ago`}
           </p>
         </header>
-        <section className="text-sm py-3 text-neutral-700">
-          {comment.text}
-        </section>
+
+        {/* start: EDITING COMMENT */}
+        {edit ? (
+          <CommentEditBox
+            text={editText}
+            onKeyDown={onKeyDown}
+            onChange={(evt, value) => setEditText(value)}
+            onCancel={() => {
+              setEdit(false);
+              setEditText(comment.text);
+            }}
+            onSubmit={submitData}
+          />
+        ) : (
+          <section className="text-sm py-3 text-neutral-700">
+            {comment.text}
+          </section>
+        )}
+        {/* end: EDITING COMMENT */}
         <footer className="flex w-full">
           <div className="flex items-center">
             <Button
@@ -66,6 +101,7 @@ const Comment = ({ comment, toggleCommentLike, isCommentorCreatorOfPost }) => {
             variant="text-button"
             size="xs"
             className="flex items-center text-md text-primary-700 hover:text-primary-900 hover:underline"
+            onClick={() => setEdit(true)}
           >
             Edit
           </Button>
@@ -82,6 +118,7 @@ Comment.defaultProps = {
 Comment.propTypes = {
   comment: PropTypes.objectOf(PropTypes.shape).isRequired,
   toggleCommentLike: PropTypes.func.isRequired,
+  onSubmitUpdate: PropTypes.func.isRequired,
   isCommentorCreatorOfPost: PropTypes.bool,
 };
 
