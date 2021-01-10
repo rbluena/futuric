@@ -12,7 +12,7 @@ const Select = ({
 }) => (
   <div className="max-w-sm">
     {label && label.length && (
-      <label htmlFor={name} className="text-sm text-primary-700">
+      <label htmlFor={name} className="text-sm text-primary-700 font-semibold">
         {label}
       </label>
     )}
