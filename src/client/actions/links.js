@@ -218,7 +218,7 @@ export function getLinksAction(options = {}) {
     try {
       const {
         auth: { token },
-        links: oldLinks,
+        links: { links: oldLinks },
       } = getState();
 
       if (token) {
@@ -230,7 +230,7 @@ export function getLinksAction(options = {}) {
 
       if (oldLinks.data && oldLinks.data.length > 0) {
         links = {
-          data: { ...oldLinks.data, ...data.data },
+          data: [...oldLinks.data, ...data.data],
           meta: data.meta,
         };
       } else {

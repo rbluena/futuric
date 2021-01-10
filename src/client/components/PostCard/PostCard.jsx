@@ -19,31 +19,35 @@ PostCard.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-PostCard.Header = ({ publisher, small }) => (
-  <div className="flex w-full items-center">
-    <Avatar
-      src={publisher.image && publisher.image.thumbnail}
-      initials={publisher.brandname[0]}
-      alt={publisher.brandname}
-      square
-    />
-    <div className="flex pl-2">
-      <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
-        From
-      </span>
-      &nbsp;
-      <Link
-        href={`/@${publisher.username}`}
-        className={`font-bold flex ${small ? 'text-xs' : 'text-sm'}`}
-      >
-        {publisher.brandname}&nbsp;
-        {publisher.prominent && (
-          <BadgeIcon size="xs" className="text-success-700" />
-        )}
-      </Link>
+PostCard.Header = ({ publisher, small }) => {
+  console.log(publisher.username);
+
+  return (
+    <div className="flex w-full items-center">
+      <Avatar
+        src={publisher.image && publisher.image.thumbnail}
+        initials={publisher.brandname[0]}
+        alt={publisher.brandname}
+        square
+      />
+      <div className="flex pl-2">
+        <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
+          From
+        </span>
+        &nbsp;
+        <Link
+          href={`/@${publisher.username}`}
+          className={`font-bold flex ${small ? 'text-xs' : 'text-sm'}`}
+        >
+          {publisher.brandname}&nbsp;
+          {publisher.prominent && (
+            <BadgeIcon size="xs" className="text-success-700" />
+          )}
+        </Link>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Start: POST CARD HEADER
 
@@ -99,7 +103,11 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
             {post.shortenUrl}
           </Link>
         ) : (
-          <Link href={post.longUrl} variant="secondary" className="text-base">
+          <Link
+            href={`/links/${post._id}`}
+            variant="secondary"
+            className="text-base"
+          >
             {post.shortenUrl}
           </Link>
         )}

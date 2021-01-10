@@ -17,7 +17,7 @@ export async function getServerSideProps({ req, query }) {
       // Retreive specific data based on authenticated user
     }
 
-    ({ data } = await getLinksService({ ...query, limit: 15 }));
+    ({ data } = await getLinksService({ ...query, limit: 10 }));
   } catch (error) {
     // Log exceptions
   }

@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import { findIndex } from 'lodash';
+import { findIndex, debounce } from 'lodash';
 
 export const redirectTo = (location, res) => {
   if (process.browser) {
@@ -48,4 +48,8 @@ export const mergeUpdatedItem = (
   }
 
   return data;
+};
+
+export const loadMore = (callback) => {
+  debounce(callback, 200);
 };
