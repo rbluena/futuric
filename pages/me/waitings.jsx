@@ -23,7 +23,7 @@ export async function getServerSideProps({ req }) {
       };
     }
 
-    ({ data: waitings } = await getUserWaitingsService(token, { limit: 4 }));
+    ({ data: waitings } = await getUserWaitingsService(token, { limit: 15 }));
   } catch (error) {
     if (error.status === 403) {
       await deleteCookieToken();

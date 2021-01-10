@@ -26,7 +26,7 @@ export async function getServerSideProps({ req }) {
 
     const user = decode(token);
 
-    ({ data } = await getLinksService({ owner: user._id, limit: 1 }));
+    ({ data } = await getLinksService({ owner: user._id, limit: 15 }));
   } catch (error) {
     if (error.status === 403) {
       await deleteCookieToken();
