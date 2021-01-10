@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 import { linksSelector } from '@app/selectors';
 import { getLinksAction } from '@app/actions';
 import PostsContainer from '@app/containers/PostsContainer';
 // import RecentlyPublishedContainer from '@app/containers/RecentlyPublishedContainer';
 // import FeaturedPostsContainer from '@app/containers/FeaturedPostsContainer';
-import { NavCategories } from '@app/components';
+import { NavCategories, InsersectionObserver } from '@app/components';
 
 const LandingPage = () => {
   const { data, meta } = useSelector(linksSelector);
@@ -19,13 +20,11 @@ const LandingPage = () => {
   /**
    * Loading more content if bottom is in visibility.
    */
-  function loadMore() {
-    if (hasNextPage) {
+  const loadMore = debounce((shouldLoadMore) => {
+    if (shouldLoadMore && hasNextPage) {
       dispatch(getLinksAction({ ...query, page: nextPage, limit }));
     }
-  }
-
-  // console.log(data);
+  }, 500);
 
   return (
     <div className="mx-auto flex max-w-6xl">
@@ -33,9 +32,12 @@ const LandingPage = () => {
         <NavCategories />
       </div>
       <div className="w-full">
-        <PostsContainer posts={trending} />
+        <PostsContainer posts={trending} title="Featured" />
         {upcomings && upcomings.length > 0 && (
-          <PostsContainer posts={upcomings} />
+          <>
+            <PostsContainer posts={upcomings} title="Upcoming" />
+            {hasNextPage && <InsersectionObserver loadMore={loadMore} />}
+          </>
         )}
       </div>
     </div>

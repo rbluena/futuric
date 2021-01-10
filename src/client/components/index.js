@@ -19,6 +19,7 @@ import Footer from './Footer';
 import ContentWrapper from './ContentWrapper';
 import Section from './Section';
 import ProfileHeader from './ProfileHeader';
+import InsersectionObserver from './InsersectionObserver';
 import Logo from './Logo';
 import Notification from './Notification';
 import DotSeparator from './DotSeparator';
@@ -48,4 +49,5 @@ export {
   Logo,
   Notification,
   DotSeparator,
+  InsersectionObserver,
 };

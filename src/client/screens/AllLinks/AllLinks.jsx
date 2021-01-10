@@ -4,10 +4,9 @@ import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 import { getLinksAction } from '@app/actions';
 import { linksSelector } from '@app/selectors';
-import { NavCategories } from '@app/components';
+import { NavCategories, InsersectionObserver } from '@app/components';
 import PostsContainer from '@app/containers/PostsContainer';
 import categories from '@app/utils/categories';
-import InsersectionObserver from './InsersectionObserver';
 
 const AllLinks = () => {
   const { data, meta } = useSelector(linksSelector);

@@ -13,12 +13,12 @@ const InsersectionObserver = ({ loadMore }) => {
 
   return (
     <div ref={intersectionRef}>
-      {intersection && intersection.intersectionRatio > 1 && loadMore(true)}
+      {intersection && intersection.intersectionRatio > 0 && loadMore(true)}
     </div>
   );
 };
 
-IntersectionObserver.propTypes = {
+InsersectionObserver.propTypes = {
   loadMore: PropTypes.func.isRequired,
 };
 
