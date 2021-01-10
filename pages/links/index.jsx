@@ -41,7 +41,7 @@ const ViewLink = ({ links }) => {
 
   return (
     <LayoutManager>
-      <Head title="View Link" />
+      <Head title="Links" />
       <Header showTopics />
       <LinksPage />
       <Footer />

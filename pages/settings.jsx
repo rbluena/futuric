@@ -12,7 +12,7 @@ const Edit = () => {
 
   return (
     <LayoutManager>
-      <Head title="Profile edit" />
+      <Head title="Settings" />
       <Header />
       <UserEditScreen />
       <Footer />

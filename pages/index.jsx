@@ -64,7 +64,7 @@ export default function Home({ links }) {
   if (!redirectUserToSettings) {
     return (
       <LayoutManager>
-        <Head />
+        <Head title="Home" />
         <Header showHero showTopics />
         <LandingPage />
         <Footer />

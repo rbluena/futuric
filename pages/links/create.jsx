@@ -12,7 +12,7 @@ const Create = () => {
 
   return (
     <LayoutManager>
-      <Head title="Create Link" description="" />
+      <Head title="Create" description="" />
       <Header />
       <CreateScreen />
     </LayoutManager>
