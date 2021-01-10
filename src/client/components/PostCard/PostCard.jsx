@@ -45,6 +45,8 @@ PostCard.Header = ({ publisher, small }) => (
   </div>
 );
 
+// Start: POST CARD HEADER
+
 PostCard.Header.defaultProps = {
   small: false,
 };
@@ -53,7 +55,9 @@ PostCard.Header.propTypes = {
   small: PropTypes.bool,
   publisher: PropTypes.objectOf(PropTypes.shape).isRequired,
 };
+// End: POST CARD HEADER
 
+// Start: POST CARD CONTENT
 PostCard.Content = ({ post, small, toggleWaiting }) => {
   const dispatch = useDispatch();
   const user = useSelector(getUserSelector);
@@ -127,12 +131,12 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
         {!isAuthUserOwner && (
           <button
             type="button"
-            className="ml-auto p-1 rounded-sm hover:bg-neutral-400 text-neutral-400 hover:text-white "
+            className="ml-auto p-1 rounded-sm hover:bg-neutral-300 text-neutral-400 hover:text-white "
             title="Get notified"
             onClick={toggleNotification}
           >
             {post.isUserWaiting ? (
-              <BellIcon size="sm" />
+              <BellIcon size="sm" className="text-primary-600" />
             ) : (
               <BellOutlineIcon size="sm" />
             )}
@@ -154,5 +158,6 @@ PostCard.Content.propTypes = {
   toggleWaiting: PropTypes.func.isRequired,
   small: PropTypes.bool,
 };
+// End: POST CARD CONTENT
 
 export default PostCard;
