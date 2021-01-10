@@ -8,7 +8,7 @@
   { "name": "Politics", "code": "politics" },
   { "name": "Programming", "code": "programming" },
   { "name": "Relationships", "code": "relationships" },
-  { "name": "Religious", "code": "religious" },
+  { "name": "Religion", "code": "religion" },
   { "name": "Science and Technology", "code": "sci-tech" },
   { "name": "Startup", "code": "startup" },
   { "name": "Sports & Entertainment", "code": "entertainment" }

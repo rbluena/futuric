@@ -21,6 +21,7 @@ import Section from './Section';
 import ProfileHeader from './ProfileHeader';
 import Logo from './Logo';
 import Notification from './Notification';
+import DotSeparator from './DotSeparator';
 
 export {
   LayoutManager,
@@ -46,4 +47,5 @@ export {
   ProfileHeader,
   Logo,
   Notification,
+  DotSeparator,
 };

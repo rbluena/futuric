@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModal } from '@app/slices/globalSlice';
 import { getUserSelector } from '@app/selectors';
-import { Avatar, Link } from '@app/components';
+import { Avatar, Link, DotSeparator } from '@app/components';
 import { BellIcon, BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
+import categories from '@app/utils/categories';
 
 const PostCard = ({ children }) => (
-  <div className="transform transition-all items-start bg-white hover:translate-x-1 hover:shadow-sm mx-auto p-4 py-6 max-w-lg">
+  <div className="transform transition-all items-start bg-white hover:translate-x-1 hover:shadow-sm mx-auto p-4 py-6 max-w-xl">
     {children}
   </div>
 );
@@ -24,6 +25,7 @@ PostCard.Header = ({ publisher, small }) => (
       src={publisher.image && publisher.image.thumbnail}
       initials={publisher.brandname[0]}
       alt={publisher.brandname}
+      square
     />
     <div className="flex pl-2">
       <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
@@ -70,55 +72,75 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
     }
   }
 
+  const category = categories.find((item) => item.code === post.category);
+
   return (
-    <div className="w-full pl-10">
+    <div className="w-full mt-4">
       <h2
-        className={`text-neutral-600 ${
-          small
-            ? 'leading-4 font-semibold'
-            : 'font-bold text-neutral-800 leading-4'
+        className={`text-lg ${
+          small ? 'leading-6 font-semibold' : 'font-bold text-black leading-6'
         }`}
       >
-        <Link href={`/links/${post._id}`} variant="secondary">
-          {post.title}
+        <Link
+          href={`/links/${post._id}`}
+          className="text-neutral-800 hover:text-neutral-900 hover:no-underline"
+        >
+          Adding something longer which takes a lot of spaces. This is the
+          longer version of it.
+          {/* {post.title} */}
         </Link>
       </h2>
-
-      <div className="flex items-center justify-items-start mt-2">
-        {/* start: shorten url */}
+      {/* start: shorten url */}
+      <div className="mt-2">
         {post.isActive ? (
-          <Link href={post.longUrl} className="text-xs">
+          <Link href={post.longUrl} className="text-base">
             {post.shortenUrl}
           </Link>
         ) : (
-          <Link href={post.longUrl} variant="secondary" className="text-xs">
+          <Link href={post.longUrl} variant="secondary" className="text-base">
             {post.shortenUrl}
           </Link>
         )}
         {/* end: shorten url */}
-        &nbsp;&nbsp;
-        <span className="rounded-full inline-block h-2 w-2 bg-neutral-300" />
-        &nbsp;&nbsp;
-        <span className="text-xs text-neutral-600">
-          {post.availableDate && format(new Date(post.availableDate), 'MMM d')}
-        </span>
+      </div>
+
+      {/* start: FOOTER OF POST CARD */}
+      <div className="flex justify-start items-center mt-4">
+        <div className="flex items-center">
+          <span className="text-sm text-neutral-700">
+            Available: &nbsp;
+            {post.availableDate
+              ? format(new Date(post.availableDate), 'MMM d')
+              : 'Soon'}
+          </span>
+          &nbsp;&nbsp;
+          {category && (
+            <>
+              <DotSeparator />
+              &nbsp;&nbsp;
+              <span className="text-sm text-neutral-600">{category.name}</span>
+            </>
+          )}
+        </div>
+
         {/* start: Notification button. */}
         {!isAuthUserOwner && (
           <button
             type="button"
-            className="ml-auto p-1 rounded-sm hover:bg-primary-400 text-primary-700 hover:text-white "
+            className="ml-auto p-1 rounded-sm hover:bg-neutral-400 text-neutral-400 hover:text-white "
             title="Get notified"
             onClick={toggleNotification}
           >
             {post.isUserWaiting ? (
-              <BellIcon size="xs" />
+              <BellIcon size="sm" />
             ) : (
-              <BellOutlineIcon size="xs" />
+              <BellOutlineIcon size="sm" />
             )}
           </button>
         )}
         {/* end: Notification button. */}
       </div>
+      {/* end: FOOTER OF POST CARD */}
     </div>
   );
 };
