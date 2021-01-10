@@ -1,22 +1,37 @@
 import React from 'react';
-import { useAuthentication } from '@app/hooks';
+import { getCookieToken } from '@app/utils/session';
 import { LayoutManager, Head, Header } from '@app/components';
 import CreateScreen from '@app/screens/CreateLink';
 
-const Create = () => {
-  const { isAuthenticated } = useAuthentication();
-  // Avoding to show page when redirecting
-  if (!isAuthenticated) {
-    return null;
+export async function getServerSideProps({ req }) {
+  try {
+    const token = getCookieToken(req);
+
+    if (!token) {
+      return {
+        redirect: {
+          destination: '/#signin-modal',
+          permanent: false,
+        },
+      };
+    }
+  } catch (error) {
+    return {
+      notFound: true,
+    };
   }
 
-  return (
-    <LayoutManager>
-      <Head title="Create" description="" />
-      <Header />
-      <CreateScreen />
-    </LayoutManager>
-  );
-};
+  return {
+    props: {},
+  };
+}
+
+const Create = () => (
+  <LayoutManager>
+    <Head title="Create" description="" />
+    <Header />
+    <CreateScreen />
+  </LayoutManager>
+);
 
 export default Create;

@@ -26,12 +26,12 @@ const Avatar = ({ size, className, src, alt, square, initials }) => {
     return (
       <div
         className={`border-2 border-primary-700  text-neutral-800 ${className} ${
-          square ? 'rounded-lg' : 'rounded-full'
+          square ? 'rounded' : 'rounded-full'
         } `}
       >
         <div
           className={`bg-primary-200 w-full h-full flex justify-center items-center font-semibold ${
-            square ? 'rounded-lg' : 'rounded-full'
+            square ? 'rounded' : 'rounded-full'
           }`}
         >
           {initials}

@@ -1,23 +1,38 @@
 import React from 'react';
-import { useAuthentication } from '@app/hooks';
+import { getCookieToken } from '@app/utils/session';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
 import UserEditScreen from '@app/screens/UserEdit';
 
-const Edit = () => {
-  const { isAuthenticated } = useAuthentication();
-  // Avoding to show page when redirecting
-  if (!isAuthenticated) {
-    return null;
+export async function getServerSideProps({ req }) {
+  try {
+    const token = getCookieToken(req);
+
+    if (!token) {
+      return {
+        redirect: {
+          destination: '/#signin-modal',
+          permanent: false,
+        },
+      };
+    }
+  } catch (error) {
+    return {
+      notFound: true,
+    };
   }
 
-  return (
-    <LayoutManager>
-      <Head title="Settings" />
-      <Header />
-      <UserEditScreen />
-      <Footer />
-    </LayoutManager>
-  );
-};
+  return {
+    props: {},
+  };
+}
+
+const Edit = () => (
+  <LayoutManager>
+    <Head title="Settings" />
+    <Header />
+    <UserEditScreen />
+    <Footer />
+  </LayoutManager>
+);
 
 export default Edit;

@@ -21,12 +21,12 @@ import { Section, Button } from '@app/components';
 import countries from './countries.json';
 
 const UserForm = () => {
+  const dispatch = useDispatch();
   const [showOnlinePrecense, setShowOnlinePrecense] = useState(false);
   const [showAddress, setShowAddress] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [characters, setCharacters] = useState('');
   const user = useSelector(getUserSelector);
-  const dispatch = useDispatch();
   const { handleSubmit, register, errors: inputErrors } = useForm({
     mode: 'onBlur',
     defaultValues: user,
@@ -81,18 +81,6 @@ const UserForm = () => {
         </ControlWrapper>
 
         <ControlWrapper>
-          <TextInput
-            name="brandname"
-            label="Brand Name: *"
-            placeholder="Use your brand name or full name."
-            register={register({
-              required: 'This field is required.',
-            })}
-            error={get(inputErrors, 'brandname.message')}
-          />
-        </ControlWrapper>
-
-        <ControlWrapper>
           <EmailInput
             name="email"
             label="Email: *"
@@ -134,11 +122,20 @@ const UserForm = () => {
           className="text-primary-700 hover:text-primary-900 text-sm font-light flex items-center"
           onClick={() => setShowOnlinePrecense(true)}
         >
-          <span>Online presence</span>&nbsp;
+          <span>Brand & Online presence</span>&nbsp;
           <PencilIcon size="xs" />
         </Button>
       ) : (
-        <Section heading="Online Presence">
+        <Section heading="Brand & Online Presence">
+          <ControlWrapper>
+            <TextInput
+              name="brandname"
+              label="Brand Name:"
+              register={register}
+              placeholder="Name behind the brand."
+              error={get(inputErrors, 'brandname.message')}
+            />
+          </ControlWrapper>
           <ControlWrapper>
             <TextInput
               name="website"

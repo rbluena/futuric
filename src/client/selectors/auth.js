@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { decode } from 'jsonwebtoken';
+import { setBrandAndInitials } from '@app/utils/auth';
 
 const selectSelf = (state) => state;
 
@@ -9,13 +10,7 @@ const selectUser = (state) => {
   if (token && token.length) {
     const user = decode(token);
 
-    if (!user.image || !user.image.thumbnail) {
-      if (!user.brandname) {
-        user.initials = 'U';
-      } else {
-        user.initials = `${user.brandname[0]}`;
-      }
-    }
+    setBrandAndInitials(user);
 
     return user;
   }
@@ -24,16 +19,16 @@ const selectUser = (state) => {
 };
 
 const selectAuth = (state) => {
-  const { token } = state.auth;
   let isAuthenticated = false;
-  let user = null;
+  const user = selectUser(state);
   let redirectUserToSettings = false;
 
-  if (token && token.length) {
+  if (user) {
     isAuthenticated = true;
-    user = selectUser(state);
 
-    if (user && !user.brandname) {
+    if (!user.username || user.firstname) {
+      // When user signs up with email address, username is created except firstname and lastname
+      // When user sign up with google-oauth, username is missing. We should redirect user to setting page
       redirectUserToSettings = true;
     }
   }
@@ -41,13 +36,19 @@ const selectAuth = (state) => {
   return { isAuthenticated, user, redirectUserToSettings };
 };
 
+/**
+ * Selecting profile of a user or brand from profile page
+ */
 const selectProfile = (state) => {
   const { profile } = state.auth;
   let isCurrentUser = false;
+
   const user = selectUser(state);
 
   if (user) {
     isCurrentUser = user._id === profile._id;
+  } else {
+    setBrandAndInitials(profile);
   }
 
   return { profile, isCurrentUser };

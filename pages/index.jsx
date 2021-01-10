@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useEffectOnce } from 'react-use';
 import { getCookieToken } from '@app/utils/session';
@@ -8,7 +8,6 @@ import { getLinksService } from '@app/services';
 import { getLinksSuccess } from '@app/slices/linksSlice';
 import { openModal } from '@app/slices/globalSlice';
 import { LayoutManager, Head, Footer, Header } from '@app/components';
-import { getAuthSelector } from '@app/selectors';
 import LandingPage from '@app/screens/LandingPage';
 
 export async function getServerSideProps({ req, query }) {
@@ -37,9 +36,7 @@ export async function getServerSideProps({ req, query }) {
 }
 
 export default function Home({ links }) {
-  const { redirectUserToSettings } = useSelector(getAuthSelector);
   const router = useRouter();
-
   const dispatch = useDispatch();
 
   useEffectOnce(() => {
@@ -52,27 +49,14 @@ export default function Home({ links }) {
     dispatch(getLinksSuccess(links));
   }, [dispatch, links]);
 
-  useEffect(() => {
-    if (redirectUserToSettings) {
-      return router.push('/settings');
-    }
-
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [redirectUserToSettings]);
-
-  if (!redirectUserToSettings) {
-    return (
-      <LayoutManager>
-        <Head title="Home" />
-        <Header showHero showTopics />
-        <LandingPage />
-        <Footer />
-      </LayoutManager>
-    );
-  }
-
-  return null;
+  return (
+    <LayoutManager>
+      <Head title="Home" />
+      <Header showHero showTopics />
+      <LandingPage />
+      <Footer />
+    </LayoutManager>
+  );
 }
 
 Home.defaultProps = {

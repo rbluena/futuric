@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import { useUserSettingsRedirect } from '@app/hooks';
 import AuthModalContainer from '@app/containers/AuthModalContainer';
 import StatsModalContainer from '@app/containers/StatsModalContainer';
 import NotificationContainer from '@app/containers/NotificationContainer';
 import CommentsSidebarContainer from '@app/containers/CommentsSidebarContainer';
 
 const LayoutManager = ({ children }) => {
+  const { redirectToSettings } = useUserSettingsRedirect();
   const router = useRouter();
+
+  if (redirectToSettings) {
+    return null;
+  }
 
   return (
     <>

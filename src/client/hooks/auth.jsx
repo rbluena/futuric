@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useEffectOnce } from 'react-use';
 import { useSelector } from 'react-redux';
@@ -15,4 +16,28 @@ export const useAuthentication = () => {
   });
 
   return { isAuthenticated };
+};
+
+/**
+ * Logged in user must have username and firstname.
+ *
+ * If signed in user does not have any of the above, should be redirected
+ * to profile setting page.
+ */
+export const useUserSettingsRedirect = () => {
+  const { redirectUserToSettings } = useSelector(getAuthSelector);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.pathname !== '/settings' && redirectUserToSettings) {
+      router.push('/settings');
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [redirectUserToSettings]);
+
+  return {
+    redirectToSettings:
+      redirectUserToSettings && router.pathname !== '/settings',
+  };
 };
