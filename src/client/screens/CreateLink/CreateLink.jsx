@@ -167,7 +167,7 @@ const CreateLink = () => {
         </div>
 
         <footer className="py-4">
-          <Submit>Create Link</Submit>
+          <Submit>Create</Submit>
         </footer>
       </form>
     </div>
