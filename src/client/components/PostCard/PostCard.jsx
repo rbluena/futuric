@@ -89,9 +89,7 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
           href={`/links/${post._id}`}
           className="text-neutral-800 hover:text-neutral-900 hover:no-underline"
         >
-          Adding something longer which takes a lot of spaces. This is the
-          longer version of it.
-          {/* {post.title} */}
+          {post.title}
         </Link>
       </h2>
       {/* start: shorten url */}
