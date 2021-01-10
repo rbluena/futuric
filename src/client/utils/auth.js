@@ -72,10 +72,10 @@ export const setBrandAndInitials = (data) => {
 
   // If user is not having image, we use initials on profile pic.
   if (!user.image || !user.image.thumbnail) {
-    if (!user.brandname) {
-      user.initials = `${user.firstname[0]} ${user.lastname[0]}`;
-    } else {
+    if (user.brandname) {
       user.initials = `${user.brandname[0]}`;
+    } else {
+      user.initials = `${user.firstname[0]} ${user.lastname[0]}`;
     }
   }
 

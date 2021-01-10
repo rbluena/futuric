@@ -9,10 +9,8 @@ const selectUser = (state) => {
 
   if (token && token.length) {
     const user = decode(token);
-
-    setBrandAndInitials(user);
-
-    return user;
+    const formattedUser = setBrandAndInitials(user);
+    return formattedUser;
   }
 
   return null;
@@ -26,7 +24,7 @@ const selectAuth = (state) => {
   if (user) {
     isAuthenticated = true;
 
-    if (!user.username || user.firstname) {
+    if (!user.username || !user.firstname) {
       // When user signs up with email address, username is created except firstname and lastname
       // When user sign up with google-oauth, username is missing. We should redirect user to setting page
       redirectUserToSettings = true;
