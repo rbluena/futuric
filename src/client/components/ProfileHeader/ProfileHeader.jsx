@@ -38,6 +38,7 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
       <div className="mr-auto">
         <div className="flex flex-wrap items-start">
           <Avatar
+            src={profile.image && profile.image.thumbnail}
             initials={profile.brandname[0]}
             size="2xl"
             className="text-5xl"

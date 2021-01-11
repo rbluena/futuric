@@ -200,6 +200,8 @@ const userUploadImages = async (userId, data) => {
   const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
   user.image = data;
 
+  console.log(data);
+
   if (user) {
     const savedData = await user.save();
     // const obj = savedData.toObject();

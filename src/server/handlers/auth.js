@@ -1,7 +1,7 @@
 const validator = require('validator');
 const sharp = require('sharp');
 const { decode } = require('jsonwebtoken');
-const path = require('path');
+const fs = require('fs');
 const {
   generateAccessToken,
   comparePassword,
@@ -277,21 +277,27 @@ exports.uploadImageHandler = async (req, res, next) => {
     const { file } = req;
 
     const thumbnail = `thumb_${file.filename}`;
-    const medium = `medium_${file.filename}`;
+    // const medium = `medium_${file.filename}`; // Medium image will be use later on, for let us reduce upload space.
 
     await sharp(file.path)
       .resize(150)
       .png()
       .toFile(`${file.destination}/${thumbnail}`);
 
-    await sharp(file.path)
-      .resize(300)
-      .png()
-      .toFile(`${file.destination}/${medium}`);
+    // Deleting original file
+    fs.unlink(file.path, (err) => {
+      // TODO: Report error to sentry.
+      // throw err;
+    });
+
+    // await sharp(file.path)
+    //   .resize(300)
+    //   .png()
+    //   .toFile(`${file.destination}/${medium}`);
 
     const user = await userUploadImages(userId, {
-      thumbnail: `${process.env.SERVER_API}/${thumbnail}`,
-      medium: `${process.env.SERVER_API}/${medium}`,
+      thumbnail: `${process.env.SERVER_URL}/images/${thumbnail}`,
+      // medium: `${process.env.SERVER_URL}/images/${medium}`,
     });
 
     const jwt = await generateAccessToken(user);

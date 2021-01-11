@@ -21,6 +21,8 @@ const Nav = ({ user }) => {
     }
   }
 
+  console.log(user);
+
   return (
     <nav className="relative py-6 max-w-6xl mx-auto">
       <div className="relative flex items-center">
@@ -69,7 +71,7 @@ const Nav = ({ user }) => {
             <button type="button" onClick={() => setToggleDropdown(true)}>
               <Avatar
                 size="lg"
-                src={user.image}
+                src={user.image && user.image.thumbnail}
                 alt="profile"
                 initials={user.initials}
               />

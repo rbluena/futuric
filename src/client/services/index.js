@@ -92,7 +92,7 @@ export const updateUserService = async (token, data) => {
 export const uploadProfileService = async (token, userId, data, config) => {
   try {
     const response = await request({
-      method: 'PUT',
+      method: 'POST',
       url: path.uploadProfile(userId),
       data,
       headers: {

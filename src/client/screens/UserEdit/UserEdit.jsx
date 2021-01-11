@@ -1,11 +1,15 @@
 import React from 'react';
 import { ContentWrapper } from '@app/components';
 import UserForm from './UserForm';
+import UploadProfile from './UploadProfile';
 
 const UserEdit = () => (
-  <ContentWrapper>
-    <UserForm />
-  </ContentWrapper>
+  <>
+    <ContentWrapper>
+      <UploadProfile />
+      <UserForm />
+    </ContentWrapper>
+  </>
 );
 
 UserEdit.propTypes = {};
