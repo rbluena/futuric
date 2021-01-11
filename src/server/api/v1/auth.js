@@ -1,4 +1,8 @@
 const router = require('express').Router();
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+// const { decode } = require('jsonwebtoken');
 const {
   registerHandler,
   userVerificationHandler,
@@ -10,11 +14,28 @@ const {
   deleteTestingUserHandler,
   verifyUserToken,
   followUserHandler,
+  uploadImageHandler,
 } = require('../../handlers/auth');
 const {
   registerInputValidation,
   isAuthenticated,
 } = require('../../middleware/auth');
+
+const uploadPath = path.join(__dirname, '../../uploads/images');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    if (file) {
+      const ext = file.mimetype.split('/')[1];
+      cb(null, `${Date.now()}.${ext}`);
+    }
+  },
+});
+
+const upload = multer({ storage });
 
 /**
  * Registering user using submitted form
@@ -29,6 +50,14 @@ router.get('/me', isAuthenticated, verifyUserToken);
 
 /** Retrieving user's profile based on username */
 router.get('/profile/:username', getProfileHandler);
+
+/** Uploading profile image. */
+router.post(
+  '/profile/upload/:userId',
+  isAuthenticated,
+  upload.single('media'),
+  uploadImageHandler
+);
 
 /**
  * Verifying user with token sent via email

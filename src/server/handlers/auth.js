@@ -1,5 +1,7 @@
 const validator = require('validator');
+const sharp = require('sharp');
 const { decode } = require('jsonwebtoken');
+const path = require('path');
 const {
   generateAccessToken,
   comparePassword,
@@ -14,6 +16,7 @@ const {
   findUserByEmail,
   findUserById,
   toggleFollowUserService,
+  userUploadImages,
 } = require('../services/user');
 
 /**
@@ -259,6 +262,46 @@ exports.verifyUserToken = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       success: true,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+/**
+ * Handler upload profile image.
+ */
+exports.uploadImageHandler = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { file } = req;
+
+    const thumbnail = `thumb_${file.filename}`;
+    const medium = `medium_${file.filename}`;
+
+    await sharp(file.path)
+      .resize(150)
+      .png()
+      .toFile(`${file.destination}/${thumbnail}`);
+
+    await sharp(file.path)
+      .resize(300)
+      .png()
+      .toFile(`${file.destination}/${medium}`);
+
+    const user = await userUploadImages(userId, {
+      thumbnail: `${process.env.SERVER_API}/${thumbnail}`,
+      medium: `${process.env.SERVER_API}/${medium}`,
+    });
+
+    const jwt = await generateAccessToken(user);
+    req.app.jwt = jwt;
+
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: 'Profile image updated successfully!',
+      data: { jwt },
     });
   } catch (error) {
     return next(error);

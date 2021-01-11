@@ -21,6 +21,10 @@ exports.isAuthenticated = async (req, res, next) => {
             errors: { description: 'You are not logged in, please login!' },
           });
         }
+
+        const userClient = jwt.decode(jwtClient);
+        const userServer = jwt.decode(req.app.jwt);
+
         return next();
       });
     } else {

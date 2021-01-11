@@ -78,13 +78,19 @@ const updateUser = async (userData) => {
 
   const updatedUser = {
     _id: updated._id,
-    email: updated.email,
     firstname: updated.firstname,
     lastname: updated.lastname,
+    username: updated.username,
+    brandname: updated.brandname,
+    description: updated.description,
+    website: updated.website,
+    social: updated.social,
+    isSuperUser: updated.isSuperUser,
     address: updated.address,
     verified: updated.verified,
     subscription: updated.subscription,
-    photo: updated.photo,
+    image: updated.image,
+    prominent: updated.prominent,
   };
 
   return updatedUser;
@@ -184,6 +190,45 @@ const toggleFollowUserService = async (followingId, followedId) => {
   return followedUser;
 };
 
+/**
+ * Saving paths to uploaded images
+ *
+ * @param {Sring} userId
+ * @param {Object} data
+ */
+const userUploadImages = async (userId, data) => {
+  const user = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+  user.image = data;
+
+  if (user) {
+    const savedData = await user.save();
+    // const obj = savedData.toObject();
+
+    const userData = {
+      _id: savedData._id,
+      firstname: savedData.firstname,
+      lastname: savedData.lastname,
+      username: savedData.username,
+      brandname: savedData.brandname,
+      description: savedData.description,
+      website: savedData.website,
+      social: savedData.social,
+      isSuperUser: savedData.isSuperUser,
+      address: savedData.address,
+      verified: savedData.verified,
+      subscription: savedData.subscription,
+      image: savedData.image,
+      prominent: savedData.prominent,
+    };
+
+    return userData;
+  }
+
+  throw new Error(
+    'There was an error on our side, our team are working on it.'
+  );
+};
+
 module.exports = {
   findUserByEmail,
   findUserByUsername,
@@ -196,4 +241,5 @@ module.exports = {
   followingUserService,
   unFollowUserService,
   toggleFollowUserService,
+  userUploadImages,
 };
