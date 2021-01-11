@@ -7,6 +7,7 @@ export default {
   updateUser: (id) => `${SERVER_API}/auth/update/${id}`,
   getUser: (id) => `${SERVER_API}/user/${id}`,
   getProfile: (username) => `${SERVER_API}/auth/profile/${username}`,
+  uploadProfile: (userId) => `${SERVER_API}/auth/profile/upload/${userId}`,
   followUser: `${SERVER_API}/auth/follow`,
   createLink: `${SERVER_API}/links/create`,
   updateLink: (id) => `${SERVER_API}/links/${id}`,

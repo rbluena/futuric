@@ -82,6 +82,33 @@ export const updateUserService = async (token, data) => {
 };
 
 /**
+ * Uploading user's profile
+ *
+ * @param {String} token Auth token
+ * @param {String} userId User ID
+ * @param {Object} data
+ * @param {Object} config
+ */
+export const uploadProfileService = async (token, userId, data, config) => {
+  try {
+    const response = await request({
+      method: 'PUT',
+      url: path.uploadProfile(userId),
+      data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+      onUploadProgress: config.onUploadProgress,
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
  * Logging user out
  */
 export const logUserOutService = async (token) => {

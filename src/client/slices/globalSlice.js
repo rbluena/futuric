@@ -6,6 +6,7 @@ const initialState = {
   modal: null,
   sidebar: null,
   toggleAuthMenu: false,
+  uploadImage: null,
 };
 
 const globalSlice = createSlice({
@@ -68,6 +69,11 @@ const globalSlice = createSlice({
         state.notification = null;
         state.toggleAuthMenu = false;
         state.sidebar = false;
+      },
+    },
+    setUploadImage: {
+      reducer: (state, { payload }) => {
+        state.uploadImage = payload;
       },
     },
   },

@@ -9,8 +9,7 @@ const Button = ({ children, outline, className, size, variant, ...rest }) => {
   }
 
   if (variant === 'primary' && !outline) {
-    className +=
-      ' text-neutral-50 bg-primary-700 hover:bg-neutral-50 hover:text-primary-700';
+    className += ' text-neutral-50 bg-primary-700 hover:bg-primary-800';
   }
 
   if (variant === 'primary' && outline) {
