@@ -10,7 +10,7 @@ const { MAILER } = require('../constants');
  * @param {Object} user Receiver with name and email
  * @param {String} confirmationLink URL for user to confirm verification
  */
-const sendVerificationToken = (user, confirmationLink) =>
+const sendVerificationToken = (user, subject, confirmationLink) =>
   mailjet.post('send', { version: 'v3.1' }).request({
     Messages: [
       {
@@ -26,7 +26,7 @@ const sendVerificationToken = (user, confirmationLink) =>
         ],
         TemplateID: MAILER.verification.id,
         TemplateLanguage: true,
-        Subject: '',
+        Subject: subject,
         Variables: {
           userName: user.name,
           confirmation_link: confirmationLink,

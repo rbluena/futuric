@@ -2,6 +2,7 @@ const validator = require('validator');
 const sharp = require('sharp');
 const { decode } = require('jsonwebtoken');
 const fs = require('fs');
+const { sendVerificationToken } = require('../services/mailer');
 const {
   generateAccessToken,
   comparePassword,
@@ -70,7 +71,22 @@ exports.registerHandler = async (req, res, next) => {
         verificationToken,
       };
 
-      await createUser(userData);
+      const user = await createUser(userData);
+
+      const verificationUrl = `${process.env.SITE_URL}/verify/${verificationToken}`;
+
+      if (user) {
+        const request = sendVerificationToken(
+          {
+            name: user.username,
+            email: user.email,
+          },
+          'Thank you for the sign up',
+          verificationUrl
+        );
+
+        await request;
+      }
 
       const responseBody = {
         status: 201,

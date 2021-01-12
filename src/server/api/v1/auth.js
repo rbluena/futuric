@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
-// const { decode } = require('jsonwebtoken');
 const {
   registerHandler,
   userVerificationHandler,
@@ -62,7 +60,7 @@ router.post(
 /**
  * Verifying user with token sent via email
  */
-router.get('/verify', userVerificationHandler);
+router.get('/verify/:token', userVerificationHandler);
 
 /**
  * Request new verification code
