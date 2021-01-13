@@ -16,6 +16,10 @@ const Comment = ({
   const [edit, setEdit] = useState(false);
   const [editText, setEditText] = useState(comment.text);
   const { author } = comment;
+  const authorName =
+    author.brandname && author.brandname.length
+      ? author.brandname
+      : `${author.firstname} ${author.lastname}`;
   const formattedDistance = formatDistanceStrict(
     Date.now(),
     new Date(comment.createdAt || Date.now())
@@ -49,10 +53,10 @@ const Comment = ({
           <p className="font-semibold text-neutral-700 flex items-center">
             {isCommentorCreatorOfPost ? (
               <span className=" text-xs bg-neutral-600 text-white px-2 rounded-full">
-                {author.brandname}
+                {authorName}
               </span>
             ) : (
-              <span className="text-sm">{author.brandname}</span>
+              <span className="text-sm">{authorName}</span>
             )}
             {author.prominent && (
               <BadgeIcon size="xs" className="text-success-500" />
