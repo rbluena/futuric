@@ -38,9 +38,8 @@ const Header = ({ post, owner, toggleWaiting }) => {
         <div className="flex items-center">
           <Link
             href={url || ''}
-            // variant={post.isActive ? 'primary' : 'secondary'}
             variant="primary"
-            className="sm:text-lg md:text-2xl font-light"
+            className="sm:text-xl md:text-2xl font-light"
           >
             {post.shortenUrl}
           </Link>

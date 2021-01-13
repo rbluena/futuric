@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import ContentEditable from 'react-sane-contenteditable';
 import ContentEditable from 'react-contenteditable';
 import { encode } from 'html-entities';
 import DatePicker from 'react-datepicker';
@@ -18,7 +17,7 @@ import topicOptions from '@app/utils/topics.json';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const sanitizeConf = {
-  allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p'],
+  allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'div', 'br'],
   allowedAttributes: { a: ['href'] },
 };
 
@@ -42,8 +41,8 @@ const CreateLink = () => {
 
     dispatch(
       createLinkAction({
-        title: sanitizeHtml(title.current),
-        description: sanitizeHtml(description.current, sanitizeConf),
+        title: encode(sanitizeHtml(title.current)),
+        description: encode(sanitizeHtml(description.current, sanitizeConf)),
         availableDate: date,
         category,
         topic,

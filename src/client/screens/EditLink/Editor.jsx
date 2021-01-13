@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import ContentEditable from 'react-sane-contenteditable';
+import { encode, decode } from 'html-entities';
+import ContentEditable from 'react-contenteditable';
 import DatePicker from 'react-datepicker';
+import sanitizeHtml from 'sanitize-html';
 import { updateLinkAction } from '@app/actions';
 import { Select, Submit, ControlWrapper } from '@app/components/Form';
 import categOptions from '@app/utils/categories.json';
@@ -11,9 +13,14 @@ import topicOptions from '@app/utils/topics.json';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
+const sanitizeConf = {
+  allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'div', 'br'],
+  allowedAttributes: { a: ['href'] },
+};
+
 const Editor = ({ link }) => {
-  const [title, setTitle] = useState(link.title);
-  const [description, setDescription] = useState(link.description);
+  const title = useRef(decode(link.title));
+  const description = useRef(decode(link.description));
   const [date, setDate] = useState(link.availableAt);
   const [category, setCategory] = useState(link.category);
   const [topic, setTopic] = useState(link.topic);
@@ -21,11 +28,13 @@ const Editor = ({ link }) => {
 
   useEffect(() => {
     if (link) {
-      setTitle(link.title);
-      setDescription(link.description);
+      title.current = link.title;
+      description.current = decode(link.description);
+
       if (link.availableDate) {
         setDate(new Date(link.availableDate));
       }
+
       setCategory(link.category || '');
       setTopic(link.topic || '');
     }
@@ -33,6 +42,9 @@ const Editor = ({ link }) => {
 
   const dispatch = useDispatch();
 
+  /**
+   *
+   */
   function submitData(evt) {
     evt.preventDefault();
     if (title.length === 0) {
@@ -42,13 +54,27 @@ const Editor = ({ link }) => {
 
     dispatch(
       updateLinkAction(link._id, {
-        title,
-        description,
+        title: encode(sanitizeHtml(title.current, sanitizeConf)),
+        description: encode(sanitizeHtml(description.current, sanitizeConf)),
         availableDate: new Date(date),
         category,
         topic,
       })
     );
+  }
+
+  /**
+   *
+   */
+  function titleHandler(evt) {
+    title.current = evt.target.value;
+  }
+
+  /**
+   *
+   */
+  function descriptionHandler(evt) {
+    description.current = evt.target.value;
   }
 
   return (
@@ -60,10 +86,10 @@ const Editor = ({ link }) => {
           </label>
           <ContentEditable
             id="title"
-            content={title}
+            html={title.current}
             autoComplete="off"
-            onChange={(evt, value) => setTitle(value)}
-            className="border-b bg-neutral-100 border-primary-400 focus:outline-none focus:border-primary-700 text-3xl font-light font-serif p-1"
+            onChange={titleHandler}
+            className="border-b bg-neutral-100 border-primary-400 focus:outline-none focus:border-primary-700 text-4xl font-bold p-2"
           />
           <span className="text-xs text-danger-500">
             {error && error.type === 'title' && error.message}
@@ -74,9 +100,9 @@ const Editor = ({ link }) => {
             Description:
           </label>
           <ContentEditable
-            content={description}
-            onChange={(evt, value) => setDescription(value)}
-            className="border-b bg-neutral-100 border-primary-400 focus:outline-none focus:border-primary-700 text-xl font-serif p-1"
+            html={description.current}
+            onChange={descriptionHandler}
+            className="border-b bg-neutral-100 border-primary-400 focus:outline-none focus:border-primary-700 text-xl p-2 font-light leading-7"
             autoComplete="off"
             style={{ minHeight: '200px' }}
           />
