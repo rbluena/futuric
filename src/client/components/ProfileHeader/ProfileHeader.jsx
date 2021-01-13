@@ -48,7 +48,7 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
           <div className="flex flex-col items-start flex-1 pl-12">
             <div className="pb-4 w-full flex">
               <Link
-                href={`@${profile.username}`}
+                href={`/@${profile.username}`}
                 variant="secondary"
                 size="lg"
                 className="font-bold flex items-center text-2xl"

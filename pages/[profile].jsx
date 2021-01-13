@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useEffectOnce } from 'react-use';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
-import { getUserProfileService } from '@app/services';
-import { getLinksAction } from '@app/actions';
+import { getUserProfileService, getLinksService } from '@app/services';
 import { getUserProfileSuccess } from '@app/slices/authSlice';
+import { getLinksSuccess } from '@app/slices/linksSlice';
 import ProfileScreen from '@app/screens/Profile';
 
 export async function getServerSideProps({ params }) {
   let data = null;
+  let links = null;
 
   try {
     const { profile } = params;
@@ -17,6 +17,10 @@ export async function getServerSideProps({ params }) {
     const username = profile.slice(1);
 
     ({ data } = await getUserProfileService(username));
+
+    if (data) {
+      ({ data: links } = await getLinksService({ owner: data._id }));
+    }
 
     // If data is not found
     if (!data) {
@@ -33,19 +37,15 @@ export async function getServerSideProps({ params }) {
   return {
     props: {
       data,
+      links,
     }, // will be passed to the page component as props
   };
 }
 
-const Profile = ({ data }) => {
+const Profile = ({ data, links }) => {
   const dispatch = useDispatch();
   dispatch(getUserProfileSuccess(data));
-
-  useEffectOnce(() => {
-    if (data) {
-      dispatch(getLinksAction({ owner: data._id }));
-    }
-  });
+  dispatch(getLinksSuccess(links));
 
   return (
     <LayoutManager>
@@ -59,10 +59,12 @@ const Profile = ({ data }) => {
 
 Profile.defaultProps = {
   data: {},
+  links: {},
 };
 
 Profile.propTypes = {
   data: PropTypes.objectOf(PropTypes.shape),
+  links: PropTypes.objectOf(PropTypes.shape),
 };
 
 export default Profile;
