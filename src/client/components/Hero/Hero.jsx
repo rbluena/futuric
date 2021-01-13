@@ -1,24 +1,38 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { openModal } from '@app/slices/globalSlice';
 import { Button } from '@app/components';
+import { getAuthSelector } from '@app/selectors';
+import { MODALS } from '@app/constants';
 
-const Hero = () => (
-  <div className="text-center px-2 py-12 bg-primary-800 text-neutral-50 ">
-    <h1 className="text-3xl my-8">
-      Create a link for your upcoming online content.
-    </h1>
-    <h4 className="text-xl py-">
-      Create and share a link for content you about to publish online in the
-      near future.
-      <br />
-      Discover and get notified for online contents that will soon be published.
-    </h4>
+const Hero = () => {
+  const { isAuthenticated } = useSelector(getAuthSelector);
+  const dispatch = useDispatch();
 
-    <div className="w-52 mx-auto mt-8">
-      <Button size="lg" variant="secondary" outline>
-        Get Started
-      </Button>
+  return (
+    <div className="text-center px-2 py-24 bg-primary-800 text-neutral-50 ">
+      <h1 className="text-3xl md:text-4xl mb-8 font-bold">
+        Discover what&apos;s coming next on the internet.
+      </h1>
+      <h2 className="text-2xl font-light">
+        Publisher can claim and share a URL ahead of time, <br /> and the
+        audience will be notified when a content published.
+      </h2>
+
+      {!isAuthenticated && (
+        <div className="w-52 mx-auto mt-16">
+          <Button
+            size="lg"
+            variant="secondary"
+            outline
+            onClick={() => dispatch(openModal(MODALS.signup))}
+          >
+            Get Started
+          </Button>
+        </div>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 export default Hero;
