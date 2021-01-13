@@ -42,7 +42,9 @@ const Avatar = ({ size, className, src, alt, square, initials }) => {
 
   return (
     <img
-      className={`rounded-full border-2 ${className} square ? 'rounded-lg' : 'rounded-full'`}
+      className={`border-2 border-primary-700 ${className} ${
+        square ? 'rounded' : 'rounded-full'
+      }`}
       src={src}
       alt={alt}
     />

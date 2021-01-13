@@ -95,24 +95,6 @@ const UserForm = () => {
             error={get(inputErrors, 'email.message')}
           />
         </ControlWrapper>
-        <ControlWrapper>
-          <Textarea
-            name="description"
-            label="Description:"
-            placeholder="Use few words to describe yourself or the brand behind profile."
-            register={register({
-              maxLength: {
-                value: 100,
-                message: 'Characters exceeds max number.',
-              },
-            })}
-            error={get(inputErrors, 'description.message')}
-            onChange={(evt) => onDescriptionChange(evt.target.value)}
-          />
-          <span className="text-xs">
-            {100 - characters.length} characters left.
-          </span>
-        </ControlWrapper>
       </Section>
 
       {/* start: website and social media */}
@@ -135,6 +117,24 @@ const UserForm = () => {
               placeholder="Name behind the brand."
               error={get(inputErrors, 'brandname.message')}
             />
+          </ControlWrapper>
+          <ControlWrapper>
+            <Textarea
+              name="description"
+              label="Description:"
+              placeholder="Use few words to describe yourself or the brand behind the profile."
+              register={register({
+                maxLength: {
+                  value: 100,
+                  message: 'Characters exceeds max number.',
+                },
+              })}
+              error={get(inputErrors, 'description.message')}
+              onChange={(evt) => onDescriptionChange(evt.target.value)}
+            />
+            <span className="text-xs">
+              {100 - characters.length} characters left.
+            </span>
           </ControlWrapper>
           <ControlWrapper>
             <TextInput
