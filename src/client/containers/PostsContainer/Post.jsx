@@ -4,7 +4,11 @@ import { PostCard } from '@app/components';
 
 const Post = ({ owner, post, toggleWaiting }) => (
   <PostCard>
-    <PostCard.Header publisher={owner} alt={owner.brandname} />
+    <PostCard.Header
+      publisher={owner}
+      alt={owner.brandname}
+      availableDate={post.availableDate}
+    />
     <PostCard.Content post={post} toggleWaiting={toggleWaiting} />
   </PostCard>
 );

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModal } from '@app/slices/globalSlice';
 import { getUserSelector } from '@app/selectors';
-import { Avatar, Link, DotSeparator } from '@app/components';
+import { Avatar, Link } from '@app/components';
 import { BellIcon, BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
 import categories from '@app/utils/categories';
@@ -19,7 +19,7 @@ PostCard.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-PostCard.Header = ({ publisher, small }) => (
+PostCard.Header = ({ publisher, small, availableDate }) => (
   <div className="flex w-full items-center">
     <Avatar
       src={publisher.image && publisher.image.thumbnail}
@@ -42,6 +42,15 @@ PostCard.Header = ({ publisher, small }) => (
         )}
       </Link>
     </div>
+
+    <div
+      className="absolute bg-primary-500 text-white right-0 top-4 font-bold shadow-2xl text-sm py-1 pl-4 pr-2"
+      style={{
+        clipPath: 'polygon(0 0, 100% 0%, 100% 100%, 13% 100%, 7% 54%)',
+      }}
+    >
+      {availableDate ? format(new Date(availableDate), 'MMM d') : 'Soon'}
+    </div>
   </div>
 );
 
@@ -49,11 +58,13 @@ PostCard.Header = ({ publisher, small }) => (
 
 PostCard.Header.defaultProps = {
   small: false,
+  availableDate: undefined,
 };
 
 PostCard.Header.propTypes = {
   small: PropTypes.bool,
   publisher: PropTypes.objectOf(PropTypes.shape).isRequired,
+  availableDate: PropTypes.string,
 };
 // End: POST CARD HEADER
 
@@ -113,18 +124,13 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
       {/* start: FOOTER OF POST CARD */}
       <div className="flex justify-start items-center mt-4">
         <div className="flex items-center">
-          <span className="text-sm text-neutral-700">
-            Available: &nbsp;
-            {post.availableDate
-              ? format(new Date(post.availableDate), 'MMM d')
-              : 'Soon'}
-          </span>
-          &nbsp;&nbsp;
           {category && (
             <>
-              <DotSeparator />
-              &nbsp;&nbsp;
-              <span className="text-sm text-neutral-600">{category.name}</span>
+              {/* <DotSeparator />
+              &nbsp;&nbsp; */}
+              <span className="text-sm text-neutral-600 font-bold">
+                #{category.name}
+              </span>
             </>
           )}
         </div>

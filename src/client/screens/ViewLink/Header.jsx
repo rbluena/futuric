@@ -34,7 +34,7 @@ const Header = ({ post, owner, toggleWaiting }) => {
 
   return (
     <div className="header flex border-b border-neutral-200">
-      <div className="">
+      <div className="relative">
         <div className="flex items-center">
           <Link
             href={url || ''}
@@ -56,17 +56,21 @@ const Header = ({ post, owner, toggleWaiting }) => {
         </div>
 
         <br />
-        {post.availableDate && (
-          <div className="text-neutral-600 text-sm">
-            <span className="font-bold text-neutral-800">Available At:</span>{' '}
-            {post.isActive
-              ? 'Published'
-              : post.availableDate &&
-                format(new Date(post.availableDate), 'MMM d')}
-          </div>
-        )}
+        <div
+          className="absolute bg-primary-500 text-white left-0 top-12 font-bold shadow-2xl py-1 pl-2 pr-4"
+          style={{
+            clipPath: 'polygon(0% 0%, 100% 0, 93% 54%, 87% 100%, 0% 100%)',
+          }}
+        >
+          {/* eslint-disable-next-line no-nested-ternary  */}
+          {post.isActive
+            ? 'Available'
+            : post.availableDate
+            ? format(new Date(post.availableDate), 'MMM d')
+            : 'Coming soon'}
+        </div>
 
-        <div className="border-neutral-200 py-2 pt-4 flex items-center">
+        <div className="border-neutral-200 py-2 pt-8 flex items-center">
           {!isCurrentUserOwner && (
             <>
               <Button
