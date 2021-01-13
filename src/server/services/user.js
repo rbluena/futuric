@@ -5,11 +5,8 @@ const User = require('../models/User');
  * Getting user by verification token.
  * @param {String} verificationToken
  */
-const findUserByVerificationToken = async (verificationToken) => {
-  const user = await User.findOne({ verificationToken });
-
-  return user;
-};
+const findUserByVerificationToken = async (verificationToken) =>
+  User.findOne({ verificationToken });
 
 /**
  * Find user by username.

@@ -31,8 +31,7 @@ exports.generateHash = (data) => {
 exports.comparePassword = (password, hash) =>
   bcrypt.compareSync(password, hash);
 
-exports.generateVerificationCode = () =>
-  crypto
-    .createHash('sha256')
-    .update(process.env.ACCESS_TOKEN_SECRET)
-    .digest('hex');
+/**
+ * Generating hashed string to verify user's email
+ */
+exports.generateVerificationCode = () => crypto.randomBytes(32).toString('hex');

@@ -6,6 +6,9 @@ export default {
   createUser: `${SERVER_API}/auth/register`,
   updateUser: (id) => `${SERVER_API}/auth/update/${id}`,
   getUser: (id) => `${SERVER_API}/user/${id}`,
+  verifyUser: (verificationToken) =>
+    `${SERVER_API}/auth/verify/${verificationToken}`,
+  requestVerificationToken: `${SERVER_API}/auth/verify/new`,
   getProfile: (username) => `${SERVER_API}/auth/profile/${username}`,
   uploadProfile: (userId) => `${SERVER_API}/auth/profile/upload/${userId}`,
   followUser: `${SERVER_API}/auth/follow`,

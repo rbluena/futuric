@@ -60,6 +60,27 @@ export const registerUserService = async (data) => {
 };
 
 /**
+ * Request email verification token
+ * @param {Object} data
+ */
+export const requestVerificationTokenService = async (data) => {
+  try {
+    const response = await request({
+      method: 'POST',
+      url: path.requestVerificationToken,
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
  * Update user information.
  * @param {Object} data User information
  */
@@ -122,6 +143,23 @@ export const logUserOutService = async (token) => {
     });
 
     return response.data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+/**
+ * Verifying user's email with token.
+ * @param {String} verificationToken
+ */
+export const verifyUserService = async (verificationToken) => {
+  try {
+    const respsonse = await request({
+      method: 'GET',
+      url: path.verifyUser(verificationToken),
+    });
+
+    return respsonse.data;
   } catch (error) {
     return errorHandler(error);
   }

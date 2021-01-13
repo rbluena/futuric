@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useDispatch, connect } from 'react-redux';
 import { getUserSelector } from '@app/selectors';
 import { openModal } from '@app/slices/globalSlice';
-// import { logoutUserAction } from '@app/actions';
 import { Link, Avatar, Button } from '@app/components';
 import { Dropdown } from '@app/components/Form';
 
@@ -15,13 +14,11 @@ const Nav = ({ user }) => {
 
   function onChangeDropdownHandler(value) {
     if (value === 'signout') {
-      window.location.href = '/signout';
+      router.push('/signout');
     } else {
       router.push(value);
     }
   }
-
-  console.log(user);
 
   return (
     <nav className="relative py-6 max-w-6xl mx-auto">

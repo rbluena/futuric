@@ -14,6 +14,7 @@ const {
   followUserHandler,
   uploadImageHandler,
 } = require('../../handlers/auth');
+
 const {
   registerInputValidation,
   isAuthenticated,

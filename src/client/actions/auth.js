@@ -5,6 +5,7 @@ import {
   logUserOutService,
   updateUserService,
   toggleFollowService,
+  requestVerificationTokenService,
 } from '@app/services';
 import {
   registerUser,
@@ -174,6 +175,29 @@ export function signupUserWithGoogleAction(user, accessToken) {
   };
 }
 
+/**
+ * Requesting new email verification token
+ * @param {String} data
+ */
+export function requestVerificationTokenAction(data) {
+  return async (dispatch) => {
+    try {
+      const { message } = await requestVerificationTokenService(data);
+      dispatch(setNotification({ type: 'success', message }));
+    } catch (err) {
+      const error = {
+        type: 'error',
+        message: err.errors,
+      };
+      dispatch(setNotification(error));
+    }
+  };
+}
+
+/**
+ * Updating user's data
+ * @param {Object} userData
+ */
 export function updateUserAction(userData) {
   return async (dispatch, getState) => {
     try {

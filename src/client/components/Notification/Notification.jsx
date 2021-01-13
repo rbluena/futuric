@@ -23,15 +23,16 @@ const Notification = ({ type, message, details, closeAlert }) => {
       role="alert"
     >
       <div className="flex w-full">
-        {type === 'success' ? <InfoIcon size="sm" /> : <AlertIcon size="sm" />}
-
-        <div>
-          <p className="font-bold pl-2">{message}</p>
-          {details && details.length && (
-            <p className="text-sm">
-              Make sure you know how these changes affect you.
-            </p>
+        <div className="text-center flex ml-auto">
+          {type === 'success' ? (
+            <InfoIcon size="sm" />
+          ) : (
+            <AlertIcon size="sm" />
           )}
+          <div>
+            <p className="font-bold pl-2">{message}</p>
+            {details && details.length && <p className="text-sm">{details}</p>}
+          </div>
         </div>
 
         <button

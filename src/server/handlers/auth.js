@@ -134,32 +134,31 @@ exports.registerHandler = async (req, res, next) => {
 
 /**
  * Handling user verification using link provided to user's email.
- *
- * */
+ */
 exports.userVerificationHandler = async (req, res, next) => {
   try {
-    const verificationToken = req.query.token;
+    const { token: verificationToken } = req.params;
     const user = await findUserByVerificationToken(verificationToken);
 
-    if (user && !user.verified) {
-      user.verified = true;
-      user.verificationToken = '';
-
-      await user.save();
-
-      return res.status(200).json({
-        status: 200,
-        data: { verified: true },
-        message: 'success',
+    if (!user) {
+      return res.status(400).json({
+        status: 400,
+        message: 'error',
+        errors: {
+          details:
+            'Verification is failed, please request new verification token.',
+        },
       });
     }
 
-    return res.status(400).json({
-      status: 400,
-      message: 'error',
-      errors: {
-        details: 'Verification is failed, please send new verification token.',
-      },
+    user.verified = true;
+    user.verificationToken = '';
+    await user.save();
+
+    return res.status(200).json({
+      status: 200,
+      data: { verified: true },
+      message: 'You email address has been verified.',
     });
   } catch (error) {
     return next(error);
@@ -167,7 +166,7 @@ exports.userVerificationHandler = async (req, res, next) => {
 };
 
 /**
- * Send an email with verification token
+ * Send an email with verification token.
  */
 exports.newVerificationCode = async (req, res, next) => {
   try {
@@ -193,16 +192,56 @@ exports.newVerificationCode = async (req, res, next) => {
       });
     }
 
-    const verificationToken = generateVerificationCode();
-    user.verificationToken = verificationToken;
-    await user.save();
+    if (user.verified) {
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        message: 'You are already verified.',
+        data: {},
+      });
+    }
 
-    // TODO: SEND EMAIL WITH VERIFICATION TOKEN
+    const verificationToken = generateVerificationCode();
+    const verificationUrl = `${process.env.SITE_URL}/verify/${verificationToken}`;
+
+    user.verificationToken = verificationToken;
+    const saved = await user.save();
+
+    if (!saved) {
+      res.status(400).json({
+        status: 400,
+        success: false,
+        message: 'Bad Request',
+        errors: { details: 'Failed to send an email. Please try again.' },
+      });
+    }
+
+    const request = sendVerificationToken(
+      {
+        name: user.username,
+        email: user.email,
+      },
+      'Verify your email',
+      verificationUrl
+    );
+
+    const response = await request;
+
+    if (!response) {
+      res.status(500).json({
+        status: 500,
+        success: false,
+        message: 'Server Error',
+        errors: {
+          details: 'There is a problem on our end, out team are working on it.',
+        },
+      });
+    }
 
     return res.status(200).json({
       status: 200,
       success: true,
-      message: 'success',
+      message: 'We have sent you verification email.',
       data: {},
     });
   } catch (error) {
