@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ContentEditable from 'react-sane-contenteditable';
+// import ContentEditable from 'react-sane-contenteditable';
+import ContentEditable from 'react-contenteditable';
+import { encode } from 'html-entities';
 import DatePicker from 'react-datepicker';
+import sanitizeHtml from 'sanitize-html';
 import { Select, ControlWrapper, Submit } from '@app/components/Form';
 import { getLinksStateSelector } from '@app/selectors';
 import { Link, Button } from '@app/components';
@@ -14,9 +17,14 @@ import topicOptions from '@app/utils/topics.json';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
+const sanitizeConf = {
+  allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p'],
+  allowedAttributes: { a: ['href'] },
+};
+
 const CreateLink = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const title = useRef('');
+  const description = useRef('');
   const [date, setDate] = useState(null);
   const [category, setCategory] = useState('');
   const [topic, setTopic] = useState('');
@@ -27,15 +35,15 @@ const CreateLink = () => {
   function submitData(evt) {
     evt.preventDefault();
 
-    if (title.length === 0) {
+    if (title.current.length === 0) {
       setError({ type: 'title', message: "This field can't be empty." });
       return;
     }
 
     dispatch(
       createLinkAction({
-        title,
-        description,
+        title: sanitizeHtml(title.current),
+        description: sanitizeHtml(description.current, sanitizeConf),
         availableDate: date,
         category,
         topic,
@@ -44,14 +52,28 @@ const CreateLink = () => {
   }
 
   /**
-   * Clearing all from data
+   *
+   */
+  function titleHandler(evt) {
+    title.current = evt.target.value;
+  }
+
+  /**
+   *
+   */
+  function descriptionHandler(evt) {
+    description.current = evt.target.value;
+  }
+
+  /**
+   * Clearing all from data.
    */
   function createNew() {
     dispatch(clearNotification());
     dispatch(removeCreatedLink());
     setDate(null);
-    setDescription('');
-    setTitle('');
+    title.current = '';
+    description.current = '';
     setCategory('');
     setTopic('');
     setError(null);
@@ -79,10 +101,11 @@ const CreateLink = () => {
           </label>
           <ContentEditable
             id="title"
-            content={title}
+            tagName="pre"
+            html={title.current}
             autoComplete="off"
-            onChange={(evt, value) => setTitle(value)}
-            className="border-b bg-neutral-100 border-primary-400 focus:outline-none focus:border-primary-700 text-3xl font-light font-serif p-1"
+            onChange={titleHandler}
+            className="border-b bg-neutral-100 border-primary-400 focus:outline-none focus:border-primary-700 text-4xl font-bold p-2"
           />
           <span className="text-xs text-danger-500">
             {error && error.type === 'title' && error.message}
@@ -93,9 +116,9 @@ const CreateLink = () => {
             Description:
           </label>
           <ContentEditable
-            content={description}
-            onChange={(evt, value) => setDescription(value)}
-            className="border-b bg-neutral-100 border-primary-400 focus:outline-none focus:border-primary-700 text-xl font-serif p-1"
+            html={description.current}
+            onChange={descriptionHandler}
+            className="border-b bg-neutral-100 border-primary-400 focus:outline-none focus:border-primary-700 text-xl p-2 font-light leading-7"
             autoComplete="off"
             style={{ minHeight: '200px' }}
           />

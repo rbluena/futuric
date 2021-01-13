@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { decode } from 'html-entities';
 
 const Content = ({ post }) => (
   <div className="pt-10">
@@ -7,9 +8,11 @@ const Content = ({ post }) => (
       {post.title}
     </div>
 
-    <div className="sm:text-base md:text-xl font-serif mt-6 mb-3 font-light">
-      {post.description}
-    </div>
+    <div
+      className="sm:text-base md:text-xl font-serif mt-6 mb-3 font-light leading-3"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: decode(post.description) }}
+    />
   </div>
 );
 
