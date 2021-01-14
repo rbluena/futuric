@@ -19,40 +19,47 @@ PostCard.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-PostCard.Header = ({ publisher, small, availableDate }) => (
-  <div className="flex w-full items-center">
-    <Avatar
-      src={publisher.image && publisher.image.thumbnail}
-      initials={publisher.brandname[0]}
-      alt={publisher.brandname}
-      square
-    />
-    <div className="flex pl-2">
-      <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
-        From
-      </span>
-      &nbsp;
-      <Link
-        href={`/@${publisher.username}`}
-        className={`font-bold flex ${small ? 'text-xs' : 'text-sm'}`}
-      >
-        {publisher.brandname}&nbsp;
-        {publisher.prominent && (
-          <BadgeIcon size="xs" className="text-success-700" />
-        )}
-      </Link>
-    </div>
+PostCard.Header = ({ publisher, small, availableDate }) => {
+  const publisherName =
+    publisher.brandname && publisher.brandname.length
+      ? publisher.brandname
+      : `${publisher.firstname} ${publisher.lastname}`;
 
-    <div
-      className="absolute bg-primary-500 text-white right-0 top-4 font-bold shadow-2xl text-sm py-1 pl-4 pr-2"
-      style={{
-        clipPath: 'polygon(0 0, 100% 0%, 100% 100%, 13% 100%, 7% 54%)',
-      }}
-    >
-      {availableDate ? format(new Date(availableDate), 'MMM d') : 'Soon'}
+  return (
+    <div className="flex w-full items-center">
+      <Avatar
+        src={publisher.image && publisher.image.thumbnail}
+        initials={publisherName[0]}
+        alt={publisherName}
+        square
+      />
+      <div className="flex pl-2">
+        <span className={`${small ? 'text-xs' : 'text-sm'} text-neutral-500`}>
+          From
+        </span>
+        &nbsp;
+        <Link
+          href={`/@${publisher.username}`}
+          className={`font-bold flex ${small ? 'text-xs' : 'text-sm'}`}
+        >
+          {publisherName}&nbsp;
+          {publisher.prominent && (
+            <BadgeIcon size="xs" className="text-success-700" />
+          )}
+        </Link>
+      </div>
+
+      <div
+        className="absolute bg-primary-500 text-white right-0 top-4 font-bold shadow-2xl text-sm py-1 pl-4 pr-2"
+        style={{
+          clipPath: 'polygon(0 0, 100% 0%, 100% 100%, 13% 100%, 7% 54%)',
+        }}
+      >
+        {availableDate ? format(new Date(availableDate), 'MMM d') : 'Soon'}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Start: POST CARD HEADER
 

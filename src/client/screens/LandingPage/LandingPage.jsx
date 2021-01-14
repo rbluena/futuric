@@ -28,9 +28,7 @@ const LandingPage = () => {
 
   return (
     <div className="mx-auto flex max-w-6xl">
-      <div className=" fixed top-18">
-        <NavCategories />
-      </div>
+      <NavCategories />
       <div className="w-full">
         <PostsContainer posts={trending} title="Featured" />
         {upcomings && upcomings.length > 0 && (
