@@ -1,5 +1,5 @@
 {
-  "name": "ijayo.com",
+  "name": "asteyo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,7 @@
     "cy:rub:prod": "cypress run --env configFile=prod --headless --browser chrome",
     "cy:open:dev": "cypress open --env configFile=dev",
     "server": "nodemon --config config/nodemon.config.json",
-    "prod": "node ./src/server/app.js",
+    "production": "node ./src/server/app.js",
     "client": "next dev",
     "start": "next start",
     "build": "next build",
