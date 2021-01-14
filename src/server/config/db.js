@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
 function connectDB() {
-  const isProduction = process.env.NODE_ENV === 'production';
-
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -10,11 +8,6 @@ function connectDB() {
   };
 
   options.dbName = process.env.DB_NAME;
-
-  if (isProduction) {
-    options.user = process.env.DB_USER;
-    options.pass = process.env.DB_PASS;
-  }
 
   mongoose.connect(process.env.DB_HOST, options);
 
