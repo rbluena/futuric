@@ -19,6 +19,7 @@ PostCard.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+// Start: POST CARD HEADER
 PostCard.Header = ({ publisher, small, availableDate }) => {
   const publisherName =
     publisher.brandname && publisher.brandname.length
@@ -50,7 +51,7 @@ PostCard.Header = ({ publisher, small, availableDate }) => {
       </div>
 
       <div
-        className="absolute bg-primary-500 text-white right-0 top-4 font-bold shadow-2xl text-sm py-1 pl-4 pr-2"
+        className="absolute bg-success-500 text-white right-0 top-4 font-bold shadow-xl text-sm py-1 pl-4 pr-2"
         style={{
           clipPath: 'polygon(0 0, 100% 0%, 100% 100%, 13% 100%, 7% 54%)',
         }}
@@ -60,8 +61,6 @@ PostCard.Header = ({ publisher, small, availableDate }) => {
     </div>
   );
 };
-
-// Start: POST CARD HEADER
 
 PostCard.Header.defaultProps = {
   small: false,
