@@ -7,9 +7,13 @@ function connectDB() {
     useCreateIndex: true,
   };
 
-  options.dbName = process.env.DB_NAME;
+  const { DB_USER, DB_PASS, DB_NAME, DB_HOST } = process.env;
 
-  mongoose.connect(process.env.DB_HOST, options);
+  options.user = DB_USER;
+  options.pass = DB_PASS;
+  options.dbName = DB_NAME;
+
+  mongoose.connect(DB_HOST, options);
 
   mongoose.connection
     .once('open', () => {

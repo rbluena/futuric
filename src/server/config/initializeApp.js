@@ -32,7 +32,7 @@ module.exports = function initializedApp(router) {
   );
   app.use(
     cors({
-      origin: isProduction ? false : '*',
+      origin: isProduction ? 'https://asteyo.com' : '*',
     })
   );
 
@@ -40,6 +40,9 @@ module.exports = function initializedApp(router) {
 
   /** API endpoints */
   app.use('/api/v1', router);
+
+  // Avoiding favicon returning 404
+  app.get('/favicon.ico', (req, res) => res.status(204));
 
   // Handling unreachable routes
   app.use((req, res, next) => {

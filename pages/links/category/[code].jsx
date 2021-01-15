@@ -13,12 +13,6 @@ export async function getServerSideProps({ query, params }) {
 
   try {
     ({ data } = await getLinksService({ ...query, limit: 15, category: code }));
-
-    if (!data) {
-      return {
-        notFound: true,
-      };
-    }
   } catch (error) {
     return {
       notFound: true,
