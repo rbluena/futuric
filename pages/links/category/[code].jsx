@@ -14,9 +14,7 @@ export async function getServerSideProps({ query, params }) {
   try {
     ({ data } = await getLinksService({ ...query, limit: 15, category: code }));
   } catch (error) {
-    return {
-      notFound: true,
-    };
+    // TODO: Using sentry to log errors
   }
 
   return {
