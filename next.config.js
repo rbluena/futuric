@@ -1,4 +1,5 @@
 module.exports = {
+  distDir: 'build',
   generateBuildId: async () => {
     const id = process.env.BUILD_ID;
     return id;
