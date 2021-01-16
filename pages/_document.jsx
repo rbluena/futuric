@@ -16,15 +16,15 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap"
             rel="stylesheet"
           />
+          <link rel="manifest" href="/manifest.json" />
+          <meta name="theme-color" content="#A21CAF" />
+          <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
           <meta
             property="og:title"
-            content="Discover what happening on the internet!"
+            content="Discover what's happening on the internet!"
           />
-          <meta property="og:url" content="http://www.asteyo.com" />
-          <meta
-            property="og:image"
-            content="http://sharethis.com/images/logo.jpg"
-          />
+          <meta property="og:url" content="https://asteyo.com" />
+          <meta property="og:image" content="/images/logo.png" />
           <meta
             property="og:description"
             content="Create a link for you future content, and discover what happening on the internet!"
