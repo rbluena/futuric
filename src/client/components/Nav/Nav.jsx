@@ -24,19 +24,21 @@ const Nav = ({ user }) => {
     <nav className="relative py-6 max-w-6xl mx-auto">
       <div className="relative flex items-center">
         <Link href="/">
-          <img className="w-24 h-auto" src="/images/logo.svg" alt="logo" />
+          <a>
+            <img className="w-24 h-auto" src="/images/logo.svg" alt="logo" />
+          </a>
         </Link>
 
         <div className="mx-auto">
           <Link className="px-2 font-bold" href="/">
-            Home
+            <a>Home</a>
           </Link>
           <Link className="px-2 font-bold" href="/links">
-            Explore
+            <a>Explore</a>
           </Link>
           {user ? (
             <Link className="px-2 font-bold" href="/links/create">
-              Create
+              <a>Create</a>
             </Link>
           ) : (
             <Button
