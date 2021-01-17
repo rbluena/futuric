@@ -5,7 +5,7 @@ import categories from '@app/utils/categories.json';
 const NavCategories = () => (
   <ul className="p-2" style={{ width: '200px' }}>
     {categories.map((item) => (
-      <li key={item.code} className="my-3 flex items-center">
+      <li key={item.code} className="my-3">
         <Link
           className="font-light text-xl"
           href={`/links/category/${item.code}`}
