@@ -16,7 +16,12 @@ const Footer = () => (
       </li>
       <li className="pr-2">
         <Link href="/privacy" size="sm">
-          Terms
+          Privacy
+        </Link>
+      </li>
+      <li className="pr-2">
+        <Link href="/terms" size="sm">
+          Terms of Use
         </Link>
       </li>
       <li className="pr-2">
