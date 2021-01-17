@@ -4,8 +4,9 @@ import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 import { getLinksAction } from '@app/actions';
 import { linksSelector } from '@app/selectors';
-import { NavCategories, InsersectionObserver } from '@app/components';
+import { InsersectionObserver } from '@app/components';
 import PostsContainer from '@app/containers/PostsContainer';
+import NavCategoriesContainer from '@app/containers/NavCategoriesContainer';
 import categories from '@app/utils/categories';
 
 const AllLinks = () => {
@@ -25,9 +26,10 @@ const AllLinks = () => {
 
   return (
     <div className="mx-auto flex max-w-6xl">
-      <div className=" fixed top-18">
-        <NavCategories />
-      </div>
+      {/* start: Rendering categories */}
+      <NavCategoriesContainer />
+      {/* end: Rendering categories */}
+
       <div className="w-full">
         <PostsContainer posts={data} title={title} />
         {hasNextPage && <InsersectionObserver loadMore={loadMore} />}

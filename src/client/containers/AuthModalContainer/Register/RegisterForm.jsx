@@ -40,7 +40,7 @@ const RegisterForm = ({ setApiError }) => {
           name="username"
           label="Username"
           placeholder="Username"
-          autocomplete="off"
+          autoComplete="off"
           register={register({
             required: 'This field is required.',
             minLength: {
