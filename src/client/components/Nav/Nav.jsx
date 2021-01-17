@@ -6,6 +6,7 @@ import { getUserSelector } from '@app/selectors';
 import { openModal } from '@app/slices/globalSlice';
 import { Link, Avatar, Button } from '@app/components';
 import { Dropdown } from '@app/components/Form';
+import MobileNav from './MobileNav';
 
 const Nav = ({ user }) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
@@ -22,7 +23,8 @@ const Nav = ({ user }) => {
 
   return (
     <nav className="relative py-6 max-w-6xl mx-auto">
-      <div className="relative flex items-center">
+      {/* start: MAIN NAVIGATION FOR MEDIUM SCREEN SIZES */}
+      <div className="relative hidden md:visible md:flex md:items-center">
         <Link href="/">
           <img className="w-24 h-auto" src="/images/logo.svg" alt="logo" />
         </Link>
@@ -93,6 +95,8 @@ const Nav = ({ user }) => {
           </div>
         )}
       </div>
+      {/* end: MAIN NAVIGATION FOR MEDIUM SCREEN SIZES */}
+      <MobileNav />
     </nav>
   );
 };

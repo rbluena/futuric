@@ -3,7 +3,7 @@ import { Link, DotSeparator } from '@app/components';
 
 const Footer = () => (
   // <div className="transform -translate-x-2/2 left-1/2 w-full p-4 bg-primary-100 absolute bottom-0 flex max-w-6xl"></div>
-  <div className="p-4 bg-primary-100 fixed bottom-0 flex max-w-6xl">
+  <div className="p-4 hidden md:flex bg-primary-100 fixed bottom-0 max-w-6xl">
     <div className="text-neutral-900 font-bold">
       {new Date().getFullYear()}&nbsp;&copy;&nbsp;Asteyo, Inc.
     </div>
