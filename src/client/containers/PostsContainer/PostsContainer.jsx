@@ -19,7 +19,7 @@ const PostsContainer = ({ posts, title }) => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto divide-y divide-neutral-100 py-4">
+    <div className="max-w-6xl mx-auto divide-y divide-neutral-100 py-4 pb-6">
       {title && title.length && (
         <div className="max-w-xl mx-auto border-b border-neutral-200 mb-4">
           <h2 className="text-lg pb-2">{title}</h2>
