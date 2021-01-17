@@ -25,12 +25,12 @@ const Footer = () => (
           Terms of Use
         </Link>
       </li>
-      <DotSeparator variant="primary" />
+      {/* <DotSeparator variant="primary" />
       <li className="px-2">
         <Link href="/learn" size="sm">
           Learn
         </Link>
-      </li>
+      </li> */}
     </ul>
   </div>
 );

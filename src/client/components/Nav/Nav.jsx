@@ -47,9 +47,9 @@ const Nav = ({ user }) => {
               Create
             </Button>
           )}
-          <Link className="px-2 font-bold" href="/learn">
+          {/* <Link className="px-2 font-bold" href="/learn">
             Learn
-          </Link>
+          </Link> */}
 
           {!user && (
             <Button
