@@ -63,7 +63,7 @@ const Verification = ({ verified, error }) => {
   }, [error, verified, dispatch]);
 
   if (verified) {
-    router.push('/#modal-signin');
+    router.push('/#signin-modal');
     return null;
   }
 
