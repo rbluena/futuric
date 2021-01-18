@@ -115,7 +115,8 @@ exports.registerHandler = async (req, res, next) => {
     }
 
     const user = await createUser(userData);
-    const jwt = generateAccessToken(user);
+    const userObj = user.toObject();
+    const jwt = generateAccessToken(userObj);
 
     req.app.jwt = jwt;
 
