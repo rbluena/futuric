@@ -289,6 +289,16 @@ exports.loginHandler = async (req, res, next) => {
 
     // Using username/email and password to login
     if (type === 'local') {
+      if (userData.loginStrategy !== 'local') {
+        return res.status(400).json({
+          status: 400,
+          success: false,
+          message: 'Bad Request',
+          errors: {
+            email: 'It seems you signed up with google. Use it for sign in.',
+          },
+        });
+      }
       // Checking if password is correct password.
       if (!comparePassword(password, userData.password)) {
         return res.status(400).json({
