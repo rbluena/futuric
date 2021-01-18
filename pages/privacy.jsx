@@ -59,7 +59,7 @@ const Privacy = () => (
           <p className="text-lg leading-8">
             <strong>Company</strong> (referred to as either &quot;the
             Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in
-            this Agreement) refers to Asteyo LLC, Milford, DE&nbsp;19963.
+            this Agreement) refers to Asteyo, Inc, Milford, DE&nbsp;19963.
           </p>
         </li>
         <li className="pl-2 py-2">

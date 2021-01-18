@@ -2,7 +2,10 @@ const validator = require('validator');
 const sharp = require('sharp');
 const { decode } = require('jsonwebtoken');
 const fs = require('fs');
-const { sendVerificationToken } = require('../services/mailer');
+const {
+  sendVerificationToken,
+  sendSignupEmailService,
+} = require('../services/mailer');
 const {
   generateAccessToken,
   comparePassword,
@@ -75,6 +78,7 @@ exports.registerHandler = async (req, res, next) => {
 
       const verificationUrl = `${process.env.SITE_URL}/verify/${verificationToken}`;
 
+      // SEND EMAIL WITH VERIFICATION.
       if (user) {
         const request = sendVerificationToken(
           {
@@ -119,6 +123,19 @@ exports.registerHandler = async (req, res, next) => {
     const jwt = generateAccessToken(userObj);
 
     req.app.jwt = jwt;
+
+    // SENDING THANK YOU NOTE AFTER SIGNIN UP WITH GOOGLE-AUTH.
+    if (user) {
+      const request = sendSignupEmailService(
+        {
+          name: user.firstname,
+          email: user.email,
+        },
+        'Thank you for the sign up'
+      );
+
+      await request;
+    }
 
     const responseBody = {
       status: 201,

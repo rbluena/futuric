@@ -79,8 +79,8 @@ const Terms = () => (
         </li>
         <li className="pl-2 py-2">
           <b>Company:</b> when this policy mentions “Company,” “we,” “us,” or
-          “our,” it refers to Asteyo LLC, 727 S Washington St, Milford, DE 19963
-          that is responsible for your information under this Terms &
+          “our,” it refers to Asteyo, Inc., 727 S Washington St, Milford, DE
+          19963 that is responsible for your information under this Terms &
           Conditions.
         </li>
         <li className="pl-2 py-2">

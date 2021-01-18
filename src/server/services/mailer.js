@@ -35,9 +35,37 @@ const sendVerificationToken = (user, subject, confirmationLink) =>
     ],
   });
 
+/**
+ * If user signup with google, we send thank you email without verification token
+ */
+const sendSignupEmailService = (user, subject) =>
+  mailjet.post('send', { version: 'v3.1' }).request({
+    Messages: [
+      {
+        From: {
+          Email: MAILER.signup.from,
+          Name: MAILER.signup.name,
+        },
+        To: [
+          {
+            Email: user.email,
+            Name: user.name,
+          },
+        ],
+        TemplateID: MAILER.signup.id,
+        TemplateLanguage: true,
+        Subject: subject,
+        Variables: {
+          userName: user.name,
+        },
+      },
+    ],
+  });
+
 const sendingDailyDigest = () => {};
 
 module.exports = {
   sendVerificationToken,
+  sendSignupEmailService,
   sendingDailyDigest,
 };
