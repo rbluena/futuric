@@ -82,7 +82,7 @@ const Nav = ({ user }) => {
                   [
                     { label: 'Links', value: '/me/links' },
                     { label: 'Waitlisted', value: '/me/waitings' },
-                    { label: 'Notifications', value: '/me/notifications' },
+                    // { label: 'Notifications', value: '/me/notifications' },
                   ],
                   [
                     { label: 'Settings', value: '/settings' },
