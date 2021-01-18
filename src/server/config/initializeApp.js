@@ -32,7 +32,7 @@ module.exports = function initializedApp(router) {
   );
   app.use(
     cors({
-      origin: isProduction ? 'https://asteyo.com' : '*',
+      origin: isProduction ? 'https://www.asteyo.com' : '*',
     })
   );
 
