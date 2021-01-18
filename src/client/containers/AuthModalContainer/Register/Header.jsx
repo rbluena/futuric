@@ -2,7 +2,7 @@ import React from 'react';
 // import { Logo } from '@app/components';
 
 const Header = () => (
-  <div className="text-center">
+  <div className="text-center pb-4">
     {/* <div className="w-32 mx-auto mb-4">
       <Logo />
     </div> */}
