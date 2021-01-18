@@ -6,13 +6,14 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
+const MongoStore = require('connect-mongo')(session);
 const dbConfiguration = require('./db');
 
 module.exports = function initializedApp(router) {
   const isProduction = process.env.NODE_ENV === 'production';
 
   /** Database setup */
-  dbConfiguration();
+  const dbConnection = dbConfiguration();
 
   const app = express();
 
@@ -26,8 +27,18 @@ module.exports = function initializedApp(router) {
   app.use(
     session({
       secret: process.env.SESSION_SECRET,
-      resave: true,
+      resave: false,
       saveUninitialized: true,
+      unset: 'destroy',
+      cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
+        secure: app.get('env') === 'production',
+      },
+      store: new MongoStore({
+        mongooseConnection: dbConnection,
+        touchAfter: 24 * 3600,
+        clear_interval: 3600 * 2,
+      }),
     })
   );
 

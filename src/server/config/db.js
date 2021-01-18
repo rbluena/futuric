@@ -15,7 +15,7 @@ function connectDB() {
 
   mongoose.connect(DB_HOST, options);
 
-  mongoose.connection
+  const connection = mongoose.connection
     .once('open', () => {
       // eslint-disable-next-line no-console
       console.log('Database connection established!');
@@ -24,6 +24,8 @@ function connectDB() {
       // eslint-disable-next-line no-console
       console.log('Connection error: ', error);
     });
+
+  return connection;
 }
 
 module.exports = connectDB;
