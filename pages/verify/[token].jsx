@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { verifyUserService } from '@app/services';
@@ -36,6 +37,7 @@ export async function getServerSideProps({ params }) {
 }
 
 const Verification = ({ verified, error }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,7 +45,8 @@ const Verification = ({ verified, error }) => {
       dispatch(
         setNotification({
           type: 'success',
-          message: 'You are verified.',
+          message:
+            'Your account has been verified. You can continue with login.',
         })
       );
     }
@@ -58,6 +61,11 @@ const Verification = ({ verified, error }) => {
       );
     }
   }, [error, verified, dispatch]);
+
+  if (verified) {
+    router.push('/#modal-signin');
+    return null;
+  }
 
   return (
     <LayoutManager>
