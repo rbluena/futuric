@@ -66,7 +66,7 @@ const Nav = ({ user }) => {
         </div>
 
         {user && (
-          <div className="relative">
+          <>
             <button type="button" onClick={() => setToggleDropdown(true)}>
               <Avatar
                 size="lg"
@@ -75,24 +75,26 @@ const Nav = ({ user }) => {
                 initials={user.initials}
               />
             </button>
-            <Dropdown
-              options={[
-                [{ label: 'Me', value: '/me' }],
-                [
-                  { label: 'Links', value: '/me/links' },
-                  { label: 'Waitlisted', value: '/me/waitings' },
-                  { label: 'Notifications', value: '/me/notifications' },
-                ],
-                [
-                  { label: 'Settings', value: '/settings' },
-                  { label: 'Sign Out', value: 'signout' },
-                ],
-              ]}
-              onValueChanged={onChangeDropdownHandler}
-              changeDropdownVisibility={(value) => setToggleDropdown(value)}
-              isOpen={toggleDropdown}
-            />
-          </div>
+            <div className="absolute w-full left-0 m-0 p-0 flex justify-end pr-2">
+              <Dropdown
+                options={[
+                  [{ label: 'Me', value: '/me' }],
+                  [
+                    { label: 'Links', value: '/me/links' },
+                    { label: 'Waitlisted', value: '/me/waitings' },
+                    { label: 'Notifications', value: '/me/notifications' },
+                  ],
+                  [
+                    { label: 'Settings', value: '/settings' },
+                    { label: 'Sign Out', value: 'signout' },
+                  ],
+                ]}
+                onValueChanged={onChangeDropdownHandler}
+                changeDropdownVisibility={(value) => setToggleDropdown(value)}
+                isOpen={toggleDropdown}
+              />
+            </div>
+          </>
         )}
       </div>
       {/* end: MAIN NAVIGATION FOR MEDIUM SCREEN SIZES */}

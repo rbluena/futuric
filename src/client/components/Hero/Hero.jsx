@@ -15,8 +15,8 @@ const Hero = () => {
         Discover what&apos;s coming next on the internet.
       </h1>
       <h2 className="text-2xl font-light">
-        Publisher can claim and share a URL ahead of time, <br /> and the
-        audience will be notified when a content published.
+        Publisher can claim and share a URL ahead of time. <br />
+        Audience can choose to be notified once content is published online.
       </h2>
 
       {!isAuthenticated && (
