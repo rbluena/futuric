@@ -30,9 +30,13 @@ module.exports = function initializedApp(router) {
       saveUninitialized: true,
     })
   );
+
+  // const whitelist = ['https://www.asteyo.com', 'https://asteyo.com'];
+
   app.use(
     cors({
       origin: isProduction ? 'https://www.asteyo.com' : '*',
+      methods: ['GET', 'PUT', 'PATCH', 'POST', 'DELETE'],
     })
   );
 
