@@ -32,9 +32,7 @@ export const useUserSettingsRedirect = () => {
     if (router.pathname !== '/settings' && redirectUserToSettings) {
       router.push('/settings');
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [redirectUserToSettings]);
+  }, [redirectUserToSettings, router]);
 
   return {
     redirectToSettings:
