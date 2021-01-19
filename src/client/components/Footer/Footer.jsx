@@ -23,7 +23,7 @@ const Footer = () => (
       <DotSeparator variant="primary" />
       <li className="px-2">
         <Link href="/terms" size="sm">
-          Terms of Use
+          Terms & Conditions
         </Link>
       </li>
       {/* <DotSeparator variant="primary" />
