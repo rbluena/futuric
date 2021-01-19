@@ -25,8 +25,9 @@ const Nav = ({ user }) => {
     <nav className="relative py-6 max-w-6xl mx-auto">
       {/* start: MAIN NAVIGATION FOR MEDIUM SCREEN SIZES */}
       <div className="relative hidden md:visible md:flex md:items-center">
-        <Link href="/">
+        <Link href="/" className="flex">
           <img className="w-24 h-auto" src="/images/logo.svg" alt="logo" />
+          <span className="ml-2 font-light tracking-wider">BETA</span>
         </Link>
 
         <div className="mx-auto">

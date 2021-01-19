@@ -26,10 +26,13 @@ const MobileNav = ({ user }) => {
   return (
     <div className="visible md:hidden">
       <div className="flex flex-row  items-center px-2">
-        <div className="">
+        <div className="flex items-start">
           <Button size="sm" onClick={() => setToggleMenu(true)}>
             <MenuIcon size="sm" />
           </Button>
+          <span className="ml-1 font-light tracking-wide text-primary-700">
+            BETA
+          </span>
         </div>
 
         <div className="mx-auto">
