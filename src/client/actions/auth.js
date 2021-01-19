@@ -213,6 +213,7 @@ export function updateUserAction(userData) {
 
       const { message, data } = await updateUserService(token, userData);
 
+      await setCookieToken(data.jwt);
       dispatch(updateUserSuccess(data));
       dispatch(setNotification({ type: 'success', message }));
     } catch (err) {

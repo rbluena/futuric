@@ -368,6 +368,7 @@ exports.uploadImageHandler = async (req, res, next) => {
       .toFile(`${file.destination}/${thumbnail}`);
 
     // Deleting original file
+    // eslint-disable-next-line no-unused-vars
     fs.unlink(file.path, (err) => {
       // TODO: Report error to sentry.
       // throw err;

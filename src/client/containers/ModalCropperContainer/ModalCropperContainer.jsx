@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Cropper from 'react-cropper';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setCookieToken } from '@app/utils/session';
 import { decode } from 'jsonwebtoken';
 import { Modal, Button, Avatar } from '@app/components';
 import { uploadProfileService } from '@app/services';
@@ -103,6 +104,7 @@ const ModalCropperContainer = ({ token, modal }) => {
           config
         );
 
+        await setCookieToken(data.jwt);
         dispatch(updateUserSuccess(data.jwt));
         dispatch(setNotification({ type: 'success', message }));
       }
