@@ -172,6 +172,23 @@ const UserForm = () => {
 
           <ControlWrapper>
             <TextInput
+              name="social.linkedin"
+              label="Linkedin:"
+              placeholder="Linkedin profile"
+              register={register({
+                validate: (value) => {
+                  if (value.length && !isURL(value))
+                    return 'This is not valid URL.';
+
+                  return true;
+                },
+              })}
+              error={get(inputErrors, 'social.linkedin.message')}
+            />
+          </ControlWrapper>
+
+          <ControlWrapper>
+            <TextInput
               name="social.instagram"
               label="Instagram:"
               placeholder="Instagram profile"

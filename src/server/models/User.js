@@ -13,6 +13,7 @@ const userSchema = new Schema(
     website: String,
     social: {
       twitter: String,
+      linkedin: String,
       instagram: String,
       youtube: String,
       facebook: String,

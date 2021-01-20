@@ -9,6 +9,7 @@ import {
   CheckUserIcon,
   TwitterIcon,
   InstagramIcon,
+  LinkedinIcon,
   YoutubeIcon,
   FacebookIcon,
 } from '@app/components/Icons';
@@ -123,6 +124,14 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
                   </Link>
                 )}
 
+                {profile.social.linkedin && (
+                  <>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link href={profile.social.linkedin}>
+                      <LinkedinIcon size="xs" className="text-primary-700" />
+                    </Link>
+                  </>
+                )}
                 {profile.social.instagram && (
                   <>
                     &nbsp;&nbsp;&nbsp;&nbsp;
