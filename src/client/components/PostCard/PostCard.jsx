@@ -134,8 +134,8 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
             <>
               {/* <DotSeparator />
               &nbsp;&nbsp; */}
-              <span className="text-sm text-neutral-600 font-bold">
-                #{category.name}
+              <span className="text-xs text-neutral-400 font-bold">
+                {category.name}
               </span>
             </>
           )}
