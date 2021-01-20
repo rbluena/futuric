@@ -100,7 +100,6 @@ const CreateLink = () => {
           </label>
           <ContentEditable
             id="title"
-            tagName="pre"
             html={title.current}
             autoComplete="off"
             onChange={titleHandler}
