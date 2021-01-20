@@ -40,18 +40,18 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
           <Avatar
             src={profile.image && profile.image.thumbnail}
             initials={profile.brandname[0]}
-            size="2xl"
+            size="xl"
             className="text-5xl"
             square
           />
 
-          <div className="flex flex-col items-start flex-1 pl-12">
+          <div className="flex flex-col items-start flex-1 pl-2 md:pl-6">
             <div className="pb-4 w-full flex">
               <Link
                 href={`/@${profile.username}`}
                 variant="secondary"
                 size="lg"
-                className="font-bold flex items-center text-2xl"
+                className="font-bold flex items-center text-xl md:text-2xl"
               >
                 <span>
                   {profile.brandname}&nbsp;
@@ -96,7 +96,7 @@ const ProfileHeader = ({ profile, isCurrentUser, isAuthenticated }) => {
             {/* start: description */}
             <div className="pb-2">
               {profile.description && (
-                <p className="text-neutral-900 text-xl font-light">
+                <p className="text-neutral-900 text-lg md:text-xl font-light">
                   {profile.description}
                 </p>
               )}
