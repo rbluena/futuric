@@ -21,12 +21,12 @@ import { Section, Button } from '@app/components';
 import countries from './countries.json';
 
 const UserForm = () => {
+  const user = useSelector(getUserSelector);
   const dispatch = useDispatch();
   const [showOnlinePrecense, setShowOnlinePrecense] = useState(false);
   const [showAddress, setShowAddress] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
-  const [characters, setCharacters] = useState('');
-  const user = useSelector(getUserSelector);
+  const [characters, setCharacters] = useState(user.description || '');
   const { handleSubmit, register, errors: inputErrors } = useForm({
     mode: 'onBlur',
     defaultValues: user,
@@ -125,15 +125,15 @@ const UserForm = () => {
               placeholder="Use few words to describe yourself or the brand behind the profile."
               register={register({
                 maxLength: {
-                  value: 100,
+                  value: 150,
                   message: 'Characters exceeds max number.',
                 },
               })}
               error={get(inputErrors, 'description.message')}
               onChange={(evt) => onDescriptionChange(evt.target.value)}
             />
-            <span className="text-xs">
-              {100 - characters.length} characters left.
+            <span className="text-xs font-bold">
+              {150 - characters.length} characters left.
             </span>
           </ControlWrapper>
           <ControlWrapper>
