@@ -81,7 +81,10 @@ const Editor = ({ link }) => {
     <div className="py-10">
       <form className="max-w-5xl mx-auto" onSubmit={submitData}>
         <ControlWrapper>
-          <label htmlFor="title" className="text-neutral-600 mb-1 block">
+          <label
+            htmlFor="title"
+            className="text-neutral-600 block font-bold mt-6 mb-2"
+          >
             Title: *
           </label>
           <ContentEditable
@@ -96,7 +99,10 @@ const Editor = ({ link }) => {
           </span>
         </ControlWrapper>
         <ControlWrapper>
-          <label htmlFor="date-picker" className="text-neutral-600 block">
+          <label
+            htmlFor="date-picker"
+            className="text-neutral-600 block font-bold mt-6 mb-2"
+          >
             Description:
           </label>
           <ContentEditable
@@ -108,9 +114,12 @@ const Editor = ({ link }) => {
           />
         </ControlWrapper>
         <ControlWrapper>
-          <span className="text-neutral-600 mb-1 block">
+          <label
+            htmlFor="category"
+            className="text-neutral-600 block font-bold mt-6 mb-2"
+          >
             Select where it fits most: *
-          </span>
+          </label>
           <div className="flex flex-wrap">
             <Select
               name="category"
@@ -143,7 +152,10 @@ const Editor = ({ link }) => {
         </ControlWrapper>
 
         <ControlWrapper>
-          <label htmlFor="date-picker" className="text-neutral-600 mb-1 block">
+          <label
+            htmlFor="date-picker"
+            className="text-neutral-600 block font-bold mt-6 mb-2"
+          >
             When do you expect your content to be available online?
           </label>
           <DatePicker

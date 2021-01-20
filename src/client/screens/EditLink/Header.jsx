@@ -8,28 +8,30 @@ const Header = ({ link, owner }) => {
   const url = link.isActive ? link.longUrl : `/links/${link._id}`;
 
   return (
-    <div className="header flex border-b pb-2 border-neutral-200">
+    <div className="header flex flex-col md:flex-row border-b pb-2 border-neutral-200">
       <div className="relative pb-12">
         <Link
           href={url || ''}
-          variant={link.isActive ? 'primary' : 'secondary'}
-          className="sm:text-xl md:text-2xl font-light"
+          variant="primary"
+          className="text-xl md:text-2xl font-light"
         >
           {link.shortenUrl}
         </Link>
         <br />
-        <div
-          className="absolute bg-success-500 text-white left-0 top-12 font-bold shadow-2xl py-1 pl-2 pr-4"
-          style={{
-            clipPath: 'polygon(0% 0%, 100% 0, 93% 54%, 87% 100%, 0% 100%)',
-          }}
-        >
-          {/* eslint-disable-next-line no-nested-ternary  */}
-          {link.isActive
-            ? 'Available'
-            : link.availableDate
-            ? format(new Date(link.availableDate), 'MMM d')
-            : 'Coming soon'}
+        <div className="relative">
+          <div
+            className="absolute text-sm top-0 bg-success-500 text-white font-bold shadow-2xl my-4 py-1 pl-2 pr-4"
+            style={{
+              clipPath: 'polygon(0% 0%, 100% 0, 93% 54%, 87% 100%, 0% 100%)',
+            }}
+          >
+            {/* eslint-disable-next-line no-nested-ternary  */}
+            {link.isActive
+              ? 'Available'
+              : link.availableDate
+              ? format(new Date(link.availableDate), 'MMM d')
+              : 'Coming soon'}
+          </div>
         </div>
         {/* <div className="text-neutral-600 text-sm">
         <span className="font-bold text-neutral-800">Created At:</span>{' '}
@@ -37,7 +39,7 @@ const Header = ({ link, owner }) => {
       </div> */}
       </div>
 
-      <div className="ml-auto">
+      <div className="hidden md:block md:ml-auto">
         <div className="flex flex-wrap-reverse items-center">
           <div className="flex flex-col items-start pr-2">
             <Link

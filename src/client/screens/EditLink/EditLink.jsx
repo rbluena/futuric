@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getLinksStateSelector } from '@app/selectors';
+import { ContentWrapper } from '@app/components';
 import Header from './Header';
 import Editor from './Editor';
 
@@ -13,10 +14,10 @@ const EditLink = ({ link }) => {
   }
 
   return (
-    <div className="py-10 max-w-5xl mx-auto">
+    <ContentWrapper className="py-10 max-w-5xl mx-auto">
       <Header link={link || {}} owner={owner} />
       <Editor link={link || {}} />
-    </div>
+    </ContentWrapper>
   );
 };
 
