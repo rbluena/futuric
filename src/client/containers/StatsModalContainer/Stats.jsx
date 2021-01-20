@@ -14,14 +14,14 @@ const Stats = ({ comments, views, waitlist }) => (
             {millify(views)}
           </p>
           &nbsp;
-          <span className="font-bold">Views</span>
+          <span className="font-bold pl-1">Views</span>
         </div>
         <div className="flex p-6">
           <p className="text-5xl text-neutral-600 font-light italic">
             {millify(waitlist)}
           </p>
           &nbsp;
-          <span className="font-bold">Waitlisted</span>
+          <span className="font-bold pl-1">Waitlisted</span>
         </div>
       </div>
       <div className="">
@@ -30,7 +30,7 @@ const Stats = ({ comments, views, waitlist }) => (
             {millify(comments)}
           </p>
           &nbsp;
-          <span className="font-bold">Comments</span>
+          <span className="font-bold pl-1">Comments</span>
         </div>
         {/* <div className="flex p-6">
           <p className="text-5xl text-neutral-600 font-light italic">230</p>

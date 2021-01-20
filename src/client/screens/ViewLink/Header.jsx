@@ -66,7 +66,7 @@ const Header = ({ post, owner, toggleWaiting }) => {
           >
             {/* eslint-disable-next-line no-nested-ternary  */}
             {post.isActive
-              ? 'Available'
+              ? 'Published'
               : post.availableDate
               ? format(new Date(post.availableDate), 'MMM d')
               : 'Coming soon'}
@@ -96,17 +96,26 @@ const Header = ({ post, owner, toggleWaiting }) => {
             <TwitterIcon size={28} />
           </TwitterShareButton>
           &nbsp;
-          <FacebookShareButton title={post.title} url={post.shortenUrl}>
+          <FacebookShareButton
+            quote={post.title}
+            url={post.shortenUrl}
+            hashtag={`${post.shortenUrl}`}
+          >
             <FacebookIcon size={28} />
           </FacebookShareButton>
           &nbsp;
-          <LinkedinShareButton source={post.shortenUrl} title={post.title}>
+          <LinkedinShareButton
+            url={post.shortenUrl}
+            source={post.shortenUrl}
+            title={post.title}
+            summary={post.description}
+          >
             <LinkedinIcon size={28} />
           </LinkedinShareButton>
         </div>
       </div>
 
-      <div className="ml-auto hidden md:block">
+      <div className="md:ml-auto">
         <div className="flex flex-wrap-reverse items-center">
           <div className="flex flex-col items-start pr-2">
             <Link
