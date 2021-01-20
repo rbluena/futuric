@@ -29,7 +29,7 @@ exports.newLinkHandler = async (req, res, next) => {
         Authorization: `Bearer ${process.env.BITLY_ACCESS_TOKEN}`,
       },
       data: JSON.stringify({
-        long_url: `${process.env.SITE_URL}/links/${doc._id}`,
+        long_url: `${process.env.SITE_URL}/redirect/?to=${doc._id}`,
         domain: 'bit.ly',
       }),
     });

@@ -56,7 +56,7 @@ const Footer = ({ post }) => {
               className="ml-2 text-sm text-primary-700 hover:text-primary-900 hover:underline"
               onClick={openActivateModal}
             >
-              Activate Link
+              {post.isActive ? 'Activation' : 'Activate Link'}
             </Button>
             <span className="ml-2 text-neutral-300">-</span>
             <Link href={`/links/${post._id}/edit`} size="sm" className="ml-2">

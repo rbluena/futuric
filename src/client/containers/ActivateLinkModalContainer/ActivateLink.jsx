@@ -47,7 +47,7 @@ const ActivateLink = ({ activeLink }) => {
         </ControlWrapper>
         <ControlWrapper>
           <div className="h-5">
-            <Submit>Activate</Submit>
+            <Submit>{activeLink.isActive ? 'Update' : 'Activate'}</Submit>
           </div>
         </ControlWrapper>
       </form>

@@ -81,7 +81,7 @@ const CreateLink = () => {
   if (createdLink) {
     return (
       <div className="text-center flex flex-col items-center pt-4">
-        <Link href={createdLink.longUrl} size="lg" className="mb-8">
+        <Link href={`/links/${createdLink._id}`} size="lg" className="mb-8">
           View created link
         </Link>
         <Button variant="primary" outline onClick={createNew}>
