@@ -4,6 +4,7 @@ import { connect, useSelector, useDispatch } from 'react-redux';
 import { getLinksStateSelector, getUserSelector } from '@app/selectors';
 import { openModal } from '@app/slices/globalSlice';
 import { toggleWaitingAction } from '@app/actions';
+import { ContentWrapper } from '@app/components';
 import Header from './Header';
 import Footer from './Footer';
 import Content from './Content';
@@ -28,11 +29,11 @@ const ViewLink = ({ post }) => {
 
   return (
     <div className="py-10">
-      <div className=" max-w-3xl mx-auto">
+      <ContentWrapper>
         <Header post={post} owner={owner} toggleWaiting={toggleWaiting} />
         <Content post={post} />
         <Footer post={post} />
-      </div>
+      </ContentWrapper>
     </div>
   );
 };

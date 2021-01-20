@@ -37,6 +37,7 @@ const CommentsSidebarContainer = () => {
   }
 
   function openSigninModal() {
+    dispatch(toggleSidebar());
     dispatch(openModal('signin'));
   }
 
