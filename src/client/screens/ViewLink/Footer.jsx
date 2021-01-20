@@ -21,6 +21,10 @@ const Footer = ({ post }) => {
     dispatch(openModal(MODALS.linkStats));
   }
 
+  function openActivateModal() {
+    dispatch(openModal(MODALS.linkActivate));
+  }
+
   return (
     <div className="flex items-center mt-8 border-t border-neutral-200 pt-2">
       <Button
@@ -50,8 +54,9 @@ const Footer = ({ post }) => {
               variant="text-button"
               size="xs"
               className="ml-2 text-sm text-primary-700 hover:text-primary-900 hover:underline"
+              onClick={openActivateModal}
             >
-              Activate
+              Activate Link
             </Button>
             <span className="ml-2 text-neutral-300">-</span>
             <Link href={`/links/${post._id}/edit`} size="sm" className="ml-2">

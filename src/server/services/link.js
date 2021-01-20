@@ -27,19 +27,32 @@ const updateLinkService = async (linkId, data) => {
   if (!updated) {
     throw Error('Something went wrong. Our team are fixing it');
   }
-  await updated.populate('owner', [
-    '_id',
-    'brandname',
-    'username',
-    'prominent',
-    'firstname',
-    'lastname',
-    'verified',
-    'followers',
-    'comments',
-  ]);
 
-  return updated._doc;
+  await Link.populate(updated, 'owner');
+  await Link.populate(updated, 'comments');
+  await Link.populate(updated, 'waitings');
+
+  const updatedObj = updated.toObject();
+  updatedObj.isUserWaiting = false;
+  updatedObj.isUserOwner = true;
+  updatedObj.waitingsCount = updatedObj.waitings.length;
+  updatedObj.commentsCount = updatedObj.comments
+    ? updatedObj.comments.length
+    : 0;
+
+  delete updatedObj.comments;
+  delete updatedObj.waitings;
+  delete updatedObj.owner.followings;
+  delete updatedObj.owner.followers;
+  delete updatedObj.owner.password;
+  delete updatedObj.owner.email;
+  delete updatedObj.owner.address;
+  delete updatedObj.owner.verificationToken;
+  delete updatedObj.owner.waitings;
+  delete updatedObj.owner.comments;
+  delete updatedObj.owner.links;
+
+  return updatedObj;
 };
 
 /**

@@ -7,6 +7,7 @@ import StatsModalContainer from '@app/containers/StatsModalContainer';
 import NotificationContainer from '@app/containers/NotificationContainer';
 import CommentsSidebarContainer from '@app/containers/CommentsSidebarContainer';
 import ModalCropperContainer from '@app/containers/ModalCropperContainer';
+import ActivateLinkModalContainer from '@app/containers/ActivateLinkModalContainer';
 
 const LayoutManager = ({ children }) => {
   const { redirectToSettings } = useUserSettingsRedirect();
@@ -24,6 +25,7 @@ const LayoutManager = ({ children }) => {
       {router.pathname === '/settings' && <ModalCropperContainer />}
       {router.pathname === '/links/[id]' && <CommentsSidebarContainer />}
       {router.pathname === '/links/[id]' && <StatsModalContainer />}
+      {router.pathname === '/links/[id]' && <ActivateLinkModalContainer />}
     </>
   );
 };
