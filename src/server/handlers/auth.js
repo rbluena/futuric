@@ -380,8 +380,8 @@ exports.uploadImageHandler = async (req, res, next) => {
     //   .toFile(`${file.destination}/${medium}`);
 
     const user = await userUploadImages(userId, {
-      thumbnail: `${process.env.SERVER_URL}/images/${thumbnail}`,
-      // medium: `${process.env.SERVER_URL}/images/${medium}`,
+      thumbnail: `${process.env.SERVER_URL}/api/static/images/${thumbnail}`,
+      // medium: `${process.env.SERVER_URL}/api/static/images/${medium}`,
     });
 
     const jwt = await generateAccessToken(user);

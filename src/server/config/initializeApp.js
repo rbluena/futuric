@@ -51,7 +51,7 @@ module.exports = function initializedApp(router) {
     })
   );
 
-  app.use(express.static(path.join(__dirname, '../uploads/')));
+  app.use('/api/static', express.static(path.join(__dirname, '../uploads/')));
 
   /** API endpoints */
   app.use('/api/v1', router);
