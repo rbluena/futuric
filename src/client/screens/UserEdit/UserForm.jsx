@@ -140,7 +140,7 @@ const UserForm = () => {
             <TextInput
               name="website"
               label="Website:"
-              placeholder="Website"
+              placeholder="Brand's website."
               register={register({
                 validate: (value) => {
                   if (value.length && !isURL(value))
@@ -157,7 +157,7 @@ const UserForm = () => {
             <TextInput
               name="social.twitter"
               label="Twitter:"
-              placeholder="Twitter profile"
+              placeholder="Twitter profile."
               register={register({
                 validate: (value) => {
                   if (value.length && !isURL(value))
@@ -174,7 +174,7 @@ const UserForm = () => {
             <TextInput
               name="social.linkedin"
               label="Linkedin:"
-              placeholder="Linkedin profile"
+              placeholder="Linkedin profile or company page."
               register={register({
                 validate: (value) => {
                   if (value.length && !isURL(value))
@@ -191,7 +191,7 @@ const UserForm = () => {
             <TextInput
               name="social.instagram"
               label="Instagram:"
-              placeholder="Instagram profile"
+              placeholder="Instagram profile."
               register={register({
                 validate: (value) => {
                   if (value.length && !isURL(value))
@@ -208,7 +208,7 @@ const UserForm = () => {
             <TextInput
               name="social.youtube"
               label="YouTube:"
-              placeholder="Youtube profile"
+              placeholder="Youtube profile."
               register={register({
                 validate: (value) => {
                   if (value.length && !isURL(value))
@@ -225,7 +225,7 @@ const UserForm = () => {
             <TextInput
               name="social.facebook"
               label="Facebook:"
-              placeholder="Facebook profile or page"
+              placeholder="Facebook profile or page."
               register={register({
                 validate: (value) => {
                   if (value.length && !isURL(value))
