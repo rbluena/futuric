@@ -28,7 +28,7 @@ const ViewLink = ({ post }) => {
   }
 
   return (
-    <div className="py-10">
+    <div className="py-4 md:py-6">
       <ContentWrapper>
         <Header post={post} owner={owner} toggleWaiting={toggleWaiting} />
         <Content post={post} />
