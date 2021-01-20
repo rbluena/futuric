@@ -56,7 +56,7 @@ const Header = ({ post, owner, toggleWaiting }) => {
 
         <br />
         <div
-          className="absolute bg-primary-500 text-white left-0 top-12 font-bold shadow-2xl py-1 pl-2 pr-4"
+          className="absolute bg-success-500 text-white left-0 top-12 font-bold shadow-2xl py-1 pl-2 pr-4"
           style={{
             clipPath: 'polygon(0% 0%, 100% 0, 93% 54%, 87% 100%, 0% 100%)',
           }}
