@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useCopyToClipboard } from 'react-use';
 import { format } from 'date-fns';
-import { Link, Button } from '@app/components';
+import { Link, Button, DotSeparator } from '@app/components';
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -55,6 +55,14 @@ const Header = ({ post, owner, toggleWaiting }) => {
           >
             <ClipboardListIcon size="sm" />
           </Button>
+        </div>
+
+        <div className="flex items-center text-xs text-neutral-500 mb-3">
+          <span>{post.category && post.category.toUpperCase()}</span>
+          &nbsp;&nbsp;
+          <DotSeparator />
+          &nbsp;&nbsp;
+          <span>{post.topic && post.topic.toUpperCase()}</span>
         </div>
 
         <div className="relative">

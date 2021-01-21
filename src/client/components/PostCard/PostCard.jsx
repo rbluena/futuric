@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModal } from '@app/slices/globalSlice';
 import { getUserSelector } from '@app/selectors';
-import { Avatar, Link } from '@app/components';
+import { Avatar, Link, DotSeparator } from '@app/components';
 import { BellIcon, BellOutlineIcon, BadgeIcon } from '@app/components/Icons';
 import { format } from 'date-fns';
 import categories from '@app/utils/categories';
@@ -93,8 +93,6 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
     }
   }
 
-  const category = categories.find((item) => item.code === post.category);
-
   return (
     <div className="w-full mt-4">
       <h2
@@ -129,16 +127,12 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
 
       {/* start: FOOTER OF POST CARD */}
       <div className="flex justify-start items-center mt-4">
-        <div className="flex items-center">
-          {category && (
-            <>
-              {/* <DotSeparator />
-              &nbsp;&nbsp; */}
-              <span className="text-xs text-neutral-400 font-bold">
-                {category.name}
-              </span>
-            </>
-          )}
+        <div className="flex items-center text-xs text-neutral-500">
+          <span>{post.category && post.category.toUpperCase()}</span>
+          &nbsp;&nbsp;
+          <DotSeparator />
+          &nbsp;&nbsp;
+          <span>{post.topic && post.topic.toUpperCase()}</span>
         </div>
 
         {/* start: Notification button. */}
