@@ -3,6 +3,7 @@
   { "name": "Articles", "code": "articles" },
   { "name": "Audio", "code": "audio" },
   { "name": "Books", "code": "books" },
+  { "name": "Films", "code": "films" },
   { "name": "Livestreams", "code": "livestreams" },
   { "name": "Podcasts", "code": "podcasts" },
   { "name": "Products", "code": "products" },
