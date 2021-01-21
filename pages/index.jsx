@@ -51,7 +51,7 @@ export default function Home({ links }) {
 
   return (
     <LayoutManager>
-      <Head title="Home" />
+      <Head title="Asteyo - Discover what's coming next on the internet." />
       <Header showHero showTopics />
       <LandingPage />
       <Footer />
