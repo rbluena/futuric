@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContentEditable from 'react-contenteditable';
 import { encode } from 'html-entities';
@@ -77,6 +77,20 @@ const CreateLink = () => {
     setTopic('');
     setError(null);
   }
+
+  useEffect(
+    () => () => {
+      dispatch(clearNotification());
+      dispatch(removeCreatedLink());
+      setDate(null);
+      title.current = '';
+      description.current = '';
+      setCategory('');
+      setTopic('');
+      setError(null);
+    },
+    [dispatch]
+  );
 
   if (createdLink) {
     return (
