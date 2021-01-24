@@ -7,6 +7,7 @@ import ContentEditable from 'react-contenteditable';
 import DatePicker from 'react-datepicker';
 import sanitizeHtml from 'sanitize-html';
 import { updateLinkAction } from '@app/actions';
+import { Button } from '@app/components';
 import { Select, Submit, ControlWrapper } from '@app/components/Form';
 import categOptions from '@app/utils/categories.json';
 import topicOptions from '@app/utils/topics.json';
@@ -21,10 +22,11 @@ const sanitizeConf = {
 const Editor = ({ link }) => {
   const title = useRef(decode(link.title));
   const description = useRef(decode(link.description));
-  const [date, setDate] = useState(link.availableAt);
+  const [date, setDate] = useState(null);
   const [category, setCategory] = useState(link.category);
   const [topic, setTopic] = useState(link.topic);
   const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (link) {
@@ -40,8 +42,6 @@ const Editor = ({ link }) => {
     }
   }, [link]);
 
-  const dispatch = useDispatch();
-
   /**
    *
    */
@@ -56,7 +56,7 @@ const Editor = ({ link }) => {
       updateLinkAction(link._id, {
         title: encode(sanitizeHtml(title.current, sanitizeConf)),
         description: encode(sanitizeHtml(description.current, sanitizeConf)),
-        availableDate: new Date(date),
+        availableDate: date ? new Date(date) : null,
         category,
         topic,
       })
@@ -171,6 +171,14 @@ const Editor = ({ link }) => {
             dateFormat="MMM dd, yyyy - p"
             className="outline-none py-2 px-1 focus:outline-none border-b border-primary-400 focus:border-primary-600"
           />
+          &nbsp;
+          <Button
+            variant="text-button"
+            className="text-primary-700 hover:text-primary-900 hover:underline"
+            onClick={() => setDate(null)}
+          >
+            Clear
+          </Button>
         </ControlWrapper>
 
         <footer className="py-4">

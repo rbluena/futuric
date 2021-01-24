@@ -16,7 +16,8 @@ const updateLinkService = async (linkId, data) => {
 
   Object.keys(data).forEach((key) => {
     if (key === 'availableDate') {
-      doc[key] = new Date(data[key]);
+      const date = data[key];
+      doc[key] = date ? new Date(data[key]) : null;
     } else {
       doc[key] = data[key];
     }
