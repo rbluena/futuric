@@ -1,6 +1,6 @@
 [
   { "name": "Business", "code": "business" },
-  { "name": "Community & Charity", "code": "community" },
+  { "name": "Community", "code": "community" },
   { "name": "Comedy", "code": "comedy" },
   { "name": "Education", "code": "education" },
   { "name": "Health", "code": "health" },
