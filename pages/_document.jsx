@@ -8,6 +8,7 @@ class MyDocument extends Document {
   }
 
   render() {
+    const GA_MEASUREMENT_ID = 'G-WER39820LN';
     return (
       <Html lang="en">
         <Head>
@@ -47,6 +48,26 @@ class MyDocument extends Document {
             content="Create a link for you future content, and discover what happening on the internet!"
           />
           <meta property="og:site_name" content="Asteyo" />
+
+          {/* start: GOOGLE ANALYTICS */}
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          />
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `,
+            }}
+          />
+          {/* end: GOOGLE ANALYTICS */}
         </Head>
         <body>
           <Main />
