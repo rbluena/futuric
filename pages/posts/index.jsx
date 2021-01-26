@@ -5,7 +5,7 @@ import { getCookieToken } from '@app/utils/session';
 import { getLinksService } from '@app/services';
 import { getLinksSuccess } from '@app/slices/linksSlice';
 import { LayoutManager, Head, Header, Footer } from '@app/components';
-import LinksPage from '@app/screens/Posts/All';
+import PostsScreen from '@app/screens/Posts/All';
 
 export async function getServerSideProps({ req, query }) {
   let data = {};
@@ -32,7 +32,7 @@ export async function getServerSideProps({ req, query }) {
   };
 }
 
-const ViewLink = ({ links }) => {
+const Posts = ({ links }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,20 +41,20 @@ const ViewLink = ({ links }) => {
 
   return (
     <LayoutManager>
-      <Head title="All upcomings" />
+      <Head title="Upcomings" />
       <Header showTopics />
-      <LinksPage />
+      <PostsScreen />
       <Footer />
     </LayoutManager>
   );
 };
 
-ViewLink.defaultProps = {
+Posts.defaultProps = {
   links: {},
 };
 
-ViewLink.propTypes = {
+Posts.propTypes = {
   links: PropTypes.objectOf(PropTypes.shape),
 };
 
-export default ViewLink;
+export default Posts;
