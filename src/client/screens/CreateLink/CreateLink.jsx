@@ -1,11 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+// import { isURL } from 'validator';
 import ContentEditable from 'react-contenteditable';
 import { encode } from 'html-entities';
 import DatePicker from 'react-datepicker';
 import sanitizeHtml from 'sanitize-html';
-import { Select, ControlWrapper, Submit } from '@app/components/Form';
+import {
+  Select,
+  ControlWrapper,
+  // TextInput,
+  Submit,
+} from '@app/components/Form';
 import { getLinksStateSelector } from '@app/selectors';
 import { Link, Button } from '@app/components';
 import { createLinkAction } from '@app/actions';
@@ -29,8 +35,14 @@ const CreateLink = () => {
   const [topic, setTopic] = useState('');
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
+  // const [hasUrl, setHasUrl] = useState(false);
+  // const [longUrl, setLongUrl] = useState('');
   const { createdLink } = useSelector(getLinksStateSelector);
 
+  /**
+   *
+   * @param {*} evt
+   */
   function submitData(evt) {
     evt.preventDefault();
 
@@ -46,6 +58,7 @@ const CreateLink = () => {
         availableDate: date,
         category,
         topic,
+        // longUrl,
       })
     );
   }
@@ -73,6 +86,7 @@ const CreateLink = () => {
     setDate(null);
     title.current = '';
     description.current = '';
+    // setLongUrl('');
     setCategory('');
     setTopic('');
     setError(null);
@@ -95,8 +109,8 @@ const CreateLink = () => {
   if (createdLink) {
     return (
       <div className="text-center flex flex-col items-center pt-4">
-        <Link href={`/links/${createdLink._id}`} size="lg" className="mb-8">
-          View created link
+        <Link href={`/posts/${createdLink._id}`} size="lg" className="mb-8">
+          View created post
         </Link>
         <Button variant="primary" outline onClick={createNew}>
           Create New
@@ -200,6 +214,31 @@ const CreateLink = () => {
             />
           </ControlWrapper>
         </div>
+
+        {/* <ControlWrapper>
+          <label
+            htmlFor="hasUrl"
+            className="text-neutral-600 mb-1 block max-w-xs"
+          >
+            <input
+              type="checkbox"
+              name="hasUrl"
+              id="hasUrl"
+              checked={hasUrl}
+              onChange={() => setHasUrl(!hasUrl)}
+            />
+            &nbsp; Is content having a link already?
+          </label>
+          {hasUrl && (
+            <TextInput
+              name="longUrl"
+              placeholder="Enter your URL."
+              onChange={() => setLongUrl()}
+              value={longUrl}
+              required
+            />
+          )}
+        </ControlWrapper> */}
 
         <footer className="py-4">
           <Submit>Create</Submit>
