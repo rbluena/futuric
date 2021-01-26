@@ -34,7 +34,7 @@ const Nav = ({ user }) => {
           <Link className="px-2 font-bold" href="/">
             Home
           </Link>
-          <Link className="px-2 font-bold" href="/links">
+          <Link className="px-2 font-bold" href="/posts">
             Explore
           </Link>
           {user ? (

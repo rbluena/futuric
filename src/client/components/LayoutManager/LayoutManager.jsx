@@ -23,9 +23,9 @@ const LayoutManager = ({ children }) => {
       <div className="bg-neutral-50 min-h-screen">{children}</div>
       <AuthModalContainer />
       {router.pathname === '/settings' && <ModalCropperContainer />}
-      {router.pathname === '/links/[id]' && <CommentsSidebarContainer />}
-      {router.pathname === '/links/[id]' && <StatsModalContainer />}
-      {router.pathname === '/links/[id]' && <ActivateLinkModalContainer />}
+      {router.pathname === '/posts/[id]' && <CommentsSidebarContainer />}
+      {router.pathname === '/posts/[id]' && <StatsModalContainer />}
+      {router.pathname === '/posts/[id]' && <ActivateLinkModalContainer />}
     </>
   );
 };

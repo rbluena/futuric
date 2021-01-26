@@ -101,7 +101,7 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
         }`}
       >
         <Link
-          href={`/links/${post._id}`}
+          href={`/posts/${post._id}`}
           className="text-neutral-800 hover:text-neutral-900 hover:no-underline"
         >
           {post.title}
@@ -115,7 +115,7 @@ PostCard.Content = ({ post, small, toggleWaiting }) => {
           </Link>
         ) : (
           <Link
-            href={`/links/${post._id}`}
+            href={`/posts/${post._id}`}
             variant="secondary"
             className="text-base"
           >

@@ -228,12 +228,12 @@ export function toggleCommentLikeAction(id) {
 
 export function loadLinkCommentsAction(options = {}) {
   return async (dispatch) => {
-    dispatch(toggleSidebar(SIDEBARS.comments));
     dispatch(getCommentsAction(options));
+    dispatch(toggleSidebar(SIDEBARS.comments));
   };
 }
 
-export function loadRepliesAction(options) {}
+export function loadRepliesAction() {}
 
 /**
  * Action to reset all properties from auth slice.
